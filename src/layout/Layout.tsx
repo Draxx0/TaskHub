@@ -1,9 +1,9 @@
-import Header from "../components/common/Header";
+// import Header from "../components/common/Header";
 
 const Layout = ({ children }: { children: React.ReactElement }) => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>{children}</main>
     </>
   );

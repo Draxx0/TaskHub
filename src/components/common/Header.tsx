@@ -1,11 +1,5 @@
-import { Link } from "@tanstack/react-router";
-
 const Header = () => {
-  return (
-    <nav>
-      <Link to="/workshops">Workshops</Link>
-    </nav>
-  );
+  return <nav></nav>;
 };
 
 export default Header;
