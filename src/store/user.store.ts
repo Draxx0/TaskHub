@@ -1,10 +1,10 @@
+import { User } from "firebase/auth";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { User } from "../utils/types/user";
 
 interface UserState {
   user: User | null;
-  insertUser: () => void;
+  insertUser: (user: User) => void;
   logoutUser: () => void;
 }
 
@@ -12,7 +12,7 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
-      insertUser: () => set((user: User) => ({ user })),
+      insertUser: (user: User | null) => set(() => ({ user })),
       logoutUser: () => set(() => ({ user: null })),
     }),
     { name: "user" }

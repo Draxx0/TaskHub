@@ -4,6 +4,8 @@ import "./index.css";
 import i18next from "i18next";
 import global_en from "./locales/en/global.json";
 import global_fr from "./locales/fr/global.json";
+import auth_en from "./locales/en/auth.json";
+import auth_fr from "./locales/fr/auth.json";
 import { I18nextProvider } from "react-i18next";
 
 i18next.init({
@@ -13,9 +15,11 @@ i18next.init({
   resources: {
     fr: {
       global: global_fr,
+      auth: auth_fr,
     },
     en: {
       global: global_en,
+      auth: auth_en,
     },
   },
 });
