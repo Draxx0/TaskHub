@@ -1,9 +1,13 @@
-import { FormObject } from "../../components/common/Form/FormSchema";
 import { useUserStore } from "../../store/user.store";
 import { Link } from "react-router-dom";
 import Form from "../../components/common/Form/Form";
-import authService from "../../utils/services/authService";
 import { useTranslation } from "react-i18next";
+import { FormObject } from "../../utils/types/form";
+import { authFormSchema } from "../../components/common/Form/FormSchema";
+import { ToastContainer, toast } from "react-toastify";
+import { ZodError } from "zod";
+import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslation";
+import authService from "../../utils/services/authService";
 
 const Auth = ({ type }: { type: "signup" | "login" }) => {
   const { insertUser } = useUserStore();
@@ -32,17 +36,30 @@ const Auth = ({ type }: { type: "signup" | "login" }) => {
     const form = new FormData(event.currentTarget);
     const email = form.get("email");
     const password = form.get("password");
-    console.log("log with pw", password, "email", email);
     const type = isLoginPage() ? "login" : "signup";
+    // FORM VALIDATION
+    try {
+      authFormSchema.parse({ email, password });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        error.errors.forEach((e) => {
+          const errorType = authFormErrorFinder(e.message);
+          if (!errorType.error) {
+            return;
+          }
+          toast.error(t(`formError.${errorType.error}`));
+        });
+      }
+    }
+    // AUTH
     try {
       const response = await authService.authenticate(type, {
         email: String(email),
         password: String(password),
       });
-      console.log("RESPONSE", response);
       insertUser(response.user);
     } catch (error) {
-      console.log(error);
+      toast.error(t("formError.default"));
     }
   };
 
@@ -63,6 +80,7 @@ const Auth = ({ type }: { type: "signup" | "login" }) => {
       ) : (
         <Link to="/auth/login">{t("page.loginCtaText")}</Link>
       )}
+      <ToastContainer />
     </div>
   );
 };
