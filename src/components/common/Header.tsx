@@ -6,7 +6,7 @@ const Header = () => {
       <div className="flex flex-col justify-between h-full r py-6 px-8">
         <div className="flex justify-between  items-center">
           <Link to="/" className="cursor-pointer">
-            <img src="./assets/images/logo.svg" alt="" />
+            <img src="../assets/images/logo.svg" alt="" />
           </Link>
           {/* <span>{"<"}</span> */}
         </div>

@@ -68,19 +68,45 @@ const Auth = ({ type }: { type: "signup" | "login" }) => {
   };
 
   return (
-    <div>
-      {isLoginPage() ? (
-        <p>{t("page.loginPage")}</p>
-      ) : (
-        <p>{t("page.signinPage")}</p>
-      )}
-      <Form formObject={formObject} onSubmitEvent={handleSubmit} />
-      {isLoginPage() ? (
-        <Link to="/auth/signup">{t("page.signinCtaText")}</Link>
-      ) : (
-        <Link to="/auth/login">{t("page.loginCtaText")}</Link>
-      )}
-      <ToastContainer />
+    <div className="flex">
+      <div className="flex flex-col gap-5 w-1/2">
+        <div className="max-w-xl m-auto">
+          {isLoginPage() ? (
+            <h2 className="text-xl font-semibold">{t("page.loginPage")}</h2>
+          ) : (
+            <h2 className="text-xl font-semibold">{t("page.signinPage")}</h2>
+          )}
+          <Form
+            formObject={formObject}
+            onSubmitEvent={handleSubmit}
+            cardData={{
+              title: isLoginPage()
+                ? t("authCard.loginTitle")
+                : t("authCard.signinTitle"),
+              description: isLoginPage()
+                ? t("authCard.loginDescription")
+                : t("authCard.signinDescription"),
+            }}
+          />
+          {isLoginPage() ? (
+            <Link to="/auth/signup">{t("page.signinCtaText")}</Link>
+          ) : (
+            <Link to="/auth/login">{t("page.loginCtaText")}</Link>
+          )}
+          <ToastContainer />
+        </div>
+      </div>
+      <div className="w-1/2 h-screen bg-cover bg-[url('/assets/images/auth2.jpg')] relative">
+        <div className="bg-black/40 absolute h-full w-full inset-0"></div>
+        <div className="flex flex-col gap-3 absolute bottom-10 left-10">
+          <span className="text-3xl text-white">
+            {t("authCard.testimonialAuthor")}
+          </span>
+          <p className=" text-white  font-bold">
+            {t("authCard.testimonialComment")}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

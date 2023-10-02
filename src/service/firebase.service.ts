@@ -1,8 +1,10 @@
 import { doc, collection, getDocs, getDoc } from "firebase/firestore";
 import { db } from "./firebase.config";
-import { getFirebaseDocData } from "../utils/types/firebase";
+import { getFirebaseCollection, getFirebaseDoc } from "../utils/types/firebase";
 
-const getFirebaseDoc = async ({ docReference }: getFirebaseDocData) => {
+const getFirebaseDoc = async <T>({
+  docReference,
+}: getFirebaseDoc): Promise<T | undefined> => {
   const docRef = doc(
     db,
     docReference.path,
@@ -12,20 +14,30 @@ const getFirebaseDoc = async ({ docReference }: getFirebaseDocData) => {
   try {
     const docSnap = await getDoc(docRef);
     console.log(docSnap.data());
+    const data = docSnap.data() as T;
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-const getFirebaseCollection = async (params: { collection: string }) => {
-  const collectionRef = collection(db, params.collection);
+const getFirebaseCollection = async <T>({
+  params,
+}: getFirebaseCollection): Promise<T[] | undefined> => {
+  const collectionRef = collection(db, params.path);
 
   try {
-    await getDocs(collectionRef).then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
+    const collectionSnap = await getDocs(collectionRef).then(
+      (querySnapshot) => {
+        const state: Array<T> = [];
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          state.push({ ...doc.data(), id: doc.id } as T);
+        });
+        return state;
+      }
+    );
+    return collectionSnap;
   } catch (error) {
     console.log(error);
   }
