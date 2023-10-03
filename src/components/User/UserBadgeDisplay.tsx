@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useUserStore } from "../../store/user.store";
 import { Button as ButtonShad } from "@/components/ui/button";
-import Button from "../common/Button";
+import { useTranslation } from "react-i18next";
 
 const UserBadgeDisplay = () => {
+  const { t } = useTranslation(["auth"]);
   const { user, logoutUser } = useUserStore();
 
   if (!user)
@@ -15,10 +16,17 @@ const UserBadgeDisplay = () => {
 
   return (
     <div className="flex gap-4">
-      <div className="bg-gray-200 rounded-full w-10 h-10">
-        <p>William</p>
-      </div>
-      <Button onClickEvent={logoutUser} text="Se déconnecter" />
+      {user.photoURL ? (
+        <div
+          className={`bg-[url("${user.photoURL}")] rounded-full bg-cover bg-center w-10 h-10`}
+        ></div>
+      ) : (
+        <p>
+          Connected as{" "}
+          <span className="font-bold">{user.email?.slice(0, 10) + "..."}</span>
+        </p>
+      )}
+      <ButtonShad onClick={logoutUser}>{t("utils.disconnect")}</ButtonShad>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export const Router = () => {
       <Route path="/" element={<Home />} />
       {/*---------- Auth Routes ----------*/}
       <Route element={<AlreadyLogProtect />}>
-        <Route path="/auth/signup" element={<Auth type="signup" />} />
+        <Route path="/auth/signin" element={<Auth type="signin" />} />
         <Route path="/auth/login" element={<Auth type="login" />} />
       </Route>
       {/*---------- Auth Routes ----------*/}

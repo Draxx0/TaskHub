@@ -15,8 +15,8 @@ const queryClient = new QueryClient();
 
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: "auto",
-  fallbackLng: "fr",
+  lng: "fr",
+  fallbackLng: "en",
   resources: {
     fr: {
       global: global_fr,

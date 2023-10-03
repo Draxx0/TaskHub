@@ -8,13 +8,14 @@ import { ToastContainer, toast } from "react-toastify";
 import { ZodError } from "zod";
 import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslation";
 import authService from "../../utils/services/authService";
+import { Button as ButtonShad } from "@/components/ui/button";
 
-const Auth = ({ type }: { type: "signup" | "login" }) => {
+const Auth = ({ type }: { type: "signin" | "login" }) => {
   const { insertUser } = useUserStore();
-  const { t } = useTranslation(["auth"]);
+  const { t } = useTranslation(["auth", "global"]);
 
   const formObject: FormObject = {
-    formName: "my form",
+    formName: "Auth form",
     formData: [
       {
         labelText: t("email.emailLabel"),
@@ -68,14 +69,29 @@ const Auth = ({ type }: { type: "signup" | "login" }) => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex flex-col gap-5 w-1/2">
-        <div className="max-w-xl m-auto">
-          {isLoginPage() ? (
-            <h2 className="text-xl font-semibold">{t("page.loginPage")}</h2>
-          ) : (
-            <h2 className="text-xl font-semibold">{t("page.signinPage")}</h2>
-          )}
+    <div className="lg:flex lg:space-y-0 space-y-10">
+      <div className="w-full lg:w-1/2 h-[150px] lg:h-screen group overflow-hidden">
+        <div className="h-full relative border-r border-secondary-500">
+          <div className="bg-cover bg-center lg:bg- h-full bg-[url('../assets/images/auth.jpg')] group-hover:scale-105 transition ease-in-out duration-1000"></div>
+          <div className="bg-black/40 absolute h-full w-full inset-0"></div>
+          <img
+            src="../assets/images/logo_white.svg"
+            alt=""
+            className="absolute top-10 left-10 backdrop-blur-2xl bg-gradient-custom px-3 py-2 rounded-xl"
+          />
+          <div className="hidden lg:flex flex-col gap-3 absolute bottom-10 left-10">
+            <p className=" text-white text-lg font-bold">
+              {t("authCard.testimonialComment")}
+            </p>
+            <span className="text-white font-semibold">
+              {t("authCard.testimonialAuthor")}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-5 w-full lg:w-1/2 relative">
+        <div className="max-w-md m-auto">
           <Form
             formObject={formObject}
             onSubmitEvent={handleSubmit}
@@ -87,25 +103,43 @@ const Auth = ({ type }: { type: "signup" | "login" }) => {
                 ? t("authCard.loginDescription")
                 : t("authCard.signinDescription"),
             }}
+            isLogin={isLoginPage}
           />
-          {isLoginPage() ? (
-            <Link to="/auth/signup">{t("page.signinCtaText")}</Link>
-          ) : (
-            <Link to="/auth/login">{t("page.loginCtaText")}</Link>
-          )}
           <ToastContainer />
         </div>
-      </div>
-      <div className="w-1/2 h-screen bg-cover bg-[url('/assets/images/auth2.jpg')] relative">
-        <div className="bg-black/40 absolute h-full w-full inset-0"></div>
-        <div className="flex flex-col gap-3 absolute bottom-10 left-10">
-          <span className="text-3xl text-white">
-            {t("authCard.testimonialAuthor")}
-          </span>
-          <p className=" text-white  font-bold">
-            {t("authCard.testimonialComment")}
-          </p>
-        </div>
+
+        {isLoginPage() ? (
+          <Link className="text-center" to="/auth/signin">
+            <ButtonShad
+              variant={"ghost"}
+              className="lg:absolute right-14 top-10"
+            >
+              {t("page.signinCtaText")}
+            </ButtonShad>
+          </Link>
+        ) : (
+          <Link className="text-center" to="/auth/login">
+            <ButtonShad
+              variant={"ghost"}
+              className="lg:absolute right-14 top-10"
+            >
+              {t("page.loginCtaText")}
+            </ButtonShad>
+          </Link>
+        )}
+
+        <Link className="text-center" to="/">
+          <ButtonShad
+            asChild
+            variant={"ghost"}
+            className=" lg:absolute left-10 bottom-5"
+          >
+            <div className="flex items-center gap-3">
+              <img src="../assets/icons/back.svg" alt="" className="w-5" />
+              <p>{t("global:back")}</p>
+            </div>
+          </ButtonShad>
+        </Link>
       </div>
     </div>
   );
