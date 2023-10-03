@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import UserBadgeDisplay from "../components/user/UserBadgeDisplay";
-import Header from "../components/common/Header";
 import { useEffect, useState } from "react";
+import Header from "@/components/common/Header/Header";
 
 const Layout = ({ children }: { children: React.ReactElement }) => {
   const [isAuthPage, setIsAuthPage] = useState(false);

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+*:not(path) {
   color: #333335;
+}
+
+.active,
+.active > * {
+  color: #603de1;
 }
