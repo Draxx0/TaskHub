@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useUserStore } from "../../store/user.store";
 import { Button as ButtonShad } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import UserMenuDropdown from "./UserMenuDropdown";
 
 const UserBadgeDisplay = () => {
   const { t } = useTranslation(["auth"]);
@@ -17,13 +18,12 @@ const UserBadgeDisplay = () => {
   return (
     <div className="flex items-center gap-4">
       {user.photoURL ? (
-        <img src={user.photoURL} alt="user profile picture" className="rounded-full bg-cover bg-center w-10 h-10" />
+        <UserMenuDropdown photoURL={user.photoURL} logout={logoutUser} />
       ) : (
         <p>
           Connected as {user.displayName || user.email?.slice(0, 10) + "..."}
         </p>
       )}
-      <ButtonShad onClick={logoutUser}>{t("utils.disconnect")}</ButtonShad>
     </div>
   );
 };

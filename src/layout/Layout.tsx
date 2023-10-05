@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "@/components/common/Header/Header";
-import UserBadgeDisplay from "@/components/User/UserBadgeDisplay";
+import UserBadgeDisplay from "@/components/user/UserBadgeDisplay";
 import { Toaster } from "@/components/ui/toaster";
+import { Input } from "@/components/ui/input";
 
 const Layout = ({ children }: { children: React.ReactElement }) => {
   const [isAuthPage, setIsAuthPage] = useState(false);
@@ -21,7 +22,8 @@ const Layout = ({ children }: { children: React.ReactElement }) => {
       {!isAuthPage && <Header />}
       <main className={!isAuthPage ? "pt-6 px-8 ml-[13%]" : ""}>
         {!isAuthPage && (
-          <div className="flex items-center justify-end mb-12">
+          <div className="flex items-center justify-between mb-12">
+            <Input placeholder="search..." className="max-w-lg" />
             <UserBadgeDisplay />
           </div>
         )}

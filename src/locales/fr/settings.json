@@ -1,0 +1,20 @@
+{
+ "page": {
+  "title": "Paramètres",
+  "description": "Gérer les paramètres de votre compte"
+ },
+ "tabs": [
+  {
+   "tabData": {
+    "url": "profile",
+    "text": "Profil"
+   }
+  },
+  {
+   "tabData": {
+    "url": "account",
+    "text": "Compte"
+   }
+  }
+ ]
+}

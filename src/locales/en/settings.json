@@ -1,0 +1,20 @@
+{
+ "page": {
+  "title": "Settings",
+  "description": "Manage your account settings"
+ },
+ "tabs": [
+  {
+   "tabData": {
+    "url": "profile",
+    "text": "Profile"
+   }
+  },
+  {
+   "tabData": {
+    "url": "account",
+    "text": "Account"
+   }
+  }
+ ]
+}

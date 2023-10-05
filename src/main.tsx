@@ -8,6 +8,8 @@ import auth_en from "./locales/en/auth.json";
 import auth_fr from "./locales/fr/auth.json";
 import workshops_en from "./locales/en/workshops.json";
 import workshops_fr from "./locales/fr/workshops.json";
+import settings_en from "./locales/en/settings.json";
+import settings_fr from "./locales/fr/settings.json";
 import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -22,11 +24,13 @@ i18next.init({
       global: global_fr,
       auth: auth_fr,
       workshops: workshops_fr,
+      settings: settings_fr
     },
     en: {
       global: global_en,
       auth: auth_en,
       workshops: workshops_en,
+      settings: settings_en
     },
   },
 });

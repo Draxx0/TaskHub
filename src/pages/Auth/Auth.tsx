@@ -69,8 +69,7 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
     // FORM VALIDATION
     const isFormvalid = formValidation(email, password, profile)
     if (!isFormvalid) {
-      console.log("no")
-      return;
+      throw new Error("Form is invalid");
     }
 
     // AUTH
