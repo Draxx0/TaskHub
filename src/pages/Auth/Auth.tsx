@@ -3,44 +3,45 @@ import { Link } from "react-router-dom";
 import Form from "../../components/common/Form/Form";
 import { useTranslation } from "react-i18next";
 import { FormObject } from "../../utils/types/form";
-import { authFormSchema } from "../../components/common/Form/FormSchema";
-import { ToastContainer, toast } from "react-toastify";
+import { authSchemas } from "../../components/common/Form/FormSchema";
 import { ZodError } from "zod";
 import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslation";
 import authService from "../../utils/services/authService";
 import { Button as ButtonShad } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const Auth = ({ type }: { type: "signin" | "login" }) => {
   const { insertUser } = useUserStore();
   const { t } = useTranslation(["auth", "global"]);
+  const { toast } = useToast();
 
   const formObject: FormObject = {
     formName: "Auth form",
     formData: [
       {
-        labelText: t("email.emailLabel"),
+        labelText: t("auth_card.email.emailLabel"),
         inputName: "email",
-        inputPlaceholder: t("email.inputPlaceholder"),
+        inputPlaceholder: t("auth_card.email.inputPlaceholder"),
         inputType: "email",
       },
       {
-        labelText: t("password.passwordLabel"),
+        labelText: t("auth_card.password.passwordLabel"),
         inputName: "password",
-        inputPlaceholder: t("password.inputPlaceholder"),
+        inputPlaceholder: t("auth_card.password.inputPlaceholder"),
         inputType: "password",
       },
     ],
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const email = form.get("email");
-    const password = form.get("password");
-    const type = isLoginPage() ? "login" : "signup";
-    // FORM VALIDATION
+  const formValidation = (email: string, password: string, profile?: string): boolean => {
+    const isLogin = !profile;
     try {
-      authFormSchema.parse({ email, password });
+      if (isLogin) {
+        authSchemas.authLoginFormSchema.parse({ email, password });
+      } else {
+        authSchemas.authSigninFormSchema.parse({ email, password, profile })
+      }
+      return true
     } catch (error) {
       if (error instanceof ZodError) {
         error.errors.forEach((e) => {
@@ -48,19 +49,43 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           if (!errorType.error) {
             return;
           }
-          toast.error(t(`formError.${errorType.error}`));
+          toast({
+            title: t("formError.title"),
+            description: t(`formError.${errorType.error}`)
+          })
         });
       }
+      return false
     }
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const email = String(form.get("email"));
+    const password = String(form.get("password"));
+    const profile = !isLoginPage() ? String(form.get("profil")) : undefined
+    const type = isLoginPage() ? "login" : "signup";
+    // FORM VALIDATION
+    const isFormvalid = formValidation(email, password, profile)
+    if (!isFormvalid) {
+      console.log("no")
+      return;
+    }
+
     // AUTH
     try {
       const response = await authService.authenticate(type, {
-        email: String(email),
-        password: String(password),
+        email,
+        password,
+        profile
       });
       insertUser(response.user);
     } catch (error) {
-      toast.error(t("formError.default"));
+      toast({
+        title: t("formError.title"),
+        description: t("formError.default")
+      })
     }
   };
 
@@ -81,38 +106,37 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           />
           <div className="hidden lg:flex flex-col gap-3 absolute bottom-10 left-10">
             <p className=" text-white text-lg font-bold">
-              {t("authCard.testimonialComment")}
+              {t("auth_card.testimonialComment")}
             </p>
             <span className="text-white font-semibold">
-              {t("authCard.testimonialAuthor")}
+              {t("auth_card.testimonialAuthor")}
             </span>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-5 w-full lg:w-1/2 relative">
-        <div className="max-w-md m-auto">
+        <div className="max-w-xl m-auto">
           <Form
             formObject={formObject}
             onSubmitEvent={handleSubmit}
             cardData={{
               title: isLoginPage()
-                ? t("authCard.loginTitle")
-                : t("authCard.signinTitle"),
+                ? t("auth_card.loginTitle")
+                : t("auth_card.signinTitle"),
               description: isLoginPage()
-                ? t("authCard.loginDescription")
-                : t("authCard.signinDescription"),
+                ? t("auth_card.loginDescription")
+                : t("auth_card.signinDescription"),
             }}
             isLogin={isLoginPage}
           />
-          <ToastContainer />
         </div>
 
         {isLoginPage() ? (
           <Link className="text-center" to="/auth/signin">
             <ButtonShad
               variant={"ghost"}
-              className="lg:absolute right-14 top-10"
+              className="lg:absolute right-10 top-5"
             >
               {t("page.signinCtaText")}
             </ButtonShad>
@@ -121,7 +145,7 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           <Link className="text-center" to="/auth/login">
             <ButtonShad
               variant={"ghost"}
-              className="lg:absolute right-14 top-10"
+              className="lg:absolute right-10 top-5"
             >
               {t("page.loginCtaText")}
             </ButtonShad>

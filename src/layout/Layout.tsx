@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
-import UserBadgeDisplay from "../components/user/UserBadgeDisplay";
 import { useEffect, useState } from "react";
 import Header from "@/components/common/Header/Header";
+import UserBadgeDisplay from "@/components/User/UserBadgeDisplay";
+import { Toaster } from "@/components/ui/toaster";
 
 const Layout = ({ children }: { children: React.ReactElement }) => {
   const [isAuthPage, setIsAuthPage] = useState(false);
@@ -26,6 +27,7 @@ const Layout = ({ children }: { children: React.ReactElement }) => {
         )}
         {children}
       </main>
+      <Toaster />
     </>
   );
 };

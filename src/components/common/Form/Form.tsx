@@ -3,6 +3,9 @@ import { FormObject } from "@/utils/types/form";
 import { Button as ButtonShad } from "@/components/ui/button";
 import FormGroup from "./FormGroup";
 import { Link } from "react-router-dom";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import AvatarSelection from "./AvatarSelection";
+import { avatars as dataAvatars } from "@/data/Avatar";
 
 type Props = {
   formObject: FormObject;
@@ -16,6 +19,7 @@ type Props = {
 
 const Form = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
   const { t } = useTranslation(["auth"]);
+  const avatars = dataAvatars;
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center space-y-3">
@@ -32,8 +36,34 @@ const Form = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
             labelText={object.labelText}
           />
         ))}
+
+        {!isLogin() && (
+          <div className="flex flex-col gap-2">
+            <label htmlFor="profil">{t("auth_card.profil.select_title")}</label>
+            <Select name="profil">
+              <SelectTrigger className="w-full" id="profil">
+                <SelectValue placeholder="Select a profil" />
+              </SelectTrigger>
+              <SelectContent position="item-aligned">
+                <SelectGroup>
+                  <SelectLabel>{t("auth_card.profil.select_inner_title")}</SelectLabel>
+                  {avatars.map((avatar, index) => (
+                    <SelectItem key={index} value={avatar.url} >
+                      <div className="flex items-center gap-4">
+                        <AvatarSelection url={avatar.url} fallback={avatar.fallback} width={avatar.width} />
+                        <p className="font-semibold">{avatar.avatar_name}</p>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <small className="opacity-75">{t("auth_card.profil.description")}</small>
+          </div>
+        )}
+
         <ButtonShad variant={"outline"} type="submit" className="w-full">
-          {isLogin() ? t("submit_action.login") : t("submit_action.signin")}
+          {isLogin() ? t("auth_card.submit_action.login") : t("auth_card.submit_action.signin")}
         </ButtonShad>
       </form>
 
@@ -43,7 +73,7 @@ const Form = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-white font-semibold px-2 text-muted-foreground">
-            {t("orContinueWith")}
+            {t("or_continue_with")}
           </span>
         </div>
       </div>
