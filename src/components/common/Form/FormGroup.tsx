@@ -6,6 +6,8 @@ type Props = {
   inputName: string;
   inputType: InputType;
   inputPlaceholder: string;
+  inputDescription?: string;
+  inputDefaultValue?: string;
 };
 
 const FormGroup = ({
@@ -13,6 +15,8 @@ const FormGroup = ({
   inputName,
   inputType,
   inputPlaceholder,
+  inputDescription,
+  inputDefaultValue,
 }: Props) => {
   return (
     <div className="flex flex-col gap-2">
@@ -21,8 +25,10 @@ const FormGroup = ({
         name={inputName}
         id={inputName}
         type={inputType}
-        placeholder={inputPlaceholder ?? ""}
+        placeholder={inputPlaceholder}
+        defaultValue={inputDefaultValue}
       />
+      {inputDescription && <small className="opacity-75">{inputDescription}</small>}
     </div>
   );
 };

@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-*:not(path) {
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #333335;
 }
 

@@ -5,16 +5,32 @@
  },
  "tabs": [
   {
-   "tabData": {
+   "tab_data": {
     "url": "profile",
     "text": "Profile"
    }
   },
   {
-   "tabData": {
+   "tab_data": {
     "url": "account",
     "text": "Account"
    }
   }
- ]
+ ],
+ "profile": {
+  "title": "Profile",
+  "description": "This is how others will see you on the site.",
+  "username": {
+   "username_label": "Username",
+   "username_description": "This is your public display name. It can be your real name or a pseudonym.",
+   "input_placeholder": "Jake33_"
+  }
+ },
+ "utils": {
+  "update_button": "Update",
+  "profile_update": {
+   "profile_update_title": "Modifications made",
+   "profile_update_description": "Changes have been made to your account."
+  }
+ }
 }

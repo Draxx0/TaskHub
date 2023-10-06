@@ -8,6 +8,7 @@
     }
   ],
   "errors": {
-    "global": "Ph non quelque chose s'est mal passé"
+    "global_title": "Erreur",
+    "global_description": "Oh non quelque chose s'est mal passé"
   }
 }

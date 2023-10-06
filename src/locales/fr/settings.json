@@ -5,16 +5,32 @@
  },
  "tabs": [
   {
-   "tabData": {
+   "tab_data": {
     "url": "profile",
     "text": "Profil"
    }
   },
   {
-   "tabData": {
+   "tab_data": {
     "url": "account",
     "text": "Compte"
    }
   }
- ]
+ ],
+ "profile": {
+  "title": "Profil",
+  "description": "C'est ainsi que les autres vous verront sur le site.",
+  "username": {
+   "username_label": "Nom d'utilisateur",
+   "username_description": "Il s'agit de votre nom d'affichage public. Il peut s'agir de votre vrai nom ou d'un pseudonyme.",
+   "input_placeholder": "Jake33_"
+  }
+ },
+ "utils": {
+  "update_button": "Modifier",
+  "profile_update": {
+   "profile_update_title": "Modifications apporté",
+   "profile_update_description": "Des modifications ont bien été apporté à votre compte."
+  }
+ }
 }

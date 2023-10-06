@@ -9,7 +9,7 @@ const SidebarNav = () => {
   <nav>
    <ul className="flex flex-col gap-4">
     {tabs.map((tab, index) => (
-     <SidebarNavItem key={index} text={tab.tabData.text} url={tab.tabData.url} />
+     <SidebarNavItem key={index} text={tab.tab_data.text} url={tab.tab_data.url} />
     ))}
    </ul>
   </nav>

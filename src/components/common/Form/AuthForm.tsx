@@ -17,7 +17,7 @@ type Props = {
   isLogin: () => boolean;
 };
 
-const Form = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
+const AuthForm = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
   const { t } = useTranslation(["auth"]);
   const avatars = dataAvatars;
   return (
@@ -101,4 +101,4 @@ const Form = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
   );
 };
 
-export default Form;
+export default AuthForm;

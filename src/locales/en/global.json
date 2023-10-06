@@ -8,6 +8,7 @@
     }
   ],
   "errors": {
-    "global": "Oh no something went wrong !"
+    "global_title": "Error",
+    "global_description": "Oh no something went wrong !"
   }
 }

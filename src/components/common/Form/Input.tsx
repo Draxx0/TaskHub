@@ -5,9 +5,10 @@ type Props = {
   id: string;
   placeholder?: string;
   name: string;
+  defaultValue?: string;
 };
 
-const Input = ({ type, id, placeholder, name }: Props) => {
+const Input = ({ type, id, placeholder, name, defaultValue }: Props) => {
   return (
     <input
       type={type}
@@ -15,6 +16,7 @@ const Input = ({ type, id, placeholder, name }: Props) => {
       id={id}
       className="border-gray-500/25 outline-main-500 placeholder:text-sm rounded-md border w-full p-2"
       placeholder={placeholder ?? ""}
+      defaultValue={defaultValue ?? ""}
     />
   );
 };

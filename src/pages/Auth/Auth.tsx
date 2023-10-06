@@ -1,6 +1,5 @@
 import { useUserStore } from "../../store/user.store";
 import { Link } from "react-router-dom";
-import Form from "../../components/common/Form/Form";
 import { useTranslation } from "react-i18next";
 import { FormObject } from "../../utils/types/form";
 import { authSchemas } from "../../components/common/Form/FormSchema";
@@ -9,6 +8,7 @@ import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslat
 import authService from "../../utils/services/authService";
 import { Button as ButtonShad } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import AuthForm from "../../components/common/Form/AuthForm";
 
 const Auth = ({ type }: { type: "signin" | "login" }) => {
   const { insertUser } = useUserStore();
@@ -19,15 +19,15 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
     formName: "Auth form",
     formData: [
       {
-        labelText: t("auth_card.email.emailLabel"),
+        labelText: t("auth_card.email.email_label"),
         inputName: "email",
-        inputPlaceholder: t("auth_card.email.inputPlaceholder"),
+        inputPlaceholder: t("auth_card.email.input_placeholder"),
         inputType: "email",
       },
       {
-        labelText: t("auth_card.password.passwordLabel"),
+        labelText: t("auth_card.password.password_label"),
         inputName: "password",
-        inputPlaceholder: t("auth_card.password.inputPlaceholder"),
+        inputPlaceholder: t("auth_card.password.input_placeholder"),
         inputType: "password",
       },
     ],
@@ -50,8 +50,8 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
             return;
           }
           toast({
-            title: t("formError.title"),
-            description: t(`formError.${errorType.error}`)
+            title: t("auth:form_error.title"),
+            description: t(`auth:form_error.${errorType.error}`)
           })
         });
       }
@@ -82,9 +82,11 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
       insertUser(response.user);
     } catch (error) {
       toast({
-        title: t("formError.title"),
-        description: t("formError.default")
+        title: t("auth:form_error.title"),
+        description: t("auth:form_error.default"),
+        variant: "destructive"
       })
+      console.log(error)
     }
   };
 
@@ -105,10 +107,10 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           />
           <div className="hidden lg:flex flex-col gap-3 absolute bottom-10 left-10">
             <p className=" text-white text-lg font-bold">
-              {t("auth_card.testimonialComment")}
+              {t("auth_card.testimonial_comment")}
             </p>
             <span className="text-white font-semibold">
-              {t("auth_card.testimonialAuthor")}
+              {t("auth_card.testimonial_author")}
             </span>
           </div>
         </div>
@@ -116,16 +118,16 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
 
       <div className="flex flex-col gap-5 w-full lg:w-1/2 relative">
         <div className="max-w-xl m-auto">
-          <Form
+          <AuthForm
             formObject={formObject}
             onSubmitEvent={handleSubmit}
             cardData={{
               title: isLoginPage()
-                ? t("auth_card.loginTitle")
-                : t("auth_card.signinTitle"),
+                ? t("auth_card.login_title")
+                : t("auth_card.signin_title"),
               description: isLoginPage()
-                ? t("auth_card.loginDescription")
-                : t("auth_card.signinDescription"),
+                ? t("auth_card.login_description")
+                : t("auth_card.signin_description"),
             }}
             isLogin={isLoginPage}
           />
@@ -137,7 +139,7 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
               variant={"ghost"}
               className="lg:absolute right-10 top-5"
             >
-              {t("page.signinCtaText")}
+              {t("page.signin_cta_text")}
             </ButtonShad>
           </Link>
         ) : (
@@ -146,7 +148,7 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
               variant={"ghost"}
               className="lg:absolute right-10 top-5"
             >
-              {t("page.loginCtaText")}
+              {t("page.login_cta_text")}
             </ButtonShad>
           </Link>
         )}
