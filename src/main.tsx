@@ -12,12 +12,15 @@ import settings_en from "./locales/en/settings.json";
 import settings_fr from "./locales/fr/settings.json";
 import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { usePreferencesStore } from "./store/preferences.store.ts";
+
+const preferencesStore = usePreferencesStore.getState();
+const storedLang = preferencesStore.language;
 
 const queryClient = new QueryClient();
-
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: "fr",
+  lng: storedLang || "fr",
   fallbackLng: "en",
   resources: {
     fr: {

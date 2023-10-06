@@ -26,6 +26,22 @@
    "input_placeholder": "Jake33_"
   }
  },
+ "account": {
+  "title": "Compte",
+  "description": "Mettez à jour les paramètres de votre compte. Définissez votre langue préférée.",
+  "email": {
+   "email_label": "Adresse email",
+   "email_description": "Vous pouvez mettre à jour votre adresse e-mail ci-dessous. Assurez-vous de vérifier votre adresse e-mail pour recevoir nos notifications.",
+   "input_placeholder": "monemail@gmail.com"
+  },
+  "language": {
+   "language_label": "Langues",
+   "language_description": "Il s'agit de la langue qui sera utilisée dans le tableau de bord.",
+   "language_select": "Selectionner une langue",
+   "language_english": "Anglais",
+   "language_french": "Français"
+  }
+ },
  "utils": {
   "update_button": "Modifier",
   "profile_update": {

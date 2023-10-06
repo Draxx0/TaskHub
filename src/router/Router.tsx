@@ -7,6 +7,7 @@ import AlreadyLogProtect from "./AlreadyLogProtect";
 import Auth from "@/pages/auth/Auth";
 import Settings from "@/pages/settings/Settings";
 import Profile from "@/pages/settings/Profile";
+import Account from "@/pages/settings/Account";
 
 export const Router = () => {
   return (
@@ -22,7 +23,7 @@ export const Router = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/settings/profile" element={<Settings><Profile /></Settings>} />
-        <Route path="/settings/account" element={<Settings><>ACCOUNT</></Settings>} />
+        <Route path="/settings/account" element={<Settings><Account /></Settings>} />
       </Route>
       {/*---------- Protected Routes ----------*/}
       <Route path="*" element={<NotFoundPage />} />

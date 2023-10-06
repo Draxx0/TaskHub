@@ -7,9 +7,10 @@ type Props = {
  formObject: FormObject;
  onSubmitEvent: (event: React.FormEvent<HTMLFormElement>) => void;
  t: TFunction<"settings", undefined>;
+ children?: React.ReactElement;
 }
 
-const SettingsForm = ({ formObject, onSubmitEvent, t }: Props) => {
+const SettingsForm = ({ formObject, onSubmitEvent, t, children }: Props) => {
  return (
   <div className="flex flex-col gap-6">
    <form onSubmit={onSubmitEvent} className="space-y-4">
@@ -24,6 +25,8 @@ const SettingsForm = ({ formObject, onSubmitEvent, t }: Props) => {
       inputDefaultValue={object.inputDefaultValue || ""}
      />
     ))}
+
+    {children}
 
     <ButtonShad variant={"outline"} type="submit">
      {t("utils.update_button")}

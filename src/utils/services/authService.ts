@@ -1,9 +1,10 @@
 import {
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../service/firebase.config";
-import { updateUserProfile } from "../functions/updateUserProfile";
+import { updateUserProfile } from "../../service/functions/updateUserProfile";
 import { firebaseSet } from "@/service/firebaseSet";
 
 const authenticate = async (
@@ -19,11 +20,13 @@ const authenticate = async (
     data.email,
     data.password
   );
+
   await updateUserProfile({
     params: {
       photoURL: data.profile,
     },
   });
+
   await firebaseSet.docInCollection<{
     displayName: string | null;
     email: string | null;
@@ -39,6 +42,9 @@ const authenticate = async (
       lastLogin: userCreated.user.metadata.lastSignInTime || "",
     },
   });
+
+  await sendEmailVerification(userCreated.user);
+
   return userCreated;
 };
 

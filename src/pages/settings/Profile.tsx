@@ -4,7 +4,7 @@ import TabHeader from "@/components/settings/TabHeader";
 import { useToast } from "@/components/ui/use-toast";
 import { firebaseUpdate } from "@/service/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";
-import { updateUserProfile } from "@/utils/functions/updateUserProfile";
+import { updateUserProfile } from "@/service/functions/updateUserProfile";
 import { FormObject } from "@/utils/types/form";
 import { useTranslation } from "react-i18next";
 
