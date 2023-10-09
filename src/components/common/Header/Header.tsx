@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import NavigationList from "./NavigationList";
+import { Separator } from "@/components/ui/separator";
 
 const Header = () => {
   return (
@@ -27,6 +28,8 @@ const Header = () => {
           </div>
 
           <NavigationList />
+
+          <Separator />
         </div>
       </div>
 

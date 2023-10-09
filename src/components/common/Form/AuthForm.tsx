@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { FormObject } from "@/utils/types/form";
 import { Button as ButtonShad } from "@/components/ui/button";
-import FormGroup from "./FormGroup";
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { AVATARS } from "@/data/Avatar";
+import FormGroup from "./FormGroup";
 import AvatarSelection from "./AvatarSelection";
-import { avatars as dataAvatars } from "@/data/Avatar";
 
 type Props = {
   formObject: FormObject;
@@ -19,7 +19,7 @@ type Props = {
 
 const AuthForm = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
   const { t } = useTranslation(["auth"]);
-  const avatars = dataAvatars;
+  const avatars = AVATARS;
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center space-y-3">

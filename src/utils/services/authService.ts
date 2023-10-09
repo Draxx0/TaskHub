@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../service/firebase.config";
 import { updateUserProfile } from "../../service/functions/updateUserProfile";
-import { firebaseSet } from "@/service/firebaseSet";
+import { firebaseCreate } from "@/service/firebaseCreate";
 
 const authenticate = async (
   type: "signup" | "login",
@@ -27,14 +27,16 @@ const authenticate = async (
     },
   });
 
-  await firebaseSet.docInCollection<{
+  await firebaseCreate.setDocInCollection<{
     displayName: string | null;
     email: string | null;
     photoURL: string | null;
     lastLogin?: string;
   }>({
-    collection: "users",
-    userUid: userCreated.user.uid,
+    docReference: {
+      path: "users",
+      pathSegments: [userCreated.user.uid],
+    },
     data: {
       displayName: userCreated.user.displayName || "",
       email: userCreated.user.email || "",

@@ -9,6 +9,7 @@ export interface FormObject {
     inputPlaceholder: string;
     inputDescription?: string;
     inputDefaultValue?: string;
+    isTextarea?: boolean;
   }[];
 }
 

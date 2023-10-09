@@ -2,5 +2,19 @@
   "header": {
     "title": "Mes ateliers",
     "description": ""
+  },
+  "create": {
+    "title": "Créer un atelier",
+    "description": "Vous êtes sur le points de créer un atelier, vous pourrez créer plusieurs tableaux dans celui-ci et y inviter vos collaborateurs.",
+    "workshop_title": "Nom de l'atelier",
+    "workshop_title_placeholder": "Agence-TaskHub",
+    "workshop_description": "Description de l'atelier",
+    "workshop_description_placeholder": "L'atelier ou vous retrouverez tout les projets de l'entreprise TaskHub afin de mener à bien chaque nouvelles aventures !"
+  },
+  "toast": {
+    "success": {
+      "title": "L'atelier a bien été crée",
+      "description": "Votre atelier a bien été créé, vous pouvez désormais vous rendre sur votre atelier pour ajouter de nouveaux tableaux de travail."
+    }
   }
 }

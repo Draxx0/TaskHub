@@ -1,5 +1,5 @@
-import { LogOut, Mail, MessageSquare, PlusCircle, Settings, User, UserPlus, Users } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { LogOut, Settings, User } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -20,14 +20,14 @@ const UserMenuDropdown = ({ photoURL, logout }: { photoURL: string; logout: () =
        <span>Profile</span>
       </DropdownMenuItem>
      </Link>
-     <DropdownMenuItem>
-      <Link to="/settings/account">
+     <Link to="/settings/account">
+      <DropdownMenuItem>
        <Settings className="mr-2 h-4 w-4" />
        <span>Settings</span>
-      </Link>
-     </DropdownMenuItem>
+      </DropdownMenuItem>
+     </Link>
     </DropdownMenuGroup>
-    <DropdownMenuSeparator />
+    {/* <DropdownMenuSeparator />
     <DropdownMenuGroup>
      <DropdownMenuItem>
       <Users className="mr-2 h-4 w-4" />
@@ -56,7 +56,7 @@ const UserMenuDropdown = ({ photoURL, logout }: { photoURL: string; logout: () =
        </DropdownMenuSubContent>
       </DropdownMenuPortal>
      </DropdownMenuSub>
-    </DropdownMenuGroup>
+    </DropdownMenuGroup> */}
     <DropdownMenuSeparator />
     <DropdownMenuItem onClick={logout}>
      <LogOut className="mr-2 h-4 w-4" />

@@ -7,6 +7,10 @@
       "path": "/workshops"
     }
   ],
+  "modal": {
+    "continue": "Continue",
+    "cancel": "Cancel"
+  },
   "errors": {
     "global_title": "Error",
     "global_description": "Oh no something went wrong !"

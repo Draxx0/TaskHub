@@ -1,6 +1,6 @@
 import { IAvatar } from "@/utils/types/user";
 
-export const avatars: IAvatar[] = [
+export const AVATARS: IAvatar[] = [
   {
     avatar_name: "Adeline",
     url: "https://cdn.discordapp.com/attachments/1159550956845932616/1159551099490025663/p_1.png?ex=65316f1d&is=651efa1d&hm=1810552d6c8c580dc4ca8ceb13d2dd5bda52fcf0aaa6b698da70b9b1206ab9fa&",

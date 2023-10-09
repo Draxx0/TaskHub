@@ -1,10 +1,10 @@
 import { doc, collection, getDocs, getDoc } from "firebase/firestore";
 import { db } from "./firebase.config";
-import { getFirebaseCollection, getFirebaseDoc } from "../utils/types/firebase";
+import { FirebaseCollection, FirebaseDoc } from "../utils/types/firebase";
 
 const getFirebaseDoc = async <T>({
   docReference,
-}: getFirebaseDoc): Promise<T | undefined> => {
+}: FirebaseDoc): Promise<T | undefined> => {
   const docRef = doc(
     db,
     docReference.path,
@@ -23,7 +23,7 @@ const getFirebaseDoc = async <T>({
 
 const getFirebaseCollection = async <T>({
   params,
-}: getFirebaseCollection): Promise<T[] | undefined> => {
+}: FirebaseCollection): Promise<T[] | undefined> => {
   const collectionRef = collection(db, params.path);
 
   try {
@@ -43,9 +43,7 @@ const getFirebaseCollection = async <T>({
   }
 };
 
-const firebaseService = {
+export const firebaseGet = {
   getFirebaseDoc,
   getFirebaseCollection,
 };
-
-export default firebaseService;

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Header from "@/components/common/Header/Header";
+import Header from "@/components/common/header/Header";
 import UserBadgeDisplay from "@/components/user/UserBadgeDisplay";
 import { Toaster } from "@/components/ui/toaster";
 import { Input } from "@/components/ui/input";

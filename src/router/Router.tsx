@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
-import Workshops from "@/pages/Workshops";
+import Workshops from "@/pages/workshops/Workshops";
 import NotFoundPage from "@/pages/NotFoundPage";
 import AlreadyLogProtect from "./AlreadyLogProtect";
 import Auth from "@/pages/auth/Auth";

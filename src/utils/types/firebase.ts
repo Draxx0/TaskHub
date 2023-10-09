@@ -1,11 +1,15 @@
-export interface getFirebaseDoc {
+export interface FirebaseDoc {
   docReference: {
     path: string;
     pathSegments?: string[];
   };
 }
 
-export interface getFirebaseCollection {
+export interface FirebaseCreateDoc<T> extends FirebaseDoc {
+  data: T;
+}
+
+export interface FirebaseCollection {
   params: {
     path: string;
   };

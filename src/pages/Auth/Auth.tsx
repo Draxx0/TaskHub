@@ -2,13 +2,13 @@ import { useUserStore } from "../../store/user.store";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FormObject } from "../../utils/types/form";
-import { authSchemas } from "../../components/common/Form/FormSchema";
+import { authSchemas } from "../../components/common/form/FormSchema";
 import { ZodError } from "zod";
 import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslation";
 import authService from "../../utils/services/authService";
 import { Button as ButtonShad } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import AuthForm from "../../components/common/Form/AuthForm";
+import AuthForm from "../../components/common/form/AuthForm";
 
 const Auth = ({ type }: { type: "signin" | "login" }) => {
   const { insertUser } = useUserStore();

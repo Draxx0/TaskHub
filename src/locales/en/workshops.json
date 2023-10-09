@@ -2,5 +2,19 @@
   "header": {
     "title": "My Workshops",
     "description": ""
+  },
+  "create": {
+    "title": "Create a workshop",
+    "description": "You're about to create a workshop, you'll be able to create several tables within it and invite your colleagues to join.",
+    "workshop_title": "Workshop name",
+    "workshop_title_placeholder": "TaskHub-Agency",
+    "workshop_description": "Workshop description",
+    "workshop_description_placeholder": "The workshop where you'll find all the TaskHub company's projects, so you can carry out every new adventure!"
+  },
+  "toast": {
+    "success": {
+      "title": "The workshop has been created",
+      "description": "Your workshop has been created, and you can now go to your workshop to add new work tables."
+    }
   }
 }

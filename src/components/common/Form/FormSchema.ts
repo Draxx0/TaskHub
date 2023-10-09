@@ -20,17 +20,27 @@ const accountFormSchema = z.object({
   language: z.string().optional(),
 });
 
+const createWorkshopFormSchema = z.object({
+  workshopTitle: z.string().min(4),
+  workshopDescription: z.string().min(30),
+});
+
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;
 export type authLoginFormObject = z.infer<typeof authLoginFormSchema>;
 export type profileFormObject = z.infer<typeof profileFormSchema>;
 export type accountFormObject = z.infer<typeof accountFormSchema>;
+export type createWorkshopFormObject = z.infer<typeof createWorkshopFormSchema>;
 
 export const authSchemas = {
   authSigninFormSchema,
   authLoginFormSchema,
 };
 
-export const settingsSchema = {
+export const settingsSchemas = {
   profileFormSchema,
   accountFormSchema,
+};
+
+export const workshopSchemas = {
+  createWorkshopFormSchema,
 };

@@ -1,5 +1,5 @@
-import { settingsSchema } from "@/components/common/Form/FormSchema";
-import SettingsForm from "@/components/common/Form/SettingsForm";
+import { settingsSchemas } from "@/components/common/form/FormSchema";
+import SettingsForm from "@/components/common/form/SettingsForm";
 import TabHeader from "@/components/settings/TabHeader";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
@@ -50,13 +50,13 @@ const Account = () => {
    //! IT SHOULD BE REVIEW
    if (language && email === currentEmail) {
     // IF ONLY LANGUAGE HAVE BEEN CHANGED
-    settingsSchema.accountFormSchema.parse({ language })
+    settingsSchemas.accountFormSchema.parse({ language })
    } else if (email !== currentEmail && !language) {
     // IF ONLY EMAIL HAVE BEEN CHANGED
-    settingsSchema.accountFormSchema.parse({ email })
+    settingsSchemas.accountFormSchema.parse({ email })
    } else if (language && email !== currentEmail) {
     // IF LANGUAGE & EMAIL CHANGED 
-    settingsSchema.accountFormSchema.parse({ email, language })
+    settingsSchemas.accountFormSchema.parse({ email, language })
    }
    return true
   } catch (error) {
@@ -75,7 +75,11 @@ const Account = () => {
   const email = String(form.get("email"));
   const language = String(form.get("language"));
 
-  formValidation(email, language)
+  const isFormValid = formValidation(email, language)
+
+  if (!isFormValid) {
+   throw new Error("Form is invalid")
+  }
 
   try {
    //UPDATE ACCOUNT

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
-import { authSchemas } from "./Form/FormSchema";
+import { authSchemas } from "./form/FormSchema";
 import { reauthenticateUser } from "@/service/functions/reauthenticateUser";
 import { updateUserEmail } from "@/service/functions/updateUserEmail";
 import { firebaseUpdate } from "@/service/firebaseUpdate";

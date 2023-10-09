@@ -1,5 +1,5 @@
-import { settingsSchema } from "@/components/common/Form/FormSchema";
-import SettingsForm from "@/components/common/Form/SettingsForm";
+import { settingsSchemas } from "@/components/common/form/FormSchema";
+import SettingsForm from "@/components/common/form/SettingsForm";
 import TabHeader from "@/components/settings/TabHeader";
 import { useToast } from "@/components/ui/use-toast";
 import { firebaseUpdate } from "@/service/firebaseUpdate";
@@ -30,7 +30,7 @@ const Profile = () => {
 
  const formValidation = (username: string): boolean => {
   if (username) {
-   settingsSchema.profileFormSchema.parse({ username })
+   settingsSchemas.profileFormSchema.parse({ username })
    return true
   }
   return false

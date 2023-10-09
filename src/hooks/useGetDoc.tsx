@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import firebaseService from "../service/firebase.service";
+import { firebaseGet } from "../service/firebaseGet";
 import { useUserStore } from "../store/user.store";
 
 type Props = {
@@ -22,7 +22,7 @@ function useGetDoc<T>({
   const query = useQuery(
     ["doc", path, pathSegments],
     async () => {
-      const data = await firebaseService.getFirebaseDoc<T>({
+      const data = await firebaseGet.getFirebaseDoc<T>({
         docReference: {
           path,
           pathSegments,

@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import firebaseService from "../service/firebase.service";
+import { firebaseGet } from "../service/firebaseGet";
 import { useUserStore } from "../store/user.store";
 
 type Props = {
@@ -20,7 +20,7 @@ function useGetCollection<T>({
   const query = useQuery(
     ["collection", path],
     async () => {
-      const data = await firebaseService.getFirebaseCollection<T[]>({
+      const data = await firebaseGet.getFirebaseCollection<T[]>({
         params: {
           path,
         },
