@@ -1,4 +1,11 @@
-import { doc, collection, getDocs, getDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getDocs,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "./firebase.config";
 import { FirebaseCollection, FirebaseDoc } from "../utils/types/firebase";
 
@@ -23,11 +30,23 @@ const getFirebaseDoc = async <T>({
 
 const getFirebaseCollection = async <T>({
   params,
+  condition,
 }: FirebaseCollection): Promise<T[] | undefined> => {
   const collectionRef = collection(db, params.path);
 
+  const q = condition
+    ? query(
+        collectionRef,
+        where(
+          condition.leftConditon,
+          condition.operator,
+          condition.rightCondition
+        )
+      )
+    : null;
+
   try {
-    const collectionSnap = await getDocs(collectionRef).then(
+    const collectionSnap = await getDocs(q ?? collectionRef).then(
       (querySnapshot) => {
         const state: Array<T> = [];
         querySnapshot.forEach((doc) => {

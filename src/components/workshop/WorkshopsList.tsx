@@ -3,10 +3,17 @@ import SkeletonCard from "@/components/common/loader/SkeletonCard";
 import useGetCollection from "@/hooks/useGetCollection";
 import { Workshop } from "@/utils/types/workshop";
 import WorkshopsItem from "./WorkshopsItem";
+import { useUserStore } from "@/store/user.store";
 
 const WorkshopsList = () => {
+ const { user } = useUserStore();
  const { data: workshops, isLoading, isError } = useGetCollection<Workshop>({
   path: "workshops",
+  condition: {
+   leftConditon: "owner.id",
+   operator: "==",
+   rightCondition: user ? user.uid : ""
+  }
  })
 
  return (

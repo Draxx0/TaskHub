@@ -6,6 +6,7 @@ export interface IAvatar {
 }
 
 export interface FirestoreUser {
+  id: string;
   displayName: string;
   email: string;
   lastLogin: string;

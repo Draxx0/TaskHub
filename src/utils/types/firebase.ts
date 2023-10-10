@@ -1,3 +1,5 @@
+import { WhereFilterOp } from "firebase/firestore";
+
 export interface FirebaseDoc {
   docReference: {
     path: string;
@@ -13,4 +15,11 @@ export interface FirebaseCollection {
   params: {
     path: string;
   };
+  condition?: GetCollectionCondition;
+}
+
+export interface GetCollectionCondition {
+  leftConditon: string;
+  operator: WhereFilterOp;
+  rightCondition: string | boolean;
 }

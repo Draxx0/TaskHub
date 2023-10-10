@@ -28,6 +28,7 @@ const authenticate = async (
   });
 
   await firebaseCreate.setDocInCollection<{
+    id: string | null;
     displayName: string | null;
     email: string | null;
     photoURL: string | null;
@@ -38,6 +39,7 @@ const authenticate = async (
       pathSegments: [userCreated.user.uid],
     },
     data: {
+      id: userCreated.user.uid,
       displayName: userCreated.user.displayName || "",
       email: userCreated.user.email || "",
       photoURL: userCreated.user.photoURL || "",
