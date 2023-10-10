@@ -4,8 +4,9 @@ import WorkshopsList from "./WorkshopsList";
 
 const Workshops = () => {
   const { t } = useTranslation(["workshops"]);
+
   return (
-    <section>
+    <section className="space-y-10">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <h1 className="text-secondary-500 font-bold text-3xl">

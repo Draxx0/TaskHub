@@ -6,6 +6,8 @@ import { firebaseCreate } from "@/service/firebaseCreate";
 import { Workshop } from "@/utils/types/workshop";
 import { useUserStore } from "@/store/user.store";
 import { FormObject } from "@/utils/types/form";
+import { queryClient } from "@/main";
+import { getCurrentUserDoc } from "@/service/functions/getCurrentUserDoc";
 
 const WorkshopCreate = () => {
  const { toast } = useToast();
@@ -67,15 +69,22 @@ const WorkshopCreate = () => {
 
   try {
    if (user) {
-    await firebaseCreate.addDocInCollection<Workshop>({
-     docReference: {
-      path: "workshops"
-     },
-     data: {
-      name: workshopTitle,
-      description: workshopDescription,
-      owner: user.uid
-     }
+    const owner = await getCurrentUserDoc(user.uid)
+    if (owner) {
+     await firebaseCreate.addDocInCollection<Omit<Workshop, "id">>({
+      docReference: {
+       path: "workshops"
+      },
+      data: {
+       name: workshopTitle,
+       description: workshopDescription,
+       owner
+      }
+     })
+    }
+    await queryClient.invalidateQueries({
+     queryKey: ["collection", "workshops"],
+     exact: true,
     })
     toast({
      title: t("toast.success.title"),

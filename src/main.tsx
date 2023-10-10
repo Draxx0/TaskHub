@@ -17,7 +17,8 @@ import { usePreferencesStore } from "./store/preferences.store.ts";
 const preferencesStore = usePreferencesStore.getState();
 const storedLang = preferencesStore.language;
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
+
 i18next.init({
   interpolation: { escapeValue: false },
   lng: storedLang || "fr",

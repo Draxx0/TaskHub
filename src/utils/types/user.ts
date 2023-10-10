@@ -4,3 +4,10 @@ export interface IAvatar {
   fallback: string;
   width: "w-4" | "w-8" | "w-12";
 }
+
+export interface FirestoreUser {
+  displayName: string;
+  email: string;
+  lastLogin: string;
+  photoURL: string;
+}

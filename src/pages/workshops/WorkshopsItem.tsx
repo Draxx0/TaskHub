@@ -1,11 +1,12 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Workshop } from "@/utils/types/workshop";
 
-const WorkshopsItem = () => {
+const WorkshopsItem = ({ workshop }: { workshop: Workshop }) => {
  return (
   <Card>
    <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardTitle>{workshop.name}</CardTitle>
+    <CardDescription className="truncate">{workshop.description}</CardDescription>
    </CardHeader>
    <CardContent>
     <p>Card Content</p>
