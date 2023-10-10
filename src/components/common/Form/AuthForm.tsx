@@ -95,7 +95,7 @@ const AuthForm = ({ formObject, onSubmitEvent, cardData, isLogin }: Props) => {
       </div>
 
       <p className="text-center text-sm opacity-75">
-        {t("agreeConditionText")}
+        {t("agree_condition_text")}
       </p>
     </div>
   );
