@@ -9,6 +9,7 @@ import authService from "../../utils/services/authService";
 import { Button as ButtonShad } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import AuthForm from "../../components/common/form/AuthForm";
+import Back from "@/components/common/Back";
 
 const Auth = ({ type }: { type: "signin" | "login" }) => {
   const { insertUser } = useUserStore();
@@ -153,18 +154,7 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           </Link>
         )}
 
-        <Link className="text-center" to="/">
-          <ButtonShad
-            asChild
-            variant={"ghost"}
-            className=" lg:absolute left-10 bottom-5"
-          >
-            <div className="flex items-center gap-3">
-              <img src="../assets/icons/back.svg" alt="" className="w-5" />
-              <p>{t("global:back")}</p>
-            </div>
-          </ButtonShad>
-        </Link>
+        <Back url="/" variant="ghost" className="lg:absolute left-10 bottom-5" translate={t("global:back")} />
       </div>
     </div>
   );

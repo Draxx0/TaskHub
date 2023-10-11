@@ -1,4 +1,9 @@
-import { WhereFilterOp } from "firebase/firestore";
+import {
+  DocumentData,
+  DocumentReference,
+  WhereFilterOp,
+} from "firebase/firestore";
+import { FirestoreUser } from "./user";
 
 export interface FirebaseDoc {
   docReference: {
@@ -19,7 +24,11 @@ export interface FirebaseCollection {
 }
 
 export interface GetCollectionCondition {
-  leftConditon: string;
+  leftConditon: string | FirestoreUser;
   operator: WhereFilterOp;
-  rightCondition: string | boolean;
+  rightCondition:
+    | DocumentReference<DocumentData, DocumentData>
+    | string
+    | boolean
+    | undefined;
 }

@@ -1,8 +1,7 @@
-import { FirestoreUser } from "@/utils/types/user";
 import { firebaseGet } from "../firebaseGet";
 
-export const getCurrentUserDoc = async (userId: string) => {
-  return await firebaseGet.getFirebaseDoc<FirestoreUser>({
+export const getCurrentUserDoc = async <T>(userId: string) => {
+  return await firebaseGet.getFirebaseDoc<T>({
     docReference: {
       path: "users",
       pathSegments: [userId],

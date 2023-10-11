@@ -33,6 +33,7 @@ function useGetDoc<T>({
     {
       staleTime: staleTime ?? Infinity,
       enabled: enabled ?? !!user,
+      refetchOnWindowFocus: false
     }
   );
 

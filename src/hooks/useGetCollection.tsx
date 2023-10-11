@@ -34,6 +34,7 @@ function useGetCollection<T>({
     {
       staleTime: staleTime ?? Infinity,
       enabled: enabled ?? !!user,
+      refetchOnWindowFocus: false
     }
   );
 
