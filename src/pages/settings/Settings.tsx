@@ -1,13 +1,15 @@
 import { Separator } from "@/components/ui/separator";
 import Tabs from "../../components/settings/SidebarNav";
+import { useTranslation } from "react-i18next";
 
 const Settings = ({ children }: { children: React.ReactElement }) => {
+ const { t } = useTranslation("settings");
  return (
   <section>
    <div className="space-y-6">
     <div>
-     <h1 className="text-2xl font-bold">Settings</h1>
-     <p className="opacity-75">Manage your account settings</p>
+     <h1 className="text-2xl font-bold">{t("page.title")}</h1>
+     <p className="opacity-75">{t("page.description")}</p>
     </div>
     <Separator />
 

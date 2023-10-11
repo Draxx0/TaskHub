@@ -7,7 +7,7 @@ import { useUserStore } from "@/store/user.store";
 import { FormObject } from "@/utils/types/form";
 import { ILanguage, Language } from "@/utils/types/language";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ReauthenticateModal from "@/components/common/ReauthenticateModal";
 import { usePreferencesStore } from "@/store/preferences.store";
 
@@ -18,6 +18,11 @@ const Account = () => {
  const { toast } = useToast();
  const [newEmail, setNewEmail] = useState<string | null>(null);
  const [isModalOpen, setIsModalOpen] = useState(false)
+ const preferencesStore = usePreferencesStore.getState();
+
+ const storedLang = useMemo(() => {
+  return preferencesStore.language;
+ }, [preferencesStore.language])
 
  const languages: ILanguage[] = [
   {
@@ -114,7 +119,7 @@ const Account = () => {
    <SettingsForm onSubmitEvent={handleSubmit} formObject={formObject} t={t}>
     <div className="flex flex-col gap-2">
      <label htmlFor="language">{t("account.language.language_label")}</label>
-     <Select name="language">
+     <Select name="language" defaultValue={storedLang as string}>
       <SelectTrigger className="w-full" id="language">
        <SelectValue placeholder={t("account.language.language_select")} />
       </SelectTrigger>
