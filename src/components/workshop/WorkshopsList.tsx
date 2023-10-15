@@ -15,7 +15,6 @@ const WorkshopsList = () => {
  const fetchCurrentUserRef = useCallback(async () => {
   if (user) {
    const currentUser = await getCurrentUserDoc<DocumentReference>(user.uid);
-   console.log("CURRENT USER HERE BRO", currentUser)
    setCurrentUserRef(currentUser);
   }
  }, [user])
