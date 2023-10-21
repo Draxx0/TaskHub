@@ -26,11 +26,17 @@ const createWorkshopFormSchema = z.object({
   workshopImageBackground: z.string(),
 });
 
+const createBoardFormSchema = z.object({
+  boardTitle: z.string().min(4),
+  boardDescription: z.string().min(30),
+});
+
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;
 export type authLoginFormObject = z.infer<typeof authLoginFormSchema>;
 export type profileFormObject = z.infer<typeof profileFormSchema>;
 export type accountFormObject = z.infer<typeof accountFormSchema>;
 export type createWorkshopFormObject = z.infer<typeof createWorkshopFormSchema>;
+export type createBoardFormObject = z.infer<typeof createBoardFormSchema>;
 
 export const authSchemas = {
   authSigninFormSchema,
@@ -44,4 +50,8 @@ export const settingsSchemas = {
 
 export const workshopSchemas = {
   createWorkshopFormSchema,
+};
+
+export const boardSchemas = {
+  createBoardFormSchema,
 };

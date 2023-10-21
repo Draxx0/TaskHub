@@ -9,7 +9,8 @@
   ],
   "modal": {
     "continue": "Continuer",
-    "cancel": "Retour"
+    "cancel": "Retour",
+    "submit": "Soumettre"
   },
   "errors": {
     "global_title": "Erreur",

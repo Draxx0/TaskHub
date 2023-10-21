@@ -1,0 +1,17 @@
+{
+  "create": {
+    "title": "Créer un tableau",
+    "description": "Vous êtes sur le points de créer un tableau, vous pourrez créer plusieurs listes qui contiendront chacune des tâches que vous déciderez !",
+    "board_title": "Nom du tableau",
+    "board_title_placeholder": "Projet Client #1",
+    "board_description": "Description du tableau",
+    "board_description_placeholder": "Tableau de gestion des tâches pour notre client X"
+  },
+ "toast": {
+    "success": {
+      "title": "Le tableau a bien été crée",
+      "description": "Votre Tableau a bien été créé, vous pouvez désormais vous y rendre et commencer à manager vos tâches !"
+    }
+  },
+  "back": "Revenir à"
+}

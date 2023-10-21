@@ -1,0 +1,17 @@
+{
+  "create": {
+    "title": "Create a board",
+    "description": "You're about to create a board, you'll be able to create several lists containing each of the tasks you decide on!",
+    "board_title": "Board name",
+    "board_title_placeholder": "Customer project #1",
+    "board_description": "Board description",
+    "board_description_placeholder": "Task management board for our customer X"
+  },
+ "toast": {
+    "success": {
+      "title": "The board has been created",
+      "description": "Your board has been created, and you can now go there and start managing your tasks!"
+    }
+  },
+  "back": "Back to"
+}

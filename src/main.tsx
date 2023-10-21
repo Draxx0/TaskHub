@@ -10,8 +10,8 @@ import workshops_en from "./locales/en/workshops.json";
 import workshops_fr from "./locales/fr/workshops.json";
 import settings_en from "./locales/en/settings.json";
 import settings_fr from "./locales/fr/settings.json";
-import workshop_en from "./locales/en/workshop.json";
-import workshop_fr from "./locales/fr/workshop.json";
+import boards_en from "./locales/en/boards.json";
+import boards_fr from "./locales/fr/boards.json";
 import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePreferencesStore } from "./store/preferences.store.ts";
@@ -30,14 +30,14 @@ i18next.init({
       global: global_fr,
       auth: auth_fr,
       workshops: workshops_fr,
-      workshop: workshop_fr,
+      boards: boards_fr,
       settings: settings_fr
     },
     en: {
       global: global_en,
       auth: auth_en,
       workshops: workshops_en,
-      workshop: workshop_en,
+      boards: boards_en,
       settings: settings_en
     },
   },

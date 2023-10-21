@@ -21,5 +21,6 @@
       "title": "The workshop has been created",
       "description": "Your workshop has been created, and you can now go to your workshop to add new work tables."
     }
-  }
+  },
+  "back": "Back to Workshops" 
 }

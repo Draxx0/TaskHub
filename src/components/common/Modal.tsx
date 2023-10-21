@@ -8,30 +8,35 @@ import { AlertDialogAction, AlertDialogCancel } from "@radix-ui/react-alert-dial
 type Props = {
  formData: FormObject
  onSubmitEvent: (event: React.FormEvent<HTMLFormElement>) => void;
+ dynamicTranslation: {
+  title: string;
+  description: string;
+  buttonText: string;
+ }
 }
 
-const Modal = ({ formData, onSubmitEvent }: Props) => {
- const { t } = useTranslation(["workshops", "global"])
+const Modal = ({ formData, onSubmitEvent, dynamicTranslation }: Props) => {
+ const { t } = useTranslation(["global"])
  return (
   <AlertDialog>
    <AlertDialogTrigger asChild>
-    <Button>{t("create.title")}</Button>
+    <Button>{dynamicTranslation.buttonText}</Button>
    </AlertDialogTrigger>
    <AlertDialogContent>
     <AlertDialogHeader>
-     <AlertDialogTitle>{t("create.title")}</AlertDialogTitle>
+     <AlertDialogTitle>{dynamicTranslation.title}</AlertDialogTitle>
      <AlertDialogDescription>
-      {t("create.description")}
+      {dynamicTranslation.description}
      </AlertDialogDescription>
     </AlertDialogHeader>
     <DefaultForm onSubmitEvent={onSubmitEvent} formObject={formData} hasSubmitButton={false}>
      <div>
       <AlertDialogFooter className="mt-4">
        <Button asChild variant={"outline"}>
-        <AlertDialogCancel>{t("global:modal.cancel")}</AlertDialogCancel>
+        <AlertDialogCancel>{t("modal.cancel")}</AlertDialogCancel>
        </Button>
        <Button type="submit" asChild>
-        <AlertDialogAction>{t("global:modal.continue")}</AlertDialogAction>
+        <AlertDialogAction>{t("modal.submit")}</AlertDialogAction>
        </Button>
       </AlertDialogFooter>
      </div>

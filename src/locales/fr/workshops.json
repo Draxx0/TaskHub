@@ -21,5 +21,6 @@
       "title": "L'atelier a bien été crée",
       "description": "Votre atelier a bien été créé, vous pouvez désormais vous rendre sur votre atelier pour ajouter de nouveaux tableaux de travail."
     }
-  }
+  },
+  "back": "Revenir aux Ateliers"
 }

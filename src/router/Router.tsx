@@ -9,6 +9,7 @@ import Settings from "@/pages/settings/Settings";
 import Profile from "@/pages/settings/Profile";
 import Account from "@/pages/settings/Account";
 import Workshop from "@/pages/workshops/Workshop";
+import Board from "@/pages/boards/Board";
 
 export const Router = () => {
   return (
@@ -24,6 +25,7 @@ export const Router = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:id" element={<Workshop />} />
+        <Route path="/workshops/:workshopId/boardId/:id" element={<Board />} />
         <Route path="/settings/profile" element={<Settings><Profile /></Settings>} />
         <Route path="/settings/account" element={<Settings><Account /></Settings>} />
       </Route>

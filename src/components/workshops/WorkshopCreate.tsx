@@ -120,7 +120,11 @@ const WorkshopCreate = () => {
   }
  }
 
- return <Modal onSubmitEvent={handleSubmit} formData={formObject} />
+ return <Modal onSubmitEvent={handleSubmit} formData={formObject} dynamicTranslation={{
+  buttonText: t("create.title"),
+  description: t("create.description"),
+  title: t("create.title")
+ }} />
 
 
 }

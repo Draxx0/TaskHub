@@ -1,6 +1,6 @@
-import WorkshopCreate from "@/components/workshop/WorkshopCreate";
+import WorkshopCreate from "@/components/workshops/WorkshopCreate";
 import { useTranslation } from "react-i18next";
-import WorkshopsList from "../../components/workshop/WorkshopsList";
+import WorkshopsList from "../../components/workshops/WorkshopsList";
 import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
 
