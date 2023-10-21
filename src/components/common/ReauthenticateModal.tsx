@@ -3,8 +3,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
 import { authSchemas } from "./form/FormSchema";
-import { reauthenticateUser } from "@/service/functions/reauthenticateUser";
-import { updateUserEmail } from "@/service/functions/updateUserEmail";
+import { reauthenticateUser } from "@/service/auth/reauthenticateUser";
+import { updateUserEmail } from "@/service/auth/updateUserEmail";
 import { firebaseUpdate } from "@/service/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";
 

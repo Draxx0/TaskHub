@@ -22,8 +22,6 @@ export const reauthenticateUser = async (credentials: {
     );
 
     await reauthenticateWithCredential(currentUser, credential);
-
-    console.log("Reauthenticated successfully");
   } catch (error) {
     console.error("Error reauthenticating:", error);
     throw new Error("An error occured");

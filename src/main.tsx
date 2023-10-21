@@ -17,7 +17,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePreferencesStore } from "./store/preferences.store.ts";
 
 const preferencesStore = usePreferencesStore.getState();
-const storedLang = preferencesStore.language;
+export const storedLang = preferencesStore.language;
 
 export const queryClient = new QueryClient();
 

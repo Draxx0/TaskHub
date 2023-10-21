@@ -9,7 +9,12 @@
     "workshop_title": "Workshop name",
     "workshop_title_placeholder": "TaskHub-Agency",
     "workshop_description": "Workshop description",
-    "workshop_description_placeholder": "The workshop where you'll find all the TaskHub company's projects, so you can carry out every new adventure!"
+    "workshop_description_placeholder": "The workshop where you'll find all the TaskHub company's projects, so you can carry out every new adventure!",
+    "workshop_image_background": "Cover image"
+  },
+  "workshop_card": {
+    "date": "Create date :",
+    "board": "Board"
   },
   "toast": {
     "success": {

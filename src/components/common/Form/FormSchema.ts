@@ -23,6 +23,7 @@ const accountFormSchema = z.object({
 const createWorkshopFormSchema = z.object({
   workshopTitle: z.string().min(4),
   workshopDescription: z.string().min(30),
+  workshopImageBackground: z.string(),
 });
 
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;

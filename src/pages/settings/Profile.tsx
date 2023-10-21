@@ -4,7 +4,7 @@ import TabHeader from "@/components/settings/TabHeader";
 import { useToast } from "@/components/ui/use-toast";
 import { firebaseUpdate } from "@/service/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";
-import { updateUserProfile } from "@/service/functions/updateUserProfile";
+import { updateUserProfile } from "@/service/auth/updateUserProfile";
 import { FormObject } from "@/utils/types/form";
 import { useTranslation } from "react-i18next";
 
@@ -40,7 +40,6 @@ const Profile = () => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
   const username = String(form.get("username"))
-  console.log("username", username)
 
   const isFormvalid = formValidation(username)
 

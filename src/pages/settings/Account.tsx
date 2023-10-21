@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
 import ReauthenticateModal from "@/components/common/ReauthenticateModal";
 import { usePreferencesStore } from "@/store/preferences.store";
+import { queryClient } from "@/main";
 
 const Account = () => {
  const { user } = useUserStore();
@@ -97,6 +98,13 @@ const Account = () => {
    if (language) {
     i18n.changeLanguage(language)
     changeLanguage(language as Language)
+
+    //! Should check why is refetch does not works when back on /workshops.
+    //? Check with dev mode if there is a cache for collection/workshops.
+    await queryClient.invalidateQueries({
+     queryKey: ["collection", "workshops"],
+     exact: true,
+    })
    }
 
 

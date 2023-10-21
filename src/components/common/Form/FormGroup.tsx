@@ -1,16 +1,8 @@
 import { Textarea } from "@/components/ui/textarea";
-import { InputType } from "../../../utils/types/input";
 import { Input } from "@/components/ui/input";
+import { FormObject } from "@/utils/types/form";
 
-type Props = {
-  labelText: string;
-  inputName: string;
-  inputType: InputType;
-  inputPlaceholder: string;
-  inputDescription?: string;
-  inputDefaultValue?: string;
-  isTextarea?: boolean;
-};
+type Props = Omit<FormObject["formData"][number], "formName">;
 
 const FormGroup = ({
   labelText,

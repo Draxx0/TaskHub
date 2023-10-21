@@ -3,15 +3,18 @@ import { workshopSchemas } from "../common/form/FormSchema";
 import { useToast } from "../ui/use-toast";
 import { useTranslation } from "react-i18next";
 import { firebaseCreate } from "@/service/firebaseCreate";
-import { useUserStore } from "@/store/user.store";
 import { FormObject } from "@/utils/types/form";
 import { queryClient } from "@/main";
-import { getCurrentUserDoc } from "@/service/functions/getCurrentUserDoc";
+import { getCurrentUserDoc } from "@/service/firestore/getCurrentUserDoc";
 import { DocumentReference } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/service/firebase.config";
+import { convertToBlob } from "@/service/utils/convertToBlob";
+import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
+import { WorkshopCreate as IWorkshopCreate } from "@/utils/types/workshop";
 
 const WorkshopCreate = () => {
  const { toast } = useToast();
- const { user } = useUserStore();
  const { t } = useTranslation(["workshops", "global"])
 
  const formObject: FormObject = {
@@ -30,16 +33,22 @@ const WorkshopCreate = () => {
     labelText: t("create.workshop_description"),
     isTextarea: true,
    },
-   //? Select workshop background
+   {
+    inputName: "workshop-background-image",
+    inputPlaceholder: "",
+    inputType: "file",
+    labelText: t("create.workshop_image_background"),
+   },
   ],
  }
 
- const formValidation = (workshopTitle: string, workshopDescription: string): boolean => {
+ const formValidation = (workshopTitle: string, workshopDescription: string, workshopImageBackground: File | null): boolean => {
   try {
-   if (workshopTitle && workshopDescription) {
+   if (workshopTitle && workshopDescription && workshopImageBackground) {
     workshopSchemas.createWorkshopFormSchema.parse({
      workshopTitle,
-     workshopDescription
+     workshopDescription,
+     workshopImageBackground: workshopImageBackground.name
     })
    }
    return true
@@ -58,42 +67,50 @@ const WorkshopCreate = () => {
   const form = new FormData(event.currentTarget);
   const workshopTitle = String(form.get("workshop-name"));
   const workshopDescription = String(form.get("workshop-description"));
+  const workshopImageBackground = convertToBlob(form.get("workshop-background-image") as File);
 
-  console.log(workshopTitle, workshopDescription)
-
-  const isFormValid = formValidation(workshopTitle, workshopDescription);
+  const isFormValid = formValidation(workshopTitle, workshopDescription, workshopImageBackground);
 
   if (!isFormValid) {
    throw new Error("Form is invalid")
   }
 
   try {
-   if (user) {
-    const ownerRef = await getCurrentUserDoc<DocumentReference>(user.uid)
+   onAuthStateChanged(auth, async (user) => {
+    if (user) {
+     const coverImageUrl = await uploadImageInBucket(workshopImageBackground)
+     const ownerRef = await getCurrentUserDoc<DocumentReference>(user.uid)
 
-    firebaseCreate.addDocInCollection({
-     docReference: {
-      path: "workshops"
-     },
-     data: {
-      name: workshopTitle,
-      description: workshopDescription,
-      owner: ownerRef
+     if (coverImageUrl && ownerRef) {
+      firebaseCreate.addDocInCollection<IWorkshopCreate>({
+       docReference: {
+        path: "workshops"
+       },
+       data: {
+        name: workshopTitle,
+        description: workshopDescription,
+        coverUrl: coverImageUrl,
+        owner: ownerRef
+       }
+      })
+     } else {
+      throw new Error("Owner reference not found..")
      }
-    })
 
-    await queryClient.invalidateQueries({
-     queryKey: ["collection", "workshops"],
-     exact: true,
-    })
+     await queryClient.invalidateQueries({
+      queryKey: ["collection", "workshops"],
+      exact: true,
+     })
 
-    toast({
-     title: t("toast.success.title"),
-     description: t("toast.success.description")
-    })
-   } else {
-    throw new Error("User not found");
-   }
+     toast({
+      title: t("toast.success.title"),
+      description: t("toast.success.description")
+     })
+
+    } else {
+     throw new Error("User not connected")
+    }
+   })
   } catch (error) {
    toast({
     title: t("global:errors.global_title"),

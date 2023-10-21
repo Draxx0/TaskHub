@@ -20,7 +20,6 @@ const getFirebaseDoc = async <T>({
 
   try {
     const docSnap = await getDoc(docRef);
-    console.log(docSnap.data());
     const data = docSnap.data() as T;
     return data;
   } catch (error) {
@@ -50,7 +49,6 @@ const getFirebaseCollection = async <T>({
       (querySnapshot) => {
         const state: Array<T> = [];
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
           state.push({ ...doc.data(), id: doc.id } as T);
         });
         return state;

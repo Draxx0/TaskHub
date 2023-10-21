@@ -14,5 +14,8 @@
   "errors": {
     "global_title": "Error",
     "global_description": "Oh no something went wrong !"
+  },
+  "button": {
+    "select": "Select"
   }
 }
