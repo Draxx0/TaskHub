@@ -23,7 +23,7 @@ function useGetDoc<T>({
     ["doc", path, pathSegments],
     async () => {
       const data = await firebaseGet.getFirebaseDoc<T>({
-        docReference: {
+        docReferenceParams: {
           path,
           pathSegments,
         },
@@ -32,8 +32,8 @@ function useGetDoc<T>({
     },
     {
       staleTime: staleTime ?? Infinity,
-      enabled: enabled ?? !!user,
-      refetchOnWindowFocus: false
+      ...(enabled ? { enabled: !!user } : {}),
+      refetchOnWindowFocus: false,
     }
   );
 

@@ -34,7 +34,7 @@ const authenticate = async (
     photoURL: string | null;
     lastLogin?: string;
   }>({
-    docReference: {
+    docReferenceParams: {
       path: "users",
       pathSegments: [userCreated.user.uid],
     },

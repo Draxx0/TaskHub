@@ -5,16 +5,29 @@ import {
 } from "firebase/firestore";
 import { FirestoreUser } from "./user";
 
-export interface FirebaseDoc {
-  docReference: {
+export interface FirebaseDocRef {
+  docReferenceParams: {
     path: string;
     pathSegments?: string[];
   };
 }
 
-export interface FirebaseCreateDoc<T> extends FirebaseDoc {
-  data: T;
+export interface FirebaseGetDoc extends FirebaseDocRef {
+  returnWithId?: boolean;
 }
+
+export interface FirebaseCreateDoc<T> extends FirebaseDocRef {
+  data: T;
+  params?: {
+    returnRef?: boolean;
+  };
+}
+
+export interface FirebaseCreateCollectionInDoc extends FirebaseDocRef {
+  collectionName: string;
+}
+
+export type FirebaseDocData<T> = T & { id: string };
 
 export interface FirebaseCollection {
   params: {
@@ -24,6 +37,7 @@ export interface FirebaseCollection {
 }
 
 export interface GetCollectionCondition {
+  //! leftCondition should be string | FieldPath check later
   leftConditon: string | FirestoreUser;
   operator: WhereFilterOp;
   rightCondition:

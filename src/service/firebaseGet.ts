@@ -7,21 +7,34 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "./firebase.config";
-import { FirebaseCollection, FirebaseDoc } from "../utils/types/firebase";
+import {
+  FirebaseCollection,
+  FirebaseDocData,
+  FirebaseGetDoc,
+} from "../utils/types/firebase";
 
 const getFirebaseDoc = async <T>({
-  docReference,
-}: FirebaseDoc): Promise<T | undefined> => {
+  docReferenceParams,
+  returnWithId,
+}: FirebaseGetDoc): Promise<
+  FirebaseDocData<T> | Omit<FirebaseDocData<T>, "id"> | undefined
+> => {
   const docRef = doc(
     db,
-    docReference.path,
-    ...(docReference.pathSegments ?? [])
+    docReferenceParams.path,
+    ...(docReferenceParams.pathSegments ?? [])
   );
 
   try {
     const docSnap = await getDoc(docRef);
     const data = docSnap.data() as T;
-    return data;
+    if (returnWithId) {
+      return {
+        ...data,
+        id: docSnap.id,
+      } as FirebaseDocData<T>;
+    }
+    return data as Omit<FirebaseDocData<T>, "id">;
   } catch (error) {
     console.log(error);
   }

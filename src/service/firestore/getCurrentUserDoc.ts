@@ -1,9 +1,8 @@
 import { firebaseGet } from "../firebaseGet";
 
-//! Is this real usefull ?
 export const getCurrentUserDoc = async <T>(userId: string) => {
   return await firebaseGet.getFirebaseDoc<T>({
-    docReference: {
+    docReferenceParams: {
       path: "users",
       pathSegments: [userId],
     },
