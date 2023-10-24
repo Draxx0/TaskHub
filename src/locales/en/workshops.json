@@ -13,7 +13,6 @@
     "workshop_image_background": "Cover image"
   },
   "workshop_card": {
-    "date": "Create date :",
     "board": "Board"
   },
   "toast": {
@@ -22,5 +21,5 @@
       "description": "Your workshop has been created, and you can now go to your workshop to add new work tables."
     }
   },
-  "back": "Back to Workshops" 
+  "back": "Back to Workshops"
 }
