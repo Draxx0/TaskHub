@@ -20,7 +20,11 @@ function useGetCollection<T, K = unknown>({
   const { staleTime, enabled } = queryOptions || {};
 
   const query = useQuery(
-    ["collection", docReference.path, docReference.pathSegments],
+    [
+      "collection",
+      docReference.path,
+      ...(docReference.pathSegments ? docReference.pathSegments : []),
+    ],
     async () => {
       const data = await firebaseGet.getFirebaseCollection<T[]>({
         docReference: {
