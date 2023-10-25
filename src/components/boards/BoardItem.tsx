@@ -25,7 +25,7 @@ const BoardItem = ({ board }: { board: Board }) => {
             <div className="w-12 h-12 bg-main-500/30 flex items-center justify-center rounded-lg p-2">
               <p className="font-bold text-main-500">{board.name[0]}</p>
             </div>
-            <CardTitle className="capitalize">{board.name}</CardTitle>
+            <CardTitle className="capitalize truncate">{board.name}</CardTitle>
           </div>
           <CardDescription className="truncate" title={board.description}>
             {board.description}
@@ -33,10 +33,10 @@ const BoardItem = ({ board }: { board: Board }) => {
         </div>
       </CardHeader>
       <CardContent className="p-4">
-        <p>
+        {/* <p>
           {t("workshop_card.board")} -{" "}
           <span className="text-main-500 font-semibold">4</span>
-        </p>
+        </p> */}
       </CardContent>
       <CardFooter className="flex p-4 justify-between">
         <small>

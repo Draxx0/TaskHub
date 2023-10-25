@@ -1,7 +1,19 @@
 import { db } from "@/service/firebase.config";
-import { FirebaseCreateDoc } from "@/utils/types/firebase";
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import {
+  FirebaseCreateCollectionInDoc,
+  FirebaseCreateDoc,
+} from "@/utils/types/firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { parseDataForFirebase } from "./utils/parseDataForFirebase";
+import { firebaseGet } from "./firebaseGet";
+import { Workshop } from "@/utils/types/workshop";
 
 const setDocInCollection = async <T>({
   docReference,
@@ -19,10 +31,11 @@ const setDocInCollection = async <T>({
   }
 };
 
-const addDocInCollection = async <T>({
+const addDocInCollection = async <T, K = unknown>({
   docReference,
   data,
-}: FirebaseCreateDoc<T>) => {
+  returnOptions,
+}: FirebaseCreateDoc<T>): Promise<K | undefined | void> => {
   const collectionRef = collection(
     db,
     docReference.path,
@@ -35,7 +48,59 @@ const addDocInCollection = async <T>({
   };
 
   try {
+    if (returnOptions?.returnData) {
+      try {
+        const newDocRef = await addDoc(
+          collectionRef,
+          parseDataForFirebase(dataWithDate)
+        );
+        const newDocSnap = await getDoc(newDocRef);
+        if (newDocSnap.exists()) {
+          return {
+            ...newDocSnap.data(),
+            id: newDocSnap.id,
+          };
+        }
+      } catch (error) {
+        throw new Error("An error occured");
+      }
+    }
+
     await addDoc(collectionRef, parseDataForFirebase(dataWithDate));
+  } catch (error) {
+    throw new Error("An error occured");
+  }
+};
+
+const setCollectionInDoc = async <T, K>({
+  docReference,
+  collectionName,
+  newCollectionFirstDoc,
+}: FirebaseCreateCollectionInDoc<K>) => {
+  try {
+    const docRef = (await firebaseGet.getFirebaseDoc<T>({
+      docReference: {
+        path: docReference.path,
+        pathSegments: docReference.pathSegments ?? undefined,
+      },
+    })) as Workshop | undefined;
+
+    if (!docRef) {
+      throw new Error("No doc found");
+    }
+
+    console.log("DOC REFFF", docRef);
+
+    const collectionRef = collection(
+      db,
+      docReference.path,
+      docRef.id,
+      collectionName
+    );
+
+    console.log("Collection REF", collectionRef);
+
+    await addDoc(collectionRef, newCollectionFirstDoc ?? {});
   } catch (error) {
     throw new Error("An error occured");
   }
@@ -44,4 +109,5 @@ const addDocInCollection = async <T>({
 export const firebaseCreate = {
   setDocInCollection,
   addDocInCollection,
+  setCollectionInDoc,
 };

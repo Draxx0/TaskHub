@@ -21,17 +21,24 @@ const getFirebaseDoc = async <T>({
   try {
     const docSnap = await getDoc(docRef);
     const data = docSnap.data() as T;
-    return data;
+    return {
+      ...data,
+      id: docSnap.id,
+    };
   } catch (error) {
     console.log(error);
   }
 };
 
 const getFirebaseCollection = async <T>({
-  params,
+  docReference,
   condition,
-}: FirebaseCollection): Promise<T[] | undefined> => {
-  const collectionRef = collection(db, params.path);
+}: FirebaseCollection<T>): Promise<T[] | undefined> => {
+  const collectionRef = collection(
+    db,
+    docReference.path,
+    ...(docReference.pathSegments ?? [])
+  );
 
   const q = condition
     ? query(

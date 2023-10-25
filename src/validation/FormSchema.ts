@@ -22,13 +22,13 @@ const accountFormSchema = z.object({
 
 const createWorkshopFormSchema = z.object({
   workshopTitle: z.string().min(4),
-  workshopDescription: z.string().min(30),
+  workshopDescription: z.string().min(10),
   workshopImageBackground: z.string(),
 });
 
 const createBoardFormSchema = z.object({
   boardTitle: z.string().min(4),
-  boardDescription: z.string().min(30),
+  boardDescription: z.string().min(10),
 });
 
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;

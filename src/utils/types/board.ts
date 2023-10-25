@@ -1,4 +1,3 @@
-import { DocumentData, DocumentReference } from "firebase/firestore";
 import { Workshop } from "./workshop";
 import { ITimestamp } from "./timestamp";
 
@@ -12,5 +11,5 @@ export interface Board extends ITimestamp {
 export interface IBoardCreate {
   name: string;
   description: string;
-  workshop: DocumentReference<DocumentData, DocumentData>;
+  workshop: Workshop;
 }

@@ -2,7 +2,7 @@ import { useUserStore } from "../../store/user.store";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FormObject } from "../../utils/types/form";
-import { authSchemas } from "../../components/common/form/FormSchema";
+import { authSchemas } from "../../validation/FormSchema";
 import { ZodError } from "zod";
 import { authFormErrorFinder } from "../../utils/functions/authFormErrorTranslation";
 import authService from "../../utils/services/authService";
@@ -34,15 +34,19 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
     ],
   };
 
-  const formValidation = (email: string, password: string, profile?: string): boolean => {
+  const formValidation = (
+    email: string,
+    password: string,
+    profile?: string
+  ): boolean => {
     const isLogin = !profile;
     try {
       if (isLogin) {
         authSchemas.authLoginFormSchema.parse({ email, password });
       } else {
-        authSchemas.authSigninFormSchema.parse({ email, password, profile })
+        authSchemas.authSigninFormSchema.parse({ email, password, profile });
       }
-      return true
+      return true;
     } catch (error) {
       if (error instanceof ZodError) {
         error.errors.forEach((e) => {
@@ -52,23 +56,23 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           }
           toast({
             title: t("auth:form_error.title"),
-            description: t(`auth:form_error.${errorType.error}`)
-          })
+            description: t(`auth:form_error.${errorType.error}`),
+          });
         });
       }
-      return false
+      return false;
     }
-  }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email"));
     const password = String(form.get("password"));
-    const profile = !isLoginPage() ? String(form.get("profil")) : undefined
+    const profile = !isLoginPage() ? String(form.get("profil")) : undefined;
     const type = isLoginPage() ? "login" : "signup";
     // FORM VALIDATION
-    const isFormvalid = formValidation(email, password, profile)
+    const isFormvalid = formValidation(email, password, profile);
     if (!isFormvalid) {
       throw new Error("Form is invalid");
     }
@@ -78,16 +82,16 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
       const response = await authService.authenticate(type, {
         email,
         password,
-        profile
+        profile,
       });
       insertUser(response.user);
     } catch (error) {
       toast({
         title: t("auth:form_error.title"),
         description: t("auth:form_error.default"),
-        variant: "destructive"
-      })
-      console.log(error)
+        variant: "destructive",
+      });
+      console.log(error);
     }
   };
 
@@ -154,7 +158,12 @@ const Auth = ({ type }: { type: "signin" | "login" }) => {
           </Link>
         )}
 
-        <Back url="/" variant="ghost" className="lg:absolute left-10 bottom-5" translate={t("global:back")} />
+        <Back
+          url="/"
+          variant="ghost"
+          className="lg:absolute left-10 bottom-5"
+          translate={t("global:back")}
+        />
       </div>
     </div>
   );

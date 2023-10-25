@@ -1,8 +1,4 @@
-import {
-  DocumentData,
-  DocumentReference,
-  WhereFilterOp,
-} from "firebase/firestore";
+import { WhereFilterOp } from "firebase/firestore";
 import { FirestoreUser } from "./user";
 
 export interface FirebaseDoc {
@@ -14,21 +10,23 @@ export interface FirebaseDoc {
 
 export interface FirebaseCreateDoc<T> extends FirebaseDoc {
   data: T;
-}
-
-export interface FirebaseCollection {
-  params: {
-    path: string;
+  returnOptions?: {
+    returnData?: boolean;
+    returnWithId?: boolean;
   };
-  condition?: GetCollectionCondition;
 }
 
-export interface GetCollectionCondition {
+export interface FirebaseCreateCollectionInDoc<K> extends FirebaseDoc {
+  collectionName: string;
+  newCollectionFirstDoc?: K;
+}
+
+export interface FirebaseCollection<T> extends FirebaseDoc {
+  condition?: GetCollectionCondition<T>;
+}
+
+export interface GetCollectionCondition<K> {
   leftConditon: string | FirestoreUser;
   operator: WhereFilterOp;
-  rightCondition:
-    | DocumentReference<DocumentData, DocumentData>
-    | string
-    | boolean
-    | undefined;
+  rightCondition: K | string | boolean | undefined;
 }

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/user.store";
 import { Button as ButtonShad } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
@@ -11,13 +11,15 @@ import { auth } from "@/service/firebase.config";
 const UserBadgeDisplay = () => {
   const { t } = useTranslation(["auth"]);
   const { user, logoutUser: logoutUserInZustand } = useUserStore();
+  const navigate = useNavigate();
 
   const logoutUser = async () => {
     try {
-      logoutUserInZustand()
+      logoutUserInZustand();
       await signOut(auth);
+      navigate("/auth/login");
     } catch (error) {
-      console.error('Error during disconnect :', error);
+      console.error("Error during disconnect :", error);
       throw new Error("Error during disconnect");
     }
   };

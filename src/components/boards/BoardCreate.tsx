@@ -1,128 +1,174 @@
 import Modal from "../common/Modal";
-import { boardSchemas } from "../common/form/FormSchema";
+import { boardSchemas } from "../../validation/FormSchema";
 import { useToast } from "../ui/use-toast";
 import { useTranslation } from "react-i18next";
 import { firebaseCreate } from "@/service/firebaseCreate";
 import { FormObject } from "@/utils/types/form";
 import { queryClient } from "@/main";
-import { DocumentReference } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/service/firebase.config";
 import { firebaseGet } from "@/service/firebaseGet";
-import { IBoardCreate } from "@/utils/types/board";
+import { Board, IBoardCreate } from "@/utils/types/board";
 import { useParams } from "react-router-dom";
+import { Workshop } from "@/utils/types/workshop";
 
 const BoardsCreate = () => {
- const { toast } = useToast();
- const { t } = useTranslation(["boards", "global"])
- const { id: workshopId } = useParams();
+  const { toast } = useToast();
+  const { t } = useTranslation(["boards", "global"]);
+  const { id: workshopId } = useParams();
 
- const formObject: FormObject = {
-  formName: "board-create-form",
-  formData: [
-   {
-    inputName: "board-name",
-    inputPlaceholder: t("create.board_title_placeholder"),
-    inputType: "text",
-    labelText: t("create.board_title"),
-   },
-   {
-    inputName: "board-description",
-    inputPlaceholder: t("create.board_description_placeholder"),
-    inputType: "text",
-    labelText: t("create.board_description"),
-    isTextarea: true,
-   },
-  ],
- }
+  const formObject: FormObject = {
+    formName: "board-create-form",
+    formData: [
+      {
+        inputName: "board-name",
+        inputPlaceholder: t("create.board_title_placeholder"),
+        inputType: "text",
+        labelText: t("create.board_title"),
+      },
+      {
+        inputName: "board-description",
+        inputPlaceholder: t("create.board_description_placeholder"),
+        inputType: "text",
+        labelText: t("create.board_description"),
+        isTextarea: true,
+      },
+    ],
+  };
 
- const formValidation = (boardTitle: string, boardDescription: string): boolean => {
-  try {
-   if (boardTitle && boardDescription) {
-    boardSchemas.createBoardFormSchema.parse({
-     boardTitle,
-     boardDescription,
-    })
-   }
-   return true
-  } catch (error) {
-   toast({
-    title: t("global:errors.global_title"),
-    description: t("global:errors.global_description"),
-    variant: "destructive"
-   })
-   return false
-  }
- }
-
- const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  const form = new FormData(event.currentTarget);
-  const boardTitle = String(form.get("board-name"));
-  const boardDescription = String(form.get("board-description"));
-
-  const isFormValid = formValidation(boardTitle, boardDescription);
-
-  if (!isFormValid) {
-   throw new Error("Form is invalid")
-  }
-
-  try {
-   onAuthStateChanged(auth, async (user) => {
-    if (user && workshopId) {
-
-     const workshopRef = await firebaseGet.getFirebaseDoc<DocumentReference>({
-      docReference: {
-       path: "workshops",
-       pathSegments: [workshopId]
+  const formValidation = (
+    boardTitle: string,
+    boardDescription: string
+  ): boolean => {
+    try {
+      if (boardTitle && boardDescription) {
+        boardSchemas.createBoardFormSchema.parse({
+          boardTitle,
+          boardDescription,
+        });
       }
-     })
-
-     if (workshopRef) {
-      firebaseCreate.addDocInCollection<IBoardCreate>({
-       docReference: {
-        path: "boards"
-       },
-       data: {
-        name: boardTitle,
-        description: boardDescription,
-        workshop: workshopRef
-       }
-      })
-     } else {
-      throw new Error("Workshop reference not found..")
-     }
-
-     await queryClient.invalidateQueries({
-      queryKey: ["collection", "boards"],
-      exact: true,
-     })
-
-     toast({
-      title: t("toast.success.title"),
-      description: t("toast.success.description")
-     })
-
-    } else {
-     throw new Error("User not connected")
+      return true;
+    } catch (error) {
+      toast({
+        title: t("global:errors.global_title"),
+        description: t("global:errors.global_description"),
+        variant: "destructive",
+      });
+      return false;
     }
-   })
-  } catch (error) {
-   toast({
-    title: t("global:errors.global_title"),
-    description: t("global:errors.global_description"),
-    variant: "destructive"
-   })
-  }
- }
+  };
 
- return <Modal onSubmitEvent={handleSubmit} formData={formObject} dynamicTranslation={{
-  buttonText: t("create.title"),
-  description: t("create.description"),
-  title: t("create.title")
- }} />
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const boardTitle = String(form.get("board-name"));
+    const boardDescription = String(form.get("board-description"));
 
+    const isFormValid = formValidation(boardTitle, boardDescription);
 
-}
+    if (!isFormValid) {
+      throw new Error("Form is invalid");
+    }
+
+    try {
+      onAuthStateChanged(auth, async (user) => {
+        if (user && workshopId) {
+          const workshopRef = await firebaseGet.getFirebaseDoc<Workshop>({
+            docReference: {
+              path: "workshops",
+              pathSegments: [workshopId],
+            },
+          });
+
+          if (workshopRef) {
+            const newBoardRef = await firebaseCreate.addDocInCollection<
+              IBoardCreate,
+              Board
+            >({
+              docReference: {
+                path: "boards",
+              },
+              data: {
+                name: boardTitle,
+                description: boardDescription,
+                workshop: workshopRef,
+              },
+              returnOptions: {
+                returnData: true,
+                returnWithId: true,
+              },
+            });
+
+            const workshopBoards =
+              await firebaseGet.getFirebaseCollection<Board>({
+                docReference: {
+                  path: "workshops",
+                  pathSegments: [workshopId, "boards"],
+                },
+              });
+
+            if (newBoardRef && workshopBoards) {
+              if (workshopBoards.length === 0) {
+                await firebaseCreate.setCollectionInDoc<Workshop, Board>({
+                  collectionName: "boards",
+                  docReference: {
+                    path: "workshops",
+                    pathSegments: [workshopRef.id],
+                  },
+                  newCollectionFirstDoc: newBoardRef,
+                });
+              } else {
+                await firebaseCreate.addDocInCollection<Board>({
+                  docReference: {
+                    path: "workshops",
+                    pathSegments: [workshopId, "boards"],
+                  },
+                  data: newBoardRef,
+                });
+              }
+
+              await queryClient.invalidateQueries({
+                queryKey: ["collection", "workshops"],
+                exact: true,
+              });
+            }
+          } else {
+            throw new Error("Workshop reference not found..");
+          }
+
+          await queryClient.invalidateQueries({
+            queryKey: ["collection", "boards"],
+            exact: true,
+          });
+
+          toast({
+            title: t("toast.success.title"),
+            description: t("toast.success.description"),
+          });
+        } else {
+          throw new Error("User not connected");
+        }
+      });
+    } catch (error) {
+      toast({
+        title: t("global:errors.global_title"),
+        description: t("global:errors.global_description"),
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <Modal
+      onSubmitEvent={handleSubmit}
+      formData={formObject}
+      dynamicTranslation={{
+        buttonText: t("create.title"),
+        description: t("create.description"),
+        title: t("create.title"),
+      }}
+    />
+  );
+};
 
 export default BoardsCreate;

@@ -1,40 +1,42 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { firebaseGet } from "../service/firebaseGet";
 import { useUserStore } from "../store/user.store";
-import { GetCollectionCondition } from "@/utils/types/firebase";
+import { FirebaseDoc, GetCollectionCondition } from "@/utils/types/firebase";
 
-type Props = {
-  path: string;
+type Props<K = unknown> = {
   queryOptions?: {
     staleTime?: number;
     enabled?: boolean;
   };
-  condition?: GetCollectionCondition
-};
+  condition?: GetCollectionCondition<K>;
+} & FirebaseDoc;
 
-function useGetCollection<T>({
-  path,
+function useGetCollection<T, K = unknown>({
+  docReference,
   queryOptions,
-  condition
-}: Props): UseQueryResult<T[], unknown> {
+  condition,
+}: Props<K>): UseQueryResult<T[], unknown> {
   const { user } = useUserStore();
   const { staleTime, enabled } = queryOptions || {};
 
   const query = useQuery(
-    ["collection", path],
+    ["collection", docReference.path, docReference.pathSegments],
     async () => {
       const data = await firebaseGet.getFirebaseCollection<T[]>({
-        params: {
-          path,
+        docReference: {
+          path: docReference.path,
+          ...(docReference.pathSegments
+            ? { pathSegments: docReference.pathSegments }
+            : {}),
         },
-        condition
+        condition,
       });
       return data as T[];
     },
     {
       staleTime: staleTime ?? Infinity,
       enabled: enabled ?? !!user,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     }
   );
 
