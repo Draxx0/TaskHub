@@ -7,11 +7,15 @@
     "board_description": "Description du tableau",
     "board_description_placeholder": "Tableau de gestion des tâches pour notre client X"
   },
- "toast": {
+  "toast": {
     "success": {
       "title": "Le tableau a bien été crée",
       "description": "Votre Tableau a bien été créé, vous pouvez désormais vous y rendre et commencer à manager vos tâches !"
     }
+  },
+  "settings": {
+    "title": "Modifier le tableau -",
+    "description": "Gérer les paramètres de votre tableau"
   },
   "back": "Revenir à"
 }

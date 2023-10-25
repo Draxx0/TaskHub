@@ -7,11 +7,15 @@
     "board_description": "Board description",
     "board_description_placeholder": "Task management board for our customer X"
   },
- "toast": {
+  "toast": {
     "success": {
       "title": "The board has been created",
       "description": "Your board has been created, and you can now go there and start managing your tasks!"
     }
+  },
+  "settings": {
+    "title": "Update board -",
+    "description": "Manage your board settings"
   },
   "back": "Back to"
 }

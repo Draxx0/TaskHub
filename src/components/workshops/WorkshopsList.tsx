@@ -42,7 +42,7 @@ const WorkshopsList = () => {
       enabled: !!currentUserRef,
     },
   });
-
+  console.log("WORKSHOPS", workshops);
   return (
     <div
       className={`grid grid-cols-4 gap-8 ${

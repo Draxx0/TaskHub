@@ -4,12 +4,13 @@ import ProtectedRoute from "./ProtectedRoute";
 import Workshops from "@/pages/workshops/Workshops";
 import NotFoundPage from "@/pages/NotFoundPage";
 import AlreadyLogProtect from "./AlreadyLogProtect";
-import Auth from "@/pages/auth/Auth";
 import Settings from "@/pages/settings/Settings";
 import Profile from "@/pages/settings/Profile";
 import Account from "@/pages/settings/Account";
 import Workshop from "@/pages/workshops/Workshop";
 import Board from "@/pages/boards/Board";
+import Auth from "@/pages/Auth/Auth";
+import BoardSettings from "@/pages/boards/BoardSettings";
 
 export const Router = () => {
   return (
@@ -26,8 +27,26 @@ export const Router = () => {
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:id" element={<Workshop />} />
         <Route path="/workshops/:workshopId/boardId/:id" element={<Board />} />
-        <Route path="/settings/profile" element={<Settings><Profile /></Settings>} />
-        <Route path="/settings/account" element={<Settings><Account /></Settings>} />
+        <Route
+          path="/workshops/:workshopId/boardId/:id/settings"
+          element={<BoardSettings />}
+        />
+        <Route
+          path="/settings/profile"
+          element={
+            <Settings>
+              <Profile />
+            </Settings>
+          }
+        />
+        <Route
+          path="/settings/account"
+          element={
+            <Settings>
+              <Account />
+            </Settings>
+          }
+        />
       </Route>
       {/*---------- Protected Routes ----------*/}
       <Route path="*" element={<NotFoundPage />} />
