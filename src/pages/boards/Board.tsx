@@ -3,6 +3,7 @@ import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
 import Error from "@/components/common/error/Error";
 import Spinner from "@/components/common/loader/Spinner";
+import { Button } from "@/components/ui/button";
 import { TEN_MIN_STATE_TIME } from "@/constant/reactQuery.constant";
 import useGetDoc from "@/hooks/useGetDoc";
 import { Board as IBoard } from "@/utils/types/board";
@@ -46,7 +47,11 @@ const Board = () => {
               translate={`${t("back")} ${workshop?.name}`}
             />
             <PageHeader title={board.name} description={board.description}>
-              <Link to={`${location.pathname}/settings`}>Test</Link>
+              <Button asChild>
+                <Link to={`${location.pathname}/settings/general`}>
+                  Modifier
+                </Link>
+              </Button>
             </PageHeader>
           </div>
         )}

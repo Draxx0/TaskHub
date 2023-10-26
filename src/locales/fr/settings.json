@@ -1,52 +1,48 @@
 {
- "page": {
-  "title": "Paramètres",
-  "description": "Gérer les paramètres de votre compte"
- },
- "tabs": [
-  {
-   "tab_data": {
-    "url": "profile",
-    "text": "Profil"
-   }
+  "page": {
+    "title": "Paramètres",
+    "description": "Gérer les paramètres de votre compte"
   },
-  {
-   "tab_data": {
-    "url": "account",
-    "text": "Compte"
-   }
-  }
- ],
- "profile": {
-  "title": "Profil",
-  "description": "C'est ainsi que les autres vous verront sur le site.",
-  "username": {
-   "username_label": "Nom d'utilisateur",
-   "username_description": "Il s'agit de votre nom d'affichage public. Il peut s'agir de votre vrai nom ou d'un pseudonyme.",
-   "input_placeholder": "Jake33_"
-  }
- },
- "account": {
-  "title": "Compte",
-  "description": "Mettez à jour les paramètres de votre compte. Définissez votre langue préférée.",
-  "email": {
-   "email_label": "Adresse email",
-   "email_description": "Vous pouvez mettre à jour votre adresse e-mail ci-dessous. Assurez-vous de vérifier votre adresse e-mail pour recevoir nos notifications.",
-   "input_placeholder": "monemail@gmail.com"
+  "tabs": [
+    {
+      "url": "profile",
+      "text": "Profil"
+    },
+    {
+      "url": "account",
+      "text": "Compte"
+    }
+  ],
+  "profile": {
+    "title": "Profil",
+    "description": "C'est ainsi que les autres vous verront sur le site.",
+    "username": {
+      "username_label": "Nom d'utilisateur",
+      "username_description": "Il s'agit de votre nom d'affichage public. Il peut s'agir de votre vrai nom ou d'un pseudonyme.",
+      "input_placeholder": "Jake33_"
+    }
   },
-  "language": {
-   "language_label": "Langues",
-   "language_description": "Il s'agit de la langue qui sera utilisée dans le tableau de bord.",
-   "language_select": "Selectionner une langue",
-   "language_english": "Anglais",
-   "language_french": "Français"
+  "account": {
+    "title": "Compte",
+    "description": "Mettez à jour les paramètres de votre compte. Définissez votre langue préférée.",
+    "email": {
+      "email_label": "Adresse email",
+      "email_description": "Vous pouvez mettre à jour votre adresse e-mail ci-dessous. Assurez-vous de vérifier votre adresse e-mail pour recevoir nos notifications.",
+      "input_placeholder": "monemail@gmail.com"
+    },
+    "language": {
+      "language_label": "Langues",
+      "language_description": "Il s'agit de la langue qui sera utilisée dans le tableau de bord.",
+      "language_select": "Selectionner une langue",
+      "language_english": "Anglais",
+      "language_french": "Français"
+    }
+  },
+  "utils": {
+    "update_button": "Modifier",
+    "profile_update": {
+      "profile_update_title": "Modifications apporté",
+      "profile_update_description": "Des modifications ont bien été apporté à votre compte."
+    }
   }
- },
- "utils": {
-  "update_button": "Modifier",
-  "profile_update": {
-   "profile_update_title": "Modifications apporté",
-   "profile_update_description": "Des modifications ont bien été apporté à votre compte."
-  }
- }
 }

@@ -15,7 +15,25 @@
   },
   "settings": {
     "title": "Update board -",
-    "description": "Manage your board settings"
+    "description": "Manage your board settings",
+    "tabs": [
+      {
+        "url": "general",
+        "text": "General"
+      },
+      {
+        "url": "advanced",
+        "text": "Advanced"
+      }
+    ],
+    "general": {
+      "title": "General",
+      "description": "Here you will find all the general parameters."
+    },
+    "advanced": {
+      "title": "Advanced",
+      "description": "Here you'll find all the advanced settings."
+    }
   },
   "back": "Back to"
 }

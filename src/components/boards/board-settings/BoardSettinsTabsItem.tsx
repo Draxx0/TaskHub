@@ -1,10 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { formatCurrentPathname } from "@/utils/functions/formatCurrentPathname";
+import { NavLink, useLocation } from "react-router-dom";
 
-const SidebarNavItem = ({ url, text }: { url: string; text: string }) => {
+const BoardsSettingsTabsItem = ({
+  url,
+  text,
+}: {
+  url: string;
+  text: string;
+}) => {
+  const location = useLocation();
   return (
     <li>
       <NavLink
-        to={`/settings/${url}`}
+        to={`${formatCurrentPathname(location.pathname, url)}`}
         className={({ isActive }) =>
           isActive
             ? "relative font-semibold block before:absolute before:w-full before:h-full before:p-4 before:bg-gray-100/75 before:-z-10 before:-left-4 before:-top-1 before:rounded-lg"
@@ -17,4 +25,4 @@ const SidebarNavItem = ({ url, text }: { url: string; text: string }) => {
   );
 };
 
-export default SidebarNavItem;
+export default BoardsSettingsTabsItem;

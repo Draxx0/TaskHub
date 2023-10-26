@@ -10,7 +10,9 @@ import Account from "@/pages/settings/Account";
 import Workshop from "@/pages/workshops/Workshop";
 import Board from "@/pages/boards/Board";
 import Auth from "@/pages/Auth/Auth";
-import BoardSettings from "@/pages/boards/BoardSettings";
+import BoardSettings from "@/pages/boards/board-settings/BoardSettings";
+import GeneralSettings from "@/pages/boards/board-settings/GeneralSettings";
+import AdvancedSettings from "@/pages/boards/board-settings/AdvancedSettings";
 
 export const Router = () => {
   return (
@@ -28,8 +30,20 @@ export const Router = () => {
         <Route path="/workshops/:id" element={<Workshop />} />
         <Route path="/workshops/:workshopId/boardId/:id" element={<Board />} />
         <Route
-          path="/workshops/:workshopId/boardId/:id/settings"
-          element={<BoardSettings />}
+          path="/workshops/:workshopId/boardId/:id/settings/general"
+          element={
+            <BoardSettings>
+              <GeneralSettings />
+            </BoardSettings>
+          }
+        />
+        <Route
+          path="/workshops/:workshopId/boardId/:id/settings/advanced"
+          element={
+            <BoardSettings>
+              <AdvancedSettings />
+            </BoardSettings>
+          }
         />
         <Route
           path="/settings/profile"

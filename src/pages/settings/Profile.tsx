@@ -1,6 +1,6 @@
 import { settingsSchemas } from "@/validation/FormSchema";
 import SettingsForm from "@/components/common/form/SettingsForm";
-import TabHeader from "@/components/settings/TabHeader";
+import TabHeader from "@/components/common/settings/TabHeader";
 import { useToast } from "@/components/ui/use-toast";
 import { firebaseUpdate } from "@/service/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";

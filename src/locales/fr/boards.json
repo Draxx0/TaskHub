@@ -15,7 +15,25 @@
   },
   "settings": {
     "title": "Modifier le tableau -",
-    "description": "Gérer les paramètres de votre tableau"
+    "description": "Gérer les paramètres de votre tableau",
+    "tabs": [
+      {
+        "url": "general",
+        "text": "Général"
+      },
+      {
+        "url": "advanced",
+        "text": "Avancé"
+      }
+    ],
+    "general": {
+      "title": "Général",
+      "description": "Vous retrouverez ici tout les paramètres généraux."
+    },
+    "advanced": {
+      "title": "Avancé",
+      "description": "Vous retrouverez ici tout les paramètres avancé."
+    }
   },
   "back": "Revenir à"
 }
