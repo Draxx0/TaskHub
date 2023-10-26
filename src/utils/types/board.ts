@@ -11,5 +11,5 @@ export interface Board extends ITimestamp {
 export interface IBoardCreate {
   name: string;
   description: string;
-  workshop: Workshop;
+  workshopId: string;
 }

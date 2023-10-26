@@ -2,50 +2,27 @@ import useGetCollection from "@/hooks/useGetCollection";
 import Error from "../common/error/Error";
 import SkeletonCard from "../common/loader/SkeletonCard";
 import { Board } from "@/utils/types/board";
-import { useCallback, useEffect, useState } from "react";
-import { firebaseGet } from "@/service/firebaseGet";
 import { useParams } from "react-router-dom";
 import BoardItem from "./BoardItem";
-import { Workshop } from "@/utils/types/workshop";
 
 const BoardsList = () => {
-  const [currentWorkshopRef, setCurrentWorkshopRef] = useState<
-    Workshop | undefined
-  >(undefined);
-  const { id } = useParams();
-
-  const fetchCurrentWorkshop = useCallback(async () => {
-    if (id) {
-      const workshopRef = await firebaseGet.getFirebaseDoc<Workshop>({
-        docReference: {
-          path: "workshops",
-          pathSegments: [id],
-        },
-      });
-
-      setCurrentWorkshopRef(workshopRef);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    fetchCurrentWorkshop();
-  }, [fetchCurrentWorkshop]);
+  const { id: workshopId } = useParams();
 
   const {
     data: boards,
     isLoading,
     isError,
-  } = useGetCollection<Board, Workshop>({
+  } = useGetCollection<Board>({
     docReference: {
       path: "boards",
     },
     condition: {
-      leftConditon: "workshop",
+      leftConditon: "workshopId",
       operator: "==",
-      rightCondition: currentWorkshopRef,
+      rightCondition: workshopId,
     },
     queryOptions: {
-      enabled: !!currentWorkshopRef,
+      enabled: !!workshopId,
     },
   });
 

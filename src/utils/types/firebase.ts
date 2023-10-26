@@ -21,12 +21,12 @@ export interface FirebaseCreateCollectionInDoc<K> extends FirebaseDoc {
   newCollectionFirstDoc?: K;
 }
 
-export interface FirebaseCollection<T> extends FirebaseDoc {
-  condition?: GetCollectionCondition<T>;
+export interface FirebaseCollection extends FirebaseDoc {
+  condition?: GetCollectionCondition;
 }
 
-export interface GetCollectionCondition<K> {
+export interface GetCollectionCondition {
   leftConditon: string | FirestoreUser;
   operator: WhereFilterOp;
-  rightCondition: K | string | boolean | undefined;
+  rightCondition: string | boolean | undefined;
 }
