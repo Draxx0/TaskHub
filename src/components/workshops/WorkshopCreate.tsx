@@ -5,16 +5,11 @@ import { useTranslation } from "react-i18next";
 import { firebaseCreate } from "@/service/firebaseCreate";
 import { FormObject } from "@/utils/types/form";
 import { queryClient } from "@/main";
-import { getCurrentUserDoc } from "@/service/firestore/getCurrentUserDoc";
-import { DocumentReference } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/service/firebase.config";
 import { convertToBlob } from "@/service/utils/convertToBlob";
 import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
-import {
-  WorkshopCreate as IWorkshopCreate,
-  Workshop,
-} from "@/utils/types/workshop";
+import { WorkshopCreate as IWorkshopCreate } from "@/utils/types/workshop";
 
 const WorkshopCreate = () => {
   const { toast } = useToast();
@@ -94,10 +89,9 @@ const WorkshopCreate = () => {
           const coverImageUrl = await uploadImageInBucket(
             workshopImageBackground
           );
-          const ownerRef = await getCurrentUserDoc<DocumentReference>(user.uid);
 
-          if (coverImageUrl && ownerRef) {
-            await firebaseCreate.addDocInCollection<IWorkshopCreate, Workshop>({
+          if (coverImageUrl) {
+            await firebaseCreate.addDocInCollection<IWorkshopCreate>({
               docReference: {
                 path: "workshops",
               },
@@ -105,15 +99,11 @@ const WorkshopCreate = () => {
                 name: workshopTitle,
                 description: workshopDescription,
                 coverUrl: coverImageUrl,
-                owner: ownerRef,
-              },
-              returnOptions: {
-                returnData: true,
-                returnWithId: true,
+                ownerId: user.uid,
               },
             });
           } else {
-            throw new Error("Owner reference not found..");
+            throw new Error("An error occured during cover upload");
           }
 
           await queryClient.invalidateQueries({
