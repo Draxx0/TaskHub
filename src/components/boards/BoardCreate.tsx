@@ -73,67 +73,64 @@ const BoardsCreate = () => {
     try {
       onAuthStateChanged(auth, async (user) => {
         if (user && workshopId) {
-          const workshopRef = await firebaseGet.getFirebaseDoc<Workshop>({
+          const newBoardRef = await firebaseCreate.addDocInCollection<
+            IBoardCreate,
+            Board
+          >({
             docReference: {
-              path: "workshops",
-              pathSegments: [workshopId],
+              path: "boards",
+            },
+            data: {
+              name: boardTitle,
+              description: boardDescription,
+              workshopId: workshopId,
+            },
+            returnOptions: {
+              returnData: true,
+              returnWithId: true,
             },
           });
 
-          if (workshopRef) {
-            const newBoardRef = await firebaseCreate.addDocInCollection<
-              IBoardCreate,
-              Board
-            >({
+          const workshopBoards = await firebaseGet.getFirebaseCollection<Board>(
+            {
               docReference: {
-                path: "boards",
+                path: "workshops",
+                pathSegments: [workshopId, "boards"],
               },
-              data: {
-                name: boardTitle,
-                description: boardDescription,
-                workshop: workshopRef,
-              },
-              returnOptions: {
-                returnData: true,
-                returnWithId: true,
-              },
-            });
+            }
+          );
 
-            const workshopBoards =
-              await firebaseGet.getFirebaseCollection<Board>({
+          if (newBoardRef && workshopBoards) {
+            if (workshopBoards.length === 0) {
+              await firebaseCreate.setCollectionInDoc<
+                Workshop,
+                Record<string, string>
+              >({
+                collectionName: "boards",
+                docReference: {
+                  path: "workshops",
+                  pathSegments: [workshopId],
+                },
+                newCollectionFirstDoc: {
+                  boardIdRef: newBoardRef.id,
+                },
+              });
+            } else {
+              await firebaseCreate.addDocInCollection<Record<string, string>>({
                 docReference: {
                   path: "workshops",
                   pathSegments: [workshopId, "boards"],
                 },
-              });
-
-            if (newBoardRef && workshopBoards) {
-              if (workshopBoards.length === 0) {
-                await firebaseCreate.setCollectionInDoc<Workshop, Board>({
-                  collectionName: "boards",
-                  docReference: {
-                    path: "workshops",
-                    pathSegments: [workshopRef.id],
-                  },
-                  newCollectionFirstDoc: newBoardRef,
-                });
-              } else {
-                await firebaseCreate.addDocInCollection<Board>({
-                  docReference: {
-                    path: "workshops",
-                    pathSegments: [workshopId, "boards"],
-                  },
-                  data: newBoardRef,
-                });
-              }
-
-              await queryClient.invalidateQueries({
-                queryKey: ["collection", "workshops"],
-                exact: true,
+                data: {
+                  boardIdRef: newBoardRef.id,
+                },
               });
             }
-          } else {
-            throw new Error("Workshop reference not found..");
+
+            await queryClient.invalidateQueries({
+              queryKey: ["collection", "workshops"],
+              exact: true,
+            });
           }
 
           await queryClient.invalidateQueries({

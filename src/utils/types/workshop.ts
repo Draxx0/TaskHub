@@ -1,4 +1,3 @@
-import { DocumentData, DocumentReference } from "firebase/firestore";
 import { FirestoreUser } from "./user";
 import { ITimestamp } from "./timestamp";
 import { Board } from "./board";
@@ -16,5 +15,5 @@ export interface WorkshopCreate {
   name: string;
   description: string;
   coverUrl: string;
-  owner: DocumentReference<DocumentData, DocumentData>;
+  ownerId: string;
 }

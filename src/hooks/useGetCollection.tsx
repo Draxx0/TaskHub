@@ -3,19 +3,19 @@ import { firebaseGet } from "../service/firebaseGet";
 import { useUserStore } from "../store/user.store";
 import { FirebaseDoc, GetCollectionCondition } from "@/utils/types/firebase";
 
-type Props<K = unknown> = {
+type Props = {
   queryOptions?: {
     staleTime?: number;
     enabled?: boolean;
   };
-  condition?: GetCollectionCondition<K>;
+  condition?: GetCollectionCondition;
 } & FirebaseDoc;
 
-function useGetCollection<T, K = unknown>({
+function useGetCollection<T>({
   docReference,
   queryOptions,
   condition,
-}: Props<K>): UseQueryResult<T[], unknown> {
+}: Props): UseQueryResult<T[], unknown> {
   const { user } = useUserStore();
   const { staleTime, enabled } = queryOptions || {};
 

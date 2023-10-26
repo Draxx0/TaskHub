@@ -4,26 +4,9 @@ import useGetCollection from "@/hooks/useGetCollection";
 import { Workshop } from "@/utils/types/workshop";
 import WorkshopsItem from "./WorkshopsItem";
 import { useUserStore } from "@/store/user.store";
-import { getCurrentUserDoc } from "@/service/firestore/getCurrentUserDoc";
-import { useCallback, useEffect, useState } from "react";
-import { DocumentData, DocumentReference } from "firebase/firestore";
 
 const WorkshopsList = () => {
-  const [currentUserRef, setCurrentUserRef] = useState<
-    DocumentReference<DocumentData, DocumentData> | undefined
-  >(undefined);
   const { user } = useUserStore();
-
-  const fetchCurrentUserRef = useCallback(async () => {
-    if (user) {
-      const currentUser = await getCurrentUserDoc<DocumentReference>(user.uid);
-      setCurrentUserRef(currentUser);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    fetchCurrentUserRef();
-  }, [fetchCurrentUserRef]);
 
   const {
     data: workshops,
@@ -34,15 +17,16 @@ const WorkshopsList = () => {
       path: "workshops",
     },
     condition: {
-      leftConditon: "owner",
+      leftConditon: "ownerId",
       operator: "==",
-      rightCondition: currentUserRef,
+      rightCondition: user?.uid,
     },
     queryOptions: {
-      enabled: !!currentUserRef,
+      enabled: !!user,
     },
   });
   console.log("WORKSHOPS", workshops);
+  // console.log("currentUser", currentUserRef);
   return (
     <div
       className={`grid grid-cols-4 gap-8 ${
