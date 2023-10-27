@@ -1,10 +1,10 @@
 import TabHeader from "@/components/common/settings/TabHeader";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useGetDoc from "@/hooks/useGetDoc";
 import { queryClient } from "@/main";
+import { db } from "@/service/firebase.config";
 import { firebaseDelete } from "@/service/firestore/firebaseDelete";
-import { WorkshopBoardRef } from "@/utils/types/board";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -13,26 +13,9 @@ const AdvancedSettings = () => {
   const { workshopId, id: boardId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { data: currentWorkshopBoard } = useGetDoc<WorkshopBoardRef>({
-    docReference: {
-      path: "workshops",
-      pathSegments: [workshopId ?? ""],
-    },
-    getSubCollectionData: {
-      path: "boards",
-    },
-    condition: {
-      leftConditon: "boardIdRef",
-      operator: "==",
-      rightCondition: boardId,
-    },
-    queryOptions: {
-      enabled: !!boardId && !!workshopId,
-    },
-  });
-  console.log("CURRENT WORKSHOP BOARD", currentWorkshopBoard);
+
   const handleDeleteBoard = async (): Promise<void> => {
-    if (boardId && workshopId && currentWorkshopBoard) {
+    if (boardId && workshopId) {
       try {
         await firebaseDelete.deleteDocInCollection({
           docReference: {
@@ -41,12 +24,20 @@ const AdvancedSettings = () => {
           },
         });
 
-        await firebaseDelete.deleteDocInCollection({
-          docReference: {
-            path: "workshops",
-            pathSegments: [workshopId, "boards", currentWorkshopBoard.id],
-          },
-        });
+        //! should be encapsuled
+
+        const workshopRef = doc(db, "workshops", workshopId);
+        const workshopBoardsRef = collection(workshopRef, "boards");
+
+        const q = query(workshopBoardsRef, where("boardIdRef", "==", boardId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const boardDocRef = querySnapshot.docs[0].ref;
+          await firebaseDelete.deleteDocWithDocRef(boardDocRef);
+        }
+
+        //!
 
         await queryClient.invalidateQueries({
           exact: true,

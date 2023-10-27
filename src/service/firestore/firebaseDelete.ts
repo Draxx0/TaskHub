@@ -1,5 +1,5 @@
 import { FirebaseDoc } from "@/utils/types/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import { DocumentReference, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase.config";
 
 const deleteDocInCollection = async ({
@@ -18,6 +18,15 @@ const deleteDocInCollection = async ({
   }
 };
 
+const deleteDocWithDocRef = async <T>(docRef: DocumentReference<T>) => {
+  try {
+    await deleteDoc(docRef);
+  } catch (error) {
+    throw new Error("An error occured during deletion");
+  }
+};
+
 export const firebaseDelete = {
   deleteDocInCollection,
+  deleteDocWithDocRef,
 };

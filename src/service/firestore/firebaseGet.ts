@@ -30,7 +30,7 @@ const getFirebaseDoc = async <T>({
   // if subcollection is invoked
   if (getSubCollectionData && condition) {
     const subCollectionRef = collection(docRef, getSubCollectionData.path);
-
+    console.log("there is condition & sub collection");
     const q = query(
       subCollectionRef,
       where(
@@ -44,6 +44,7 @@ const getFirebaseDoc = async <T>({
 
     if (!subCollectionSnap.empty) {
       const subCollectionDocSnap = subCollectionSnap.docs[0];
+      console.log("snaps", subCollectionSnap.docs);
       return {
         ...(subCollectionDocSnap.data() as T),
         id: subCollectionDocSnap.id,
