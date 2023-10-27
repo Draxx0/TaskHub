@@ -14,8 +14,13 @@ const BoardSettings = ({ children }: { children: React.ReactElement }) => {
   const tabs: TabItem[] = t("settings.tabs", { returnObjects: true });
   const { id: boardId } = useParams();
   const { data: board, isLoading } = useGetDoc<Board>({
-    path: "boards",
-    pathSegments: [boardId ?? ""],
+    docReference: {
+      path: "boards",
+      pathSegments: [boardId ?? ""],
+    },
+    queryOptions: {
+      enabled: !!boardId,
+    },
   });
   return (
     <Section>

@@ -1,4 +1,4 @@
-import { firebaseGet } from "../firebaseGet";
+import { firebaseGet } from "./firebaseGet";
 
 //! Is this real usefull ?
 export const getCurrentUserDoc = async <T>(userId: string) => {

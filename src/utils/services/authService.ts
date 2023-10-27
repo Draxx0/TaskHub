@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../service/firebase.config";
 import { updateUserProfile } from "../../service/auth/updateUserProfile";
-import { firebaseCreate } from "@/service/firebaseCreate";
+import { firebaseCreate } from "@/service/firestore/firebaseCreate";
 
 const authenticate = async (
   type: "signup" | "login",

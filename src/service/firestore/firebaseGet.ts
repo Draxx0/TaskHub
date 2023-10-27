@@ -6,17 +6,50 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "./firebase.config";
-import { FirebaseCollection, FirebaseDoc } from "../utils/types/firebase";
+import { db } from "../firebase.config";
+import { FirebaseGet } from "../../utils/types/firebase";
+
+type Props = {
+  getSubCollectionData?: {
+    path: string;
+    pathSegments?: string[];
+  };
+};
 
 const getFirebaseDoc = async <T>({
   docReference,
-}: FirebaseDoc): Promise<T | undefined> => {
+  condition,
+  getSubCollectionData,
+}: FirebaseGet & Props): Promise<T | undefined> => {
   const docRef = doc(
     db,
     docReference.path,
     ...(docReference.pathSegments ?? [])
   );
+
+  // if subcollection is invoked
+  if (getSubCollectionData && condition) {
+    const subCollectionRef = collection(docRef, getSubCollectionData.path);
+
+    const q = query(
+      subCollectionRef,
+      where(
+        condition.leftConditon,
+        condition.operator,
+        condition.rightCondition
+      )
+    );
+
+    const subCollectionSnap = await getDocs(q);
+
+    if (!subCollectionSnap.empty) {
+      const subCollectionDocSnap = subCollectionSnap.docs[0];
+      return {
+        ...(subCollectionDocSnap.data() as T),
+        id: subCollectionDocSnap.id,
+      };
+    }
+  }
 
   try {
     const docSnap = await getDoc(docRef);
@@ -33,7 +66,7 @@ const getFirebaseDoc = async <T>({
 const getFirebaseCollection = async <T>({
   docReference,
   condition,
-}: FirebaseCollection<T>): Promise<T[] | undefined> => {
+}: FirebaseGet): Promise<T[] | undefined> => {
   const collectionRef = collection(
     db,
     docReference.path,

@@ -23,6 +23,7 @@ const BoardsList = () => {
     },
     queryOptions: {
       enabled: !!workshopId,
+      staleTime: 0,
     },
   });
 

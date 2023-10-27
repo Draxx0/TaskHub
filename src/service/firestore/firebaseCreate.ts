@@ -11,7 +11,7 @@ import {
   setDoc,
   Timestamp,
 } from "firebase/firestore";
-import { parseDataForFirebase } from "./utils/parseDataForFirebase";
+import { parseDataForFirebase } from "../utils/parseDataForFirebase";
 import { firebaseGet } from "./firebaseGet";
 import { Workshop } from "@/utils/types/workshop";
 

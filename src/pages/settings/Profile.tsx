@@ -2,7 +2,7 @@ import { settingsSchemas } from "@/validation/FormSchema";
 import SettingsForm from "@/components/common/form/SettingsForm";
 import TabHeader from "@/components/common/settings/TabHeader";
 import { useToast } from "@/components/ui/use-toast";
-import { firebaseUpdate } from "@/service/firebaseUpdate";
+import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";
 import { updateUserProfile } from "@/service/auth/updateUserProfile";
 import { FormObject } from "@/utils/types/form";

@@ -20,16 +20,24 @@ const Board = () => {
     isLoading,
     isError,
   } = useGetDoc<IBoard>({
-    path: "boards",
-    pathSegments: [boardId ?? ""],
+    docReference: {
+      path: "boards",
+      pathSegments: [boardId ?? ""],
+    },
     queryOptions: {
       staleTime: TEN_MIN_STATE_TIME,
+      enabled: !!boardId,
     },
   });
 
   const { data: workshop } = useGetDoc<Workshop>({
-    path: "workshops",
-    pathSegments: [workshopId ?? ""],
+    docReference: {
+      path: "workshops",
+      pathSegments: [workshopId ?? ""],
+    },
+    queryOptions: {
+      enabled: !!workshopId,
+    },
   });
 
   return (

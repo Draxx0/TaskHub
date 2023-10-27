@@ -32,7 +32,14 @@
     },
     "advanced": {
       "title": "Advanced",
-      "description": "Here you'll find all the advanced settings."
+      "description": "Here you'll find all the advanced settings.",
+      "delete": "Delete this board"
+    },
+    "toast": {
+      "success": {
+        "title": "The board has been deleted.",
+        "description": "Your board has been deleted, return to your workshop page."
+      }
     }
   },
   "back": "Back to"

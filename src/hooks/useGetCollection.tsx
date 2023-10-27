@@ -1,21 +1,13 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import { firebaseGet } from "../service/firebaseGet";
+import { firebaseGet } from "../service/firestore/firebaseGet";
 import { useUserStore } from "../store/user.store";
-import { FirebaseDoc, GetCollectionCondition } from "@/utils/types/firebase";
-
-type Props = {
-  queryOptions?: {
-    staleTime?: number;
-    enabled?: boolean;
-  };
-  condition?: GetCollectionCondition;
-} & FirebaseDoc;
+import { UseFirebaseGet } from "@/utils/types/firebase";
 
 function useGetCollection<T>({
   docReference,
   queryOptions,
   condition,
-}: Props): UseQueryResult<T[], unknown> {
+}: UseFirebaseGet): UseQueryResult<T[], unknown> {
   const { user } = useUserStore();
   const { staleTime, enabled } = queryOptions || {};
 
@@ -33,13 +25,13 @@ function useGetCollection<T>({
             ? { pathSegments: docReference.pathSegments }
             : {}),
         },
-        condition,
+        ...(condition ? { condition } : {}),
       });
       return data as T[];
     },
     {
       staleTime: staleTime ?? Infinity,
-      enabled: enabled ?? !!user,
+      enabled: (!!user && enabled) ?? !!user,
       refetchOnWindowFocus: false,
     }
   );

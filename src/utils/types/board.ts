@@ -8,6 +8,8 @@ export interface Board extends ITimestamp {
   workshop: Workshop;
 }
 
+export type WorkshopBoardRef = { id: string };
+
 export interface IBoardCreate {
   name: string;
   description: string;

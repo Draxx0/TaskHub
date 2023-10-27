@@ -13,37 +13,47 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 const Workshop = () => {
- const { t } = useTranslation("workshops")
- const { id: workshopId } = useParams();
- const { data: workshop, isLoading, isError } = useGetDoc<IWorkshop>({
-  path: "workshops",
-  pathSegments: [workshopId ?? ""],
-  queryOptions: {
-   staleTime: TEN_MIN_STATE_TIME
-  }
- })
- return (
-  <Section>
-   <>
-    {isLoading ? (
-     <Spinner isCentered />
-    ) : isError ? (
-     <Error />
-    ) : (
-     <div className="space-y-6">
-      <Back url="/workshops" variant="link" translate={t("back")} />
-      <PageHeader title={workshop.name} description={workshop.description}>
-       <BoardsCreate />
-      </PageHeader>
+  const { t } = useTranslation("workshops");
+  const { id: workshopId } = useParams();
+  const {
+    data: workshop,
+    isLoading,
+    isError,
+  } = useGetDoc<IWorkshop>({
+    docReference: {
+      path: "workshops",
+      pathSegments: [workshopId ?? ""],
+    },
+    queryOptions: {
+      staleTime: TEN_MIN_STATE_TIME,
+      enabled: !!workshopId,
+    },
+  });
+  return (
+    <Section>
+      <>
+        {isLoading ? (
+          <Spinner isCentered />
+        ) : isError ? (
+          <Error />
+        ) : (
+          <div className="space-y-6">
+            <Back url="/workshops" variant="link" translate={t("back")} />
+            <PageHeader
+              title={workshop.name}
+              description={workshop.description}
+            >
+              <BoardsCreate />
+            </PageHeader>
 
-      <Separator />
+            <Separator />
 
-      <BoardsList />
-     </div>
-    )}
-   </>
-  </Section>
- );
-}
+            <BoardsList />
+          </div>
+        )}
+      </>
+    </Section>
+  );
+};
 
 export default Workshop;

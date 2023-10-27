@@ -2,7 +2,7 @@ import Modal from "../common/Modal";
 import { workshopSchemas } from "../../validation/FormSchema";
 import { useToast } from "../ui/use-toast";
 import { useTranslation } from "react-i18next";
-import { firebaseCreate } from "@/service/firebaseCreate";
+import { firebaseCreate } from "@/service/firestore/firebaseCreate";
 import { FormObject } from "@/utils/types/form";
 import { queryClient } from "@/main";
 import { onAuthStateChanged } from "firebase/auth";

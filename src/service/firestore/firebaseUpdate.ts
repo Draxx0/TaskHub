@@ -1,5 +1,5 @@
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "./firebase.config";
+import { db } from "../firebase.config";
 
 const docInCollection = async <T>({
   collection,

@@ -14,7 +14,7 @@ import { useToast } from "../ui/use-toast";
 import { authSchemas } from "../../validation/FormSchema";
 import { reauthenticateUser } from "@/service/auth/reauthenticateUser";
 import { updateUserEmail } from "@/service/auth/updateUserEmail";
-import { firebaseUpdate } from "@/service/firebaseUpdate";
+import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
 import { useUserStore } from "@/store/user.store";
 
 const ReauthenticateModal = ({

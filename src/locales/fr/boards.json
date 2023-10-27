@@ -32,7 +32,14 @@
     },
     "advanced": {
       "title": "Avancé",
-      "description": "Vous retrouverez ici tout les paramètres avancé."
+      "description": "Vous retrouverez ici tout les paramètres avancé.",
+      "delete": "Supprimer ce tableau"
+    },
+    "toast": {
+      "success": {
+        "title": "Le tableau a bien été supprimé.",
+        "description": "Votre tableau a bien été supprimé, retour à la page de votre atelier."
+      }
     }
   },
   "back": "Revenir à"
