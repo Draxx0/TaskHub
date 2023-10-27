@@ -17,3 +17,7 @@ h6 {
 .active > * {
   color: #603de1;
 }
+
+::file-selector-button {
+  display: none;
+}
