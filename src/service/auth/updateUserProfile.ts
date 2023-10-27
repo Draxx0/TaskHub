@@ -7,13 +7,13 @@ export const updateUserProfile = async ({
 }): Promise<User> => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
-  if (
-    !currentUser ||
-    currentUser.displayName === params.displayName ||
-    currentUser.photoURL === params.photoURL
-  ) {
+  console.log(currentUser);
+  console.log(params);
+  if (!currentUser) {
     throw new Error("User not found.");
   }
+
+  console.log(currentUser);
 
   await updateProfile(currentUser, {
     displayName: params.displayName || currentUser.displayName,

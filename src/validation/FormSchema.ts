@@ -12,7 +12,8 @@ const authLoginFormSchema = z.object({
 });
 
 const profileFormSchema = z.object({
-  username: z.string(),
+  username: z.string().optional(),
+  profilePicture: z.string().optional(),
 });
 
 const accountFormSchema = z.object({
