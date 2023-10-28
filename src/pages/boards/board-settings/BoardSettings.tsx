@@ -8,11 +8,12 @@ import { Board } from "@/utils/types/board";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { TabItem } from "@/utils/types/settings";
+import Back from "@/components/common/Back";
 
 const BoardSettings = ({ children }: { children: React.ReactElement }) => {
   const { t } = useTranslation(["boards"]);
   const tabs: TabItem[] = t("settings.tabs", { returnObjects: true });
-  const { id: boardId } = useParams();
+  const { workshopId, id: boardId } = useParams();
   const { data: board, isLoading } = useGetDoc<Board>({
     docReference: {
       path: "boards",
@@ -26,6 +27,11 @@ const BoardSettings = ({ children }: { children: React.ReactElement }) => {
     <Section>
       <>
         <div className="space-y-6">
+          <Back
+            url={`/workshops/${workshopId}/boardId/${boardId}`}
+            variant="link"
+            translate={t("back") + " " + board?.name}
+          />
           <div>
             {isLoading ? (
               <div className="space-y-4">
@@ -35,7 +41,8 @@ const BoardSettings = ({ children }: { children: React.ReactElement }) => {
             ) : board ? (
               <>
                 <h1 className="text-2xl font-bold">
-                  {t("settings.title")} {board.name}
+                  {t("settings.title")}{" "}
+                  <span className="text-main-500 underline">{board.name}</span>
                 </h1>
                 <p className="opacity-75">{t("settings.description")}</p>
               </>
