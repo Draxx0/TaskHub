@@ -7,19 +7,24 @@ const Board = () => {
     [key: string]: {
       id: string;
       title: string;
-      cards: { id: string; content: string }[];
+      cards: { id: string; title: string; content: string }[];
     };
   }>({
     "list-1": {
       id: "list-1",
       title: "Todo",
       cards: [
-        { id: "card-1", content: "Task 1" },
-        { id: "card-2", content: "Task 2" },
-        { id: "card-3", content: "Task 3" },
-        { id: "card-4", content: "Task 4" },
-        { id: "card-5", content: "Task 5" },
-        { id: "card-6", content: "Task 6" },
+        {
+          id: "card-1",
+          title: "Release Taskhub V1",
+          content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et gravida sem. Sed ornare rhoncus felis, a ornare tortor ultricies sed. Aenean sagittis mi at vulputate tincidunt. Nam sit amet enim semper, interdum orci non, tincidunt nibh. Duis vitae hendrerit eros, at euismod sapien.",
+        },
+        { id: "card-2", title: "Release Taskhub V1", content: "Task 2" },
+        { id: "card-3", title: "Release Taskhub V1", content: "Task 3" },
+        { id: "card-4", title: "Release Taskhub V1", content: "Task 4" },
+        { id: "card-5", title: "Release Taskhub V1", content: "Task 5" },
+        { id: "card-6", title: "Release Taskhub V1", content: "Task 6" },
       ],
     },
     "list-2": {
