@@ -42,5 +42,19 @@
       }
     }
   },
+  "list": {
+    "create": {
+      "title": "Créer une tâche",
+      "description": "Veuillez remplir les champs ci-dessous afin de créer une tâche.",
+      "task_title": "Titre de la tâche",
+      "task_title_placeholder": "Ceci est le titre de ma tâche",
+      "task_description": "Description de la tâche",
+      "task_description_placeholder": "Ceci est la description de ma tâche",
+      "task_goal_date": "Date d'échance",
+      "task_image": "Insérer une image",
+      "task_image_optionnal": "Ce champ est optionnel.",
+      "submit": "Ajouter ma tâche"
+    }
+  },
   "back": "Revenir à"
 }

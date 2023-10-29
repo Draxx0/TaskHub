@@ -1,19 +1,24 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
+import { FirebaseUpdateDoc } from "@/utils/types/firebase";
+import { parseDataForFirebase } from "../utils/parseDataForFirebase";
 
 const docInCollection = async <T>({
-  collection,
-  docId,
+  docReference,
   updateData,
-}: {
-  collection: string;
-  docId: string;
-  updateData: T;
-}) => {
+}: FirebaseUpdateDoc<T>) => {
   try {
-    const ref = doc(db, collection, docId);
+    const docRef = doc(
+      db,
+      docReference.path,
+      ...(docReference.pathSegments ? docReference.pathSegments : [])
+    );
 
-    await updateDoc(ref, JSON.parse(JSON.stringify(updateData)));
+    const toot = await getDoc(docRef);
+
+    console.log("doc ref", toot.data());
+
+    await updateDoc(docRef, parseDataForFirebase(updateData));
   } catch (error) {
     throw new Error("An error occured");
   }

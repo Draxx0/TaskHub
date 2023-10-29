@@ -17,10 +17,16 @@ const TaskCreate = ({
   onSubmitEvent,
   form,
   children,
+  dynamicTranslations,
 }: {
   onSubmitEvent: (event: React.FormEvent<HTMLFormElement>) => void;
   form: FormObject;
   children: React.ReactElement;
+  dynamicTranslations: {
+    sheetTitle: string;
+    sheetDescription: string;
+    submitText: string;
+  };
 }) => {
   return (
     <Sheet>
@@ -29,9 +35,9 @@ const TaskCreate = ({
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-4">
         <SheetHeader>
-          <SheetTitle>Créer une tâche</SheetTitle>
+          <SheetTitle>{dynamicTranslations.sheetTitle}</SheetTitle>
           <SheetDescription>
-            Veuillez remplir tous les champs afin de créer une tâche.
+            {dynamicTranslations.sheetDescription}
           </SheetDescription>
         </SheetHeader>
         <DefaultForm
@@ -39,15 +45,17 @@ const TaskCreate = ({
           onSubmitEvent={onSubmitEvent}
           hasSubmitButton={false}
         >
-          {children}
+          <>
+            {children}
+            <SheetFooter>
+              <SheetClose asChild>
+                <Button className="flex m-auto ml-0" type="submit">
+                  {dynamicTranslations.submitText}
+                </Button>
+              </SheetClose>
+            </SheetFooter>
+          </>
         </DefaultForm>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button className="flex m-auto ml-0" type="submit">
-              Ajouter ma tâche
-            </Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

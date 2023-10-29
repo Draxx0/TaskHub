@@ -32,12 +32,20 @@ const createBoardFormSchema = z.object({
   boardDescription: z.string().min(10),
 });
 
+const createTaskFormSchema = z.object({
+  taskTitle: z.string(),
+  taskContent: z.string().min(10),
+  taskDueDate: z.date(),
+  taskImage: z.string().optional(),
+});
+
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;
 export type authLoginFormObject = z.infer<typeof authLoginFormSchema>;
 export type profileFormObject = z.infer<typeof profileFormSchema>;
 export type accountFormObject = z.infer<typeof accountFormSchema>;
 export type createWorkshopFormObject = z.infer<typeof createWorkshopFormSchema>;
 export type createBoardFormObject = z.infer<typeof createBoardFormSchema>;
+export type createTaskFormObject = z.infer<typeof createTaskFormSchema>;
 
 export const authSchemas = {
   authSigninFormSchema,
@@ -55,4 +63,8 @@ export const workshopSchemas = {
 
 export const boardSchemas = {
   createBoardFormSchema,
+};
+
+export const taskSchemas = {
+  createTaskFormSchema,
 };

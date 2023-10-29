@@ -8,6 +8,12 @@ import { useTranslation } from "react-i18next";
 import DatePicker from "@/components/common/form/DatePicker";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { taskSchemas } from "@/validation/FormSchema";
+import { firebaseCreate } from "@/service/firestore/firebaseCreate";
+import { ICreateTask } from "@/utils/types/task";
+import { Timestamp, arrayUnion } from "firebase/firestore";
+import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
 
 interface ListProps {
   list: IList;
@@ -15,30 +21,119 @@ interface ListProps {
 }
 
 const List = ({ list }: ListProps) => {
-  const { t } = useTranslation("");
+  const { t } = useTranslation(["boards", "global"]);
+  const { toast } = useToast();
   const [date, setDate] = useState<Date>(new Date(Date.now()));
 
   const formObject: FormObject = {
     formName: "board-list-task-create-form",
     formData: [
       {
-        inputName: "task-name",
-        inputPlaceholder: t("create.board_title_placeholder"),
+        inputName: "task-title",
+        inputPlaceholder: t("list.create.task_title_placeholder"),
         inputType: "text",
-        labelText: t("create.board_title"),
+        labelText: t("list.create.task_title"),
       },
       {
         inputName: "task-content",
-        inputPlaceholder: t("create.board_description_placeholder"),
+        inputPlaceholder: t("list.create.task_description_placeholder"),
         inputType: "text",
-        labelText: t("create.board_description"),
+        labelText: t("list.create.task_description"),
         isTextarea: true,
       },
     ],
   };
 
-  const handleSubmitNewTask = (event: React.FormEvent<HTMLFormElement>) => {
+  const formValidation = (
+    taskTitle: string,
+    taskContent: string,
+    taskDueDate: Date,
+    taskImage?: string
+  ): boolean => {
+    try {
+      if (taskImage) {
+        const result = taskSchemas.createTaskFormSchema.safeParse({
+          taskTitle,
+          taskContent,
+          taskDueDate,
+          taskImage,
+        });
+        if (!result.success) {
+          return false;
+        }
+        return true;
+      }
+
+      const result = taskSchemas.createTaskFormSchema.safeParse({
+        taskTitle,
+        taskContent,
+        taskDueDate,
+      });
+
+      if (!result.success) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      toast({
+        title: t("global:errors.global_title"),
+        description: t("global:errors.global_description"),
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  console.log("list", list);
+
+  const handleSubmitNewTask = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+    const title = String(form.get("task-title"));
+    const content = String(form.get("task-content"));
+    const image = String(form.get("task-image"));
+
+    const isFormValid = formValidation(
+      title,
+      content,
+      date,
+      image ?? undefined
+    );
+
+    if (!isFormValid) {
+      throw new Error("The form is invalid");
+    }
+
+    console.log("current list", list);
+
+    try {
+      await firebaseUpdate.docInCollection<ICreateTask>({
+        docReference: {
+          path: "lists",
+          pathSegments: [list.id],
+        },
+        updateData: {
+          // Un peu perdu sur l'erreur sans le as TS ici :'(
+          tasks: arrayUnion({
+            ...(image ? { image: image.name } : {}),
+            title,
+            content,
+            dueDate: Timestamp.fromDate(date),
+          }) as any,
+        },
+      });
+    } catch (error) {
+      toast({
+        title: t("global:errors.global_title"),
+        description: t("global:errors.global_description"),
+        variant: "destructive",
+      });
+      throw new Error("An error occured during task creation");
+    }
   };
 
   return (
@@ -59,17 +154,27 @@ const List = ({ list }: ListProps) => {
         </div>
         <div className="flex gap-1">
           <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
-            <TaskCreate form={formObject} onSubmitEvent={handleSubmitNewTask}>
+            <TaskCreate
+              form={formObject}
+              dynamicTranslations={{
+                sheetDescription: t("list.create.description"),
+                sheetTitle: t("list.create.title"),
+                submitText: t("list.create.submit"),
+              }}
+              onSubmitEvent={handleSubmitNewTask}
+            >
               <>
                 <div className="flex flex-col gap-2">
-                  <label>Date d'écheance</label>
+                  <label>{t("list.create.task_goal_date")}</label>
                   <DatePicker date={date} setDate={setDate} />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label>Insérer une image</label>
-                  <Input type="file" />
-                  <small className="opacity-75">Ce champs est optionnel.</small>
+                  <label>{t("list.create.task_image")}</label>
+                  <Input type="file" name="task-image" />
+                  <small className="opacity-75">
+                    {t("list.create.task_image_optionnal")}
+                  </small>
                 </div>
               </>
             </TaskCreate>

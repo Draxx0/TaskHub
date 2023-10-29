@@ -42,5 +42,19 @@
       }
     }
   },
+  "list": {
+    "create": {
+      "title": "Create a task",
+      "description": "Please fill in the fields below to create a task.",
+      "task_title": "Task title",
+      "task_title_placeholder": "This is the title of my task",
+      "task_description": "Task description",
+      "task_description_placeholder": "This is the description of my task",
+      "task_goal_date": "Due date",
+      "task_image": "Insert an image",
+      "task_image_optionnal": "This field is optional.",
+      "submit": "Add task"
+    }
+  },
   "back": "Back to"
 }
