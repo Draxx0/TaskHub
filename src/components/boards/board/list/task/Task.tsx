@@ -6,17 +6,18 @@ import { Separator } from "@/components/ui/separator";
 import AvatarSelection from "@/components/common/form/AvatarSelection";
 import { useUserStore } from "@/store/user.store";
 import { Flag, MessageCircle, MoreHorizontal } from "lucide-react";
+import { Task as ITask } from "@/utils/types/task";
 
-interface CardProps {
-  card: { id: string; title: string; content: string };
+interface Props {
+  task: ITask;
   index: number;
 }
 
-const Card = ({ card, index }: CardProps) => {
+const Task = ({ task, index }: Props) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const { user } = useUserStore();
   return (
-    <Draggable draggableId={card.id} index={index}>
+    <Draggable draggableId={task.id} index={index}>
       {(provided: DraggableProvided) => (
         <div
           className="whitespace-normal"
@@ -37,14 +38,14 @@ const Card = ({ card, index }: CardProps) => {
               </div>
             </div>
             <CardContent>
-              <p className="font-bold mb-2">{card.title}</p>
+              <p className="font-bold mb-2">{task.title}</p>
               <div className="flex flex-col gap-4">
                 <p className="text-sm">
-                  {card.content.length > 50 ? (
+                  {task.content.length > 50 ? (
                     <>
                       {showFullContent
-                        ? card.content
-                        : card.content.substring(0, 50) + "..."}
+                        ? task.content
+                        : task.content.substring(0, 50) + "..."}
                       <button
                         onClick={() => setShowFullContent(!showFullContent)}
                         className="font-bold"
@@ -53,9 +54,12 @@ const Card = ({ card, index }: CardProps) => {
                       </button>
                     </>
                   ) : (
-                    card.content
+                    task.content
                   )}
                 </p>
+                {task.image && (
+                  <img src={task.image} alt="" className="rounded-md" />
+                )}
                 <div className="flex gap-3">
                   <div className="flex items-center gap-1">
                     <Flag size={16} className="text-gray-400" />
@@ -79,7 +83,7 @@ const Card = ({ card, index }: CardProps) => {
 
                   <div className="p-2 relative flex items-center gap-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
                     <MessageCircle size={20} className="text-gray-400" />
-                    <span className="text-xs">8</span>
+                    <span className="text-xs text-gray-400">8</span>
                   </div>
                 </div>
               </div>
@@ -91,4 +95,4 @@ const Card = ({ card, index }: CardProps) => {
   );
 };
 
-export default Card;
+export default Task;

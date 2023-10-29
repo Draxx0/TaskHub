@@ -1,4 +1,4 @@
-import BoardList from "@/components/boards/board/BoardList";
+import BoardList from "@/components/boards/board/BoardLists";
 import Back from "@/components/common/Back";
 import PageHeader from "@/components/common/PageHeader";
 import Section from "@/components/common/Section";
