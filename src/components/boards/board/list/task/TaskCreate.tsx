@@ -48,10 +48,12 @@ const TaskCreate = ({
           <>
             {children}
             <SheetFooter>
+              <Button className="flex m-auto ml-0" type="submit">
+                {dynamicTranslations.submitText}
+              </Button>
+
               <SheetClose asChild>
-                <Button className="flex m-auto ml-0" type="submit">
-                  {dynamicTranslations.submitText}
-                </Button>
+                <Button variant={"outline"}>Fermer l'onglet</Button>
               </SheetClose>
             </SheetFooter>
           </>

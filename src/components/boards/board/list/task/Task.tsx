@@ -1,12 +1,14 @@
 import { CardContent } from "@/components/ui/card";
 import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { Card as ShadCard } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import AvatarSelection from "@/components/common/form/AvatarSelection";
 import { useUserStore } from "@/store/user.store";
 import { Flag, MessageCircle, MoreHorizontal } from "lucide-react";
 import { Task as ITask } from "@/utils/types/task";
+import { formatDate } from "@/utils/functions/formatDate";
+import { storedLang } from "@/main";
 
 interface Props {
   task: ITask;
@@ -16,6 +18,9 @@ interface Props {
 const Task = ({ task, index }: Props) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const { user } = useUserStore();
+  useEffect(() => {
+    console.log("rendered with", task);
+  }, [task]);
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided: DraggableProvided) => (
@@ -38,9 +43,9 @@ const Task = ({ task, index }: Props) => {
               </div>
             </div>
             <CardContent>
-              <p className="font-bold mb-2">{task.title}</p>
+              <p className="font-bold mb-2 break-words">{task.title}</p>
               <div className="flex flex-col gap-4">
-                <p className="text-sm">
+                <p className="text-sm break-words">
                   {task.content.length > 50 ? (
                     <>
                       {showFullContent
@@ -64,7 +69,12 @@ const Task = ({ task, index }: Props) => {
                   <div className="flex items-center gap-1">
                     <Flag size={16} className="text-gray-400" />
                     {/* {goal date} */}
-                    <p className="opacity-75 text-xs font-semibold">22/12/23</p>
+                    <p className="opacity-75 text-xs font-semibold">
+                      {formatDate({
+                        date: task.dueDate,
+                        locale: storedLang || "fr",
+                      })}
+                    </p>
                   </div>
                 </div>
                 <Separator />

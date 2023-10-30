@@ -13,6 +13,7 @@ export interface ICreateTask {
     title: string;
     content: string;
     dueDate: Timestamp;
+    id: string;
     image?: string;
   };
 }

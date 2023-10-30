@@ -18,7 +18,7 @@ const docInCollection = async <T>({
 
     console.log("doc ref", toot.data());
 
-    await updateDoc(docRef, parseDataForFirebase(updateData));
+    await updateDoc(docRef, updateData);
   } catch (error) {
     throw new Error("An error occured");
   }

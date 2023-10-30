@@ -10,10 +10,13 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { taskSchemas } from "@/validation/FormSchema";
-import { firebaseCreate } from "@/service/firestore/firebaseCreate";
 import { ICreateTask } from "@/utils/types/task";
 import { Timestamp, arrayUnion } from "firebase/firestore";
 import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
+import { convertToBlob } from "@/utils/functions/convertToBlob";
+import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
+import { generateUUID } from "@/utils/functions/generateUUID";
+import { queryClient } from "@/main";
 
 interface ListProps {
   list: IList;
@@ -48,7 +51,7 @@ const List = ({ list }: ListProps) => {
     taskTitle: string,
     taskContent: string,
     taskDueDate: Date,
-    taskImage?: string
+    taskImage?: File
   ): boolean => {
     try {
       if (taskImage) {
@@ -56,7 +59,7 @@ const List = ({ list }: ListProps) => {
           taskTitle,
           taskContent,
           taskDueDate,
-          taskImage,
+          taskImage: taskImage.name,
         });
         if (!result.success) {
           return false;
@@ -85,17 +88,18 @@ const List = ({ list }: ListProps) => {
     }
   };
 
-  console.log("list", list);
-
   const handleSubmitNewTask = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
+    console.log("triggered");
     event.preventDefault();
 
     const form = new FormData(event.currentTarget);
     const title = String(form.get("task-title"));
     const content = String(form.get("task-content"));
-    const image = String(form.get("task-image"));
+    const image = convertToBlob(form.get("task-image") as File);
+
+    console.log("HERRRREE", title, content);
 
     const isFormValid = formValidation(
       title,
@@ -111,20 +115,49 @@ const List = ({ list }: ListProps) => {
     console.log("current list", list);
 
     try {
-      await firebaseUpdate.docInCollection<ICreateTask>({
-        docReference: {
-          path: "lists",
-          pathSegments: [list.id],
-        },
-        updateData: {
-          // Un peu perdu sur l'erreur sans le as TS ici :'(
-          tasks: arrayUnion({
-            ...(image ? { image: image.name } : {}),
-            title,
-            content,
-            dueDate: Timestamp.fromDate(date),
-          }) as any,
-        },
+      if (image) {
+        const imageUrl = await uploadImageInBucket(image);
+
+        await firebaseUpdate.docInCollection<ICreateTask>({
+          docReference: {
+            path: "lists",
+            pathSegments: [list.id],
+          },
+          updateData: {
+            // Un peu perdu sur l'erreur TS ici :'(
+            tasks: arrayUnion({
+              image: imageUrl,
+              title,
+              content,
+              id: generateUUID(),
+              dueDate: Timestamp.fromDate(new Date(date)),
+            }),
+          },
+        });
+      } else {
+        await firebaseUpdate.docInCollection<ICreateTask>({
+          docReference: {
+            path: "lists",
+            pathSegments: [list.id],
+          },
+          updateData: {
+            // Un peu perdu sur l'erreur TS ici :'(
+            tasks: arrayUnion({
+              title,
+              content,
+              id: generateUUID(),
+              dueDate: Timestamp.fromDate(new Date(date)),
+            }),
+          },
+        });
+      }
+
+      await queryClient.invalidateQueries({
+        queryKey: ["collection", "lists"],
+      });
+
+      toast({
+        title: t("toast.task_success.title"),
       });
     } catch (error) {
       toast({

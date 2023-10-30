@@ -11,6 +11,9 @@
     "success": {
       "title": "Le tableau a bien été crée",
       "description": "Votre Tableau a bien été créé, vous pouvez désormais vous y rendre et commencer à manager vos tâches !"
+    },
+    "task_success": {
+      "title": "La tâche a bien été crée !"
     }
   },
   "settings": {

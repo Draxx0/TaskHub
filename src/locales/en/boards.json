@@ -9,8 +9,11 @@
   },
   "toast": {
     "success": {
-      "title": "The board has been created",
+      "title": "The board has been created !",
       "description": "Your board has been created, and you can now go there and start managing your tasks!"
+    },
+    "task_success": {
+      "title": "The task has been created !"
     }
   },
   "settings": {
