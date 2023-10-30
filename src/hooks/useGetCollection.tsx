@@ -38,6 +38,7 @@ function useGetCollection<T>({
 
   return {
     ...query,
+    refetch: query.refetch,
   };
 }
 

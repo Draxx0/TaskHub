@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import List from "./list/List";
 import useGetCollection from "@/hooks/useGetCollection";
@@ -8,7 +8,7 @@ import { List as IList } from "@/utils/types/list";
 const BoardLists = () => {
   const { id: boardId } = useParams();
 
-  const { data: lists } = useGetCollection<IList>({
+  const { data: lists, refetch } = useGetCollection<IList>({
     docReference: {
       path: "lists",
     },
@@ -22,8 +22,9 @@ const BoardLists = () => {
     },
   });
 
-  console.log("LIST", lists);
-
+  useEffect(() => {
+    refetch();
+  }, [boardId, refetch]);
   const onDragEnd = useCallback(
     (result: DropResult) => {
       const { source, destination } = result;
