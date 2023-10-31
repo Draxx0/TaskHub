@@ -14,6 +14,9 @@
     },
     "task_success": {
       "title": "The task has been created !"
+    },
+    "list_success": {
+      "title": "The list has been created !"
     }
   },
   "settings": {
@@ -46,7 +49,16 @@
     }
   },
   "list": {
-    "create": {
+    "create-list": {
+      "title": "Create a list",
+      "description": "Please fill in the fields below to create a list.",
+      "list_title": "List title",
+      "list_title_placeholder": "This is the title of my list",
+      "list_color": "List color",
+      "list_color_small_text": "Color is a visual cue that you'll find in the form of a colored dot at the top left of your list.",
+      "submit": "Add list"
+    },
+    "create-task": {
       "title": "Create a task",
       "description": "Please fill in the fields below to create a task.",
       "task_title": "Task title",
@@ -55,7 +67,6 @@
       "task_description_placeholder": "This is the description of my task",
       "task_goal_date": "Due date",
       "task_image": "Insert an image",
-      "task_image_optionnal": "This field is optional.",
       "submit": "Add task"
     }
   },

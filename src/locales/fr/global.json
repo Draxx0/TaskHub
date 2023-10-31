@@ -12,6 +12,9 @@
     "cancel": "Retour",
     "submit": "Soumettre"
   },
+  "form": {
+    "optional_fiel": "Ce champ est optionnel."
+  },
   "errors": {
     "global_title": "Erreur",
     "global_description": "Oh non quelque chose s'est mal passé"

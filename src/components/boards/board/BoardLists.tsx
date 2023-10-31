@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import List from "./list/List";
 import useGetCollection from "@/hooks/useGetCollection";
@@ -25,6 +25,7 @@ const BoardLists = () => {
   useEffect(() => {
     refetch();
   }, [boardId, refetch]);
+
   const onDragEnd = useCallback(
     (result: DropResult) => {
       const { source, destination } = result;
@@ -36,9 +37,11 @@ const BoardLists = () => {
       }
 
       if (lists) {
-        const sourceList = lists.find((list) => list.id === source.droppableId);
-        const destList = lists.find(
-          (list) => list.id === destination.droppableId
+        const sourceList = lists?.find(
+          (list) => list.id === source.droppableId
+        );
+        const destList = lists?.find(
+          (list) => list.id === destination?.droppableId
         );
 
         const movedCard = sourceList?.tasks[source.index];

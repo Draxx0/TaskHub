@@ -12,6 +12,9 @@
     "cancel": "Cancel",
     "submit": "Submit"
   },
+  "form": {
+    "optional_fiel": "This field is optional."
+  },
   "errors": {
     "global_title": "Error",
     "global_description": "Oh no something went wrong !"

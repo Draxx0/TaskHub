@@ -1,7 +1,7 @@
 import { CardContent } from "@/components/ui/card";
 import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { Card as ShadCard } from "@/components/ui/card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import AvatarSelection from "@/components/common/form/AvatarSelection";
 import { useUserStore } from "@/store/user.store";
@@ -18,9 +18,7 @@ interface Props {
 const Task = ({ task, index }: Props) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const { user } = useUserStore();
-  useEffect(() => {
-    console.log("rendered with", task);
-  }, [task]);
+
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided: DraggableProvided) => (
@@ -68,7 +66,6 @@ const Task = ({ task, index }: Props) => {
                 <div className="flex gap-3">
                   <div className="flex items-center gap-1">
                     <Flag size={16} className="text-gray-400" />
-                    {/* {goal date} */}
                     <p className="opacity-75 text-xs font-semibold">
                       {formatDate({
                         date: task.dueDate,

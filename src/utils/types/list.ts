@@ -7,3 +7,10 @@ export interface List {
   color: string;
   tasks: Array<Task>;
 }
+
+export interface ICreateList {
+  boardId: string;
+  title: string;
+  color: string;
+  tasks: [];
+}
