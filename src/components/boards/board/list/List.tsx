@@ -1,6 +1,5 @@
 import { Droppable, DroppableProvided } from "react-beautiful-dnd";
 import Task from "./task/Task";
-import { MoreHorizontal } from "lucide-react";
 import { List as IList } from "@/utils/types/list";
 import TaskCreate from "./task/TaskCreate";
 import { FormObject } from "@/utils/types/form";
@@ -17,6 +16,7 @@ import { convertToBlob } from "@/utils/functions/convertToBlob";
 import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
 import { generateUUID } from "@/utils/functions/generateUUID";
 import { queryClient } from "@/main";
+import ListSettings from "./ListSettings";
 
 interface ListProps {
   list: IList;
@@ -28,7 +28,7 @@ const List = ({ list }: ListProps) => {
   const { toast } = useToast();
   const [date, setDate] = useState<Date>(new Date(Date.now()));
 
-  const formObject: FormObject = {
+  const newTaskFormObject: FormObject = {
     formName: "board-list-task-create-form",
     formData: [
       {
@@ -115,7 +115,7 @@ const List = ({ list }: ListProps) => {
     }
 
     try {
-      if (image) {
+      if (image?.name) {
         const imageUrl = await uploadImageInBucket(image);
 
         await firebaseUpdate.docInCollection<ICreateTask>({
@@ -169,18 +169,18 @@ const List = ({ list }: ListProps) => {
     }
   };
 
-  const parseColorToTailwind = (hex: string) => {
-    return `bg-[${hex}]`;
-  };
   return (
     <div className="bg-gray-100/75 border border-gray-200 rounded-lg relative inline-block min-w-[400px] max-w-[400px] align-top transition ease-in-out overflow-hidden overflow-y-scroll duration-300 p-3 min-h-[600px] max-h-[600px] space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div
-            className={`rounded-full w-2 h-2 ${
-              list.color ? parseColorToTailwind(list.color) : "bg-main-500"
-            }
+            className={`rounded-full w-2 h-2 
               }`}
+            style={
+              list.color
+                ? { backgroundColor: list.color }
+                : { backgroundColor: "#603DE1" }
+            }
           ></div>
           <h2 className="capitalize font-bold cursor-default">{list.title}</h2>
           <div className="flex items-center w-6 h-6 justify-center p-2 bg-gray-200 rounded-full">
@@ -192,7 +192,7 @@ const List = ({ list }: ListProps) => {
         <div className="flex gap-1">
           <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
             <TaskCreate
-              form={formObject}
+              form={newTaskFormObject}
               dynamicTranslations={{
                 sheetDescription: t("list.create-task.description"),
                 sheetTitle: t("list.create-task.title"),
@@ -217,7 +217,14 @@ const List = ({ list }: ListProps) => {
             </TaskCreate>
           </div>
           <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
-            <MoreHorizontal size={20} className="text-gray-400" />
+            <ListSettings
+              dynamicTranslations={{
+                sheetDescription: t("list.create-task.description"),
+                sheetTitle: t("list.create-task.title"),
+                submitText: t("list.create-task.submit"),
+              }}
+              listData={list}
+            />
           </div>
         </div>
       </div>

@@ -11,7 +11,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { FormObject } from "@/utils/types/form";
-import { Plus } from "lucide-react";
 
 const ListCreate = ({
   onSubmitEvent,
