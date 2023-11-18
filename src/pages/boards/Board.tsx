@@ -12,6 +12,7 @@ import { TEN_MIN_STATE_TIME } from "@/constant/reactQuery.constant";
 import useGetDoc from "@/hooks/useGetDoc";
 import { queryClient } from "@/main";
 import { firebaseCreate } from "@/service/firestore/firebaseCreate";
+import { usePreferencesStore } from "@/store/preferences.store";
 import { Board as IBoard } from "@/utils/types/board";
 import { FormObject } from "@/utils/types/form";
 import { ICreateList } from "@/utils/types/list";
@@ -23,6 +24,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const Board = () => {
   const { t } = useTranslation(["boards", "global"]);
   const { toast } = useToast();
+  const { addFavorite, favorites, removeFavorite } = usePreferencesStore();
   const { id: boardId, workshopId } = useParams();
   const location = useLocation();
   const {
@@ -39,6 +41,8 @@ const Board = () => {
       enabled: !!boardId,
     },
   });
+
+  console.log("check at board", board);
 
   const { data: workshop } = useGetDoc<Workshop>({
     docReference: {
@@ -154,7 +158,21 @@ const Board = () => {
             />
             <PageHeader title={board.name} description={board.description}>
               <div className="flex gap-3 items-center">
-                <Button variant={"secondary"}>Ajouter aux favoris</Button>
+                {favorites.some((favorite) => favorite.id === board.id) ? (
+                  <Button
+                    variant={"secondary"}
+                    onClick={() => removeFavorite(board)}
+                  >
+                    Retirer des favoris
+                  </Button>
+                ) : (
+                  <Button
+                    variant={"outline"}
+                    onClick={() => addFavorite(board)}
+                  >
+                    Ajouter aux favoris
+                  </Button>
+                )}
                 <Button variant={"outline"} asChild>
                   <Link to={`${location.pathname}/settings/general`}>
                     Modifier

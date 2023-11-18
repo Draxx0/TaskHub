@@ -1,11 +1,10 @@
-import { Workshop } from "./workshop";
 import { ITimestamp } from "./timestamp";
 
 export interface Board extends ITimestamp {
   id: string;
   name: string;
   description: string;
-  workshop: Workshop;
+  workshopId: string;
 }
 
 export type WorkshopBoardRef = { id: string };
