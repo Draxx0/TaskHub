@@ -142,6 +142,24 @@ const Board = () => {
     }
   };
 
+  const handleFavorite = (method: "add" | "remove") => {
+    if (board) {
+      if (method === "add") {
+        addFavorite(board);
+
+        toast({
+          title: t("favorite.toast.add_success"),
+        });
+      } else {
+        removeFavorite(board);
+
+        toast({
+          title: t("favorite.toast.remove_success"),
+        });
+      }
+    }
+  };
+
   return (
     <Section>
       <>
@@ -161,16 +179,16 @@ const Board = () => {
                 {favorites.some((favorite) => favorite.id === board.id) ? (
                   <Button
                     variant={"secondary"}
-                    onClick={() => removeFavorite(board)}
+                    onClick={() => handleFavorite("remove")}
                   >
-                    Retirer des favoris
+                    {t("favorite.remove")}
                   </Button>
                 ) : (
                   <Button
                     variant={"outline"}
-                    onClick={() => addFavorite(board)}
+                    onClick={() => handleFavorite("add")}
                   >
-                    Ajouter aux favoris
+                    {t("favorite.add")}
                   </Button>
                 )}
                 <Button variant={"outline"} asChild>

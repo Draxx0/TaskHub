@@ -9,6 +9,7 @@ import { Flag, MessageCircle, MoreHorizontal } from "lucide-react";
 import { Task as ITask } from "@/utils/types/task";
 import { formatDate } from "@/utils/functions/formatDate";
 import { storedLang } from "@/main";
+import TaskPriorityBadge from "./TaskPriorityBadge";
 
 interface Props {
   task: ITask;
@@ -31,10 +32,7 @@ const Task = ({ task, index }: Props) => {
           <ShadCard className="space-y-4">
             <div className="flex justify-between items-center px-6 pt-6">
               <div className="flex items-center gap-2">
-                {/* Insert here task tag(s) create Tag component*/}
-                <div className="px-3 py-1 rounded-md bg-green-300/50 flex items-center justify-center">
-                  <span className="text-green-700 text-xs">Low</span>
-                </div>
+                <TaskPriorityBadge priority={task.priority} />
               </div>
               <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
                 <MoreHorizontal size={20} className="text-gray-400" />

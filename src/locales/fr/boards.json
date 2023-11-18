@@ -7,6 +7,14 @@
     "board_description": "Description du tableau",
     "board_description_placeholder": "Tableau de gestion des tâches pour notre client X"
   },
+  "favorite": {
+    "add": "Ajouter aux favoris",
+    "remove": "Retirer des favoris",
+    "toast": {
+      "add_success": "Le tableau a bien été ajouté aux favoris",
+      "remove_success": "Le tableau a bien été retiré des favoris"
+    }
+  },
   "toast": {
     "success": {
       "title": "Le tableau a bien été crée",

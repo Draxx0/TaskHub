@@ -17,6 +17,15 @@ import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
 import { generateUUID } from "@/utils/functions/generateUUID";
 import { queryClient } from "@/main";
 import ListSettings from "./ListSettings";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ListProps {
   list: IList;
@@ -51,6 +60,7 @@ const List = ({ list }: ListProps) => {
     taskTitle: string,
     taskContent: string,
     taskDueDate: Date,
+    taskPriority?: string,
     taskImage?: File
   ): boolean => {
     try {
@@ -59,6 +69,7 @@ const List = ({ list }: ListProps) => {
           taskTitle,
           taskContent,
           taskDueDate,
+          taskPriority,
           taskImage: taskImage.name,
         });
         if (!result.success) {
@@ -96,12 +107,14 @@ const List = ({ list }: ListProps) => {
     const form = new FormData(event.currentTarget);
     const title = String(form.get("task-title"));
     const content = String(form.get("task-content"));
+    const priority = String(form.get("task-priority"));
     const image = convertToBlob(form.get("task-image") as File);
 
     const isFormValid = formValidation(
       title,
       content,
       date,
+      priority,
       image ?? undefined
     );
 
@@ -129,8 +142,10 @@ const List = ({ list }: ListProps) => {
               image: imageUrl,
               title,
               content,
+              priority,
               id: generateUUID(),
               dueDate: Timestamp.fromDate(new Date(date)),
+              messages: [],
             }),
           },
         });
@@ -145,8 +160,10 @@ const List = ({ list }: ListProps) => {
             tasks: arrayUnion({
               title,
               content,
+              priority,
               id: generateUUID(),
               dueDate: Timestamp.fromDate(new Date(date)),
+              messages: [],
             }),
           },
         });
@@ -204,6 +221,23 @@ const List = ({ list }: ListProps) => {
                 <div className="flex flex-col gap-2">
                   <label>{t("list.create-task.task_goal_date")}</label>
                   <DatePicker date={date} setDate={setDate} />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label>Priorité</label>
+                  <Select name="task-priority">
+                    <SelectTrigger className="w-full" id="profil">
+                      <SelectValue placeholder="Sélectioner une priorité" />
+                    </SelectTrigger>
+                    <SelectContent position="item-aligned">
+                      <SelectGroup>
+                        <SelectLabel>Sélectioner une priorité</SelectLabel>
+                        <SelectItem value={"Low"}>Low</SelectItem>
+                        <SelectItem value={"Medium"}>Medium</SelectItem>
+                        <SelectItem value={"High"}>High</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="flex flex-col gap-2">

@@ -42,6 +42,7 @@ const createTaskFormSchema = z.object({
   taskContent: z.string().min(10),
   taskDueDate: z.date(),
   taskImage: z.string().optional(),
+  taskPriority: z.string(),
 });
 
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;

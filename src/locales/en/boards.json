@@ -7,6 +7,14 @@
     "board_description": "Board description",
     "board_description_placeholder": "Task management board for our customer X"
   },
+  "favorite": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "toast": {
+      "add_success": "The board has been added to your favorites",
+      "remove_success": "The board has been removed from your favorites"
+    }
+  },
   "toast": {
     "success": {
       "title": "The board has been created !",
