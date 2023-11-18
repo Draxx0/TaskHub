@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import List from "./list/List";
 import useGetCollection from "@/hooks/useGetCollection";
 import { useParams } from "react-router-dom";
 import { List as IList } from "@/utils/types/list";
+import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
 
 const BoardLists = () => {
   const { id: boardId } = useParams();
@@ -27,10 +28,8 @@ const BoardLists = () => {
   }, [boardId, refetch]);
 
   const onDragEnd = useCallback(
-    (result: DropResult) => {
+    async (result: DropResult) => {
       const { source, destination } = result;
-
-      return;
 
       if (!destination) {
         return;
@@ -40,25 +39,42 @@ const BoardLists = () => {
         const sourceList = lists?.find(
           (list) => list.id === source.droppableId
         );
+
         const destList = lists?.find(
           (list) => list.id === destination?.droppableId
         );
 
         const movedCard = sourceList?.tasks[source.index];
-        if (movedCard) {
-          // Retirez la carte de la liste source
-          sourceList.tasks.splice(source.index, 1);
 
-          // Insérez la carte dans la liste de destination à la position appropriée
+        if (movedCard) {
+          sourceList.tasks.splice(source.index, 1);
           if (destList) {
-            //   destList.tasks.splice(destination.index, 0, movedCard);
-            //   db.collection("lists")
-            //     .doc(sourceList.id)
-            //     .update({ tasks: sourceList.tasks });
-            //   db.collection("lists")
-            //     .doc(destList.id)
-            //     .update({ tasks: destList.tasks });
-            // }
+            destList.tasks.splice(destination.index, 0, movedCard);
+
+            if (sourceList && destList) {
+              await Promise.all([
+                firebaseUpdate.docInCollection<IList>({
+                  docReference: {
+                    path: "lists",
+                    pathSegments: [sourceList.id],
+                  },
+                  updateData: {
+                    ...sourceList,
+                    tasks: sourceList.tasks,
+                  },
+                }),
+                firebaseUpdate.docInCollection<IList>({
+                  docReference: {
+                    path: "lists",
+                    pathSegments: [destList.id],
+                  },
+                  updateData: {
+                    ...destList,
+                    tasks: destList.tasks,
+                  },
+                }),
+              ]);
+            }
           }
         }
       }
