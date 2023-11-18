@@ -7,7 +7,7 @@ import { FormObject } from "@/utils/types/form";
 import { queryClient } from "@/main";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/service/firebase.config";
-import { convertToBlob } from "@/service/utils/convertToBlob";
+import { convertToBlob } from "@/utils/functions/convertToBlob";
 import { uploadImageInBucket } from "@/service/storage/uploadInBucket";
 import { WorkshopCreate as IWorkshopCreate } from "@/utils/types/workshop";
 

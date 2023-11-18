@@ -24,11 +24,9 @@ const WorkshopsItem = ({ workshop }: { workshop: Workshop }) => {
       pathSegments: [workshop.id, "boards"],
     },
     queryOptions: {
-      enabled: true,
+      enabled: !!workshop.id,
     },
   });
-
-  console.log(workshopBoards);
   return (
     <Card className="hover:border-main-500 transition ease-in-out duration-300">
       <CardHeader className="p-0">
@@ -40,7 +38,9 @@ const WorkshopsItem = ({ workshop }: { workshop: Workshop }) => {
         <div className="p-4 flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <div className="w-12 h-12 bg-main-500/30 flex items-center justify-center rounded-lg p-2">
-              <p className="font-bold text-main-500">{workshop.name[0]}</p>
+              <p className="font-bold text-main-500 uppercase">
+                {workshop.name[0]}
+              </p>
             </div>
             <CardTitle className="capitalize truncate">
               {workshop.name}

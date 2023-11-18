@@ -7,10 +7,30 @@
     "board_description": "Board description",
     "board_description_placeholder": "Task management board for our customer X"
   },
+  "favorite": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "toast": {
+      "add_success": "The board has been added to your favorites",
+      "remove_success": "The board has been removed from your favorites"
+    }
+  },
   "toast": {
     "success": {
-      "title": "The board has been created",
+      "title": "The board has been created !",
       "description": "Your board has been created, and you can now go there and start managing your tasks!"
+    },
+    "task_success": {
+      "title": "The task has been created !"
+    },
+    "list_success": {
+      "title": "The list has been created !"
+    },
+    "update_list_success": {
+      "title": "The list has been updated !"
+    },
+    "delete_list_success": {
+      "title": "The list has been deleted !"
     }
   },
   "settings": {
@@ -40,6 +60,44 @@
         "title": "The board has been deleted.",
         "description": "Your board has been deleted, return to your workshop page."
       }
+    }
+  },
+  "list": {
+    "create-list": {
+      "title": "Create a list",
+      "description": "Please fill in the fields below to create a list.",
+      "list_title": "List title",
+      "list_title_placeholder": "This is the title of my list",
+      "list_color": "List color",
+      "list_color_small_text": "Color is a visual cue that you'll find in the form of a colored dot at the top left of your list.",
+      "submit": "Add list"
+    },
+    "update-list": {
+      "title": "Update a list",
+      "description": "The fields have been pre-filled with the list informations, so you can modify them as you wish.",
+      "submit": "Update list",
+      "delete": "Delete list"
+    },
+    "create-task": {
+      "title": "Create a task",
+      "description": "Please fill in the fields below to create a task.",
+      "task_title": "Task title",
+      "task_title_placeholder": "This is the title of my task",
+      "task_description": "Task description",
+      "task_description_placeholder": "This is the description of my task",
+      "task_goal_date": "Due date",
+      "task_priority": "Task priority",
+      "task_priority_placeholder": "Select a priority",
+      "task_priority_low": "Low",
+      "task_priority_medium": "Medium",
+      "task_priority_high": "High",
+      "task_image": "Insert an image",
+      "submit": "Add task"
+    },
+    "update-task": {
+      "title": "Update a task",
+      "description": "The fields have been pre-filled with the task informations, so you can modify them as you wish.",
+      "submit": "Update task"
     }
   },
   "back": "Back to"

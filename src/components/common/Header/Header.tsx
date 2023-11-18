@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import NavigationList from "./NavigationList";
 import { Separator } from "@/components/ui/separator";
+import Favorites from "./Favorites";
 
 const Header = () => {
   return (
     <nav className="w-[13%] h-screen fixed left-0 border-r bg-main-gray border-gray-200/75">
-
-      <div className="flex flex-col py-4 px-6">
+      <div className="flex flex-col py-4 px-6 space-y-6">
         <div className="flex flex-col gap-10">
           <div className="flex justify-between items-center">
             <Link to="/" className="cursor-pointer">
@@ -31,12 +31,11 @@ const Header = () => {
 
           <Separator />
         </div>
+        <div className="space-y-6">
+          <span className="font-bold text-lg">Favoris</span>
+          <Favorites />
+        </div>
       </div>
-
-      {/* 
-      <div>
-        INVITE TEAMMATES BUTTON DISPLAY ONLY WHEN ON /WORKSHOPS/ID/BOARDS/ID
-      </div> */}
     </nav>
   );
 };

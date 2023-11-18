@@ -37,11 +37,8 @@ const AdvancedSettings = () => {
           await firebaseDelete.deleteDocWithDocRef(boardDocRef);
         }
 
-        //!
-
         await queryClient.invalidateQueries({
-          exact: true,
-          queryKey: ["boards"],
+          queryKey: ["collection", "boards"],
         });
 
         toast({

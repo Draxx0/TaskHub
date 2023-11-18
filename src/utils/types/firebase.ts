@@ -16,6 +16,10 @@ export interface FirebaseCreateDoc<T> extends FirebaseDoc {
   };
 }
 
+export interface FirebaseUpdateDoc<T> extends FirebaseDoc {
+  updateData: T;
+}
+
 export interface FirebaseCreateCollectionInDoc<K> extends FirebaseDoc {
   collectionName: string;
   newCollectionFirstDoc?: K;
