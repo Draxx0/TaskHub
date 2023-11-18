@@ -42,8 +42,6 @@ const Board = () => {
     },
   });
 
-  console.log("check at board", board);
-
   const { data: workshop } = useGetDoc<Workshop>({
     docReference: {
       path: "workshops",
@@ -96,8 +94,6 @@ const Board = () => {
     const form = new FormData(event.currentTarget);
     const listTitle = String(form.get("list-title"));
     const listColor = String(form.get("list-color"));
-
-    console.log("list color", listColor);
 
     const isFormValid = formValidation(listTitle, listColor);
 

@@ -28,21 +28,21 @@ const createWorkshopFormSchema = z.object({
 });
 
 const createBoardFormSchema = z.object({
-  boardTitle: z.string().min(4),
+  boardTitle: z.string().min(1),
   boardDescription: z.string().min(10),
 });
 
 const createListFormSchema = z.object({
-  listTitle: z.string().min(4),
-  listColor: z.string(),
+  listTitle: z.string().min(1),
+  listColor: z.string().min(1),
 });
 
 const createTaskFormSchema = z.object({
-  taskTitle: z.string(),
+  taskTitle: z.string().min(1),
   taskContent: z.string().min(10),
   taskDueDate: z.date(),
   taskImage: z.string().optional(),
-  taskPriority: z.string(),
+  taskPriority: z.string().min(1),
 });
 
 export type authSigninFormObject = z.infer<typeof authSigninFormSchema>;

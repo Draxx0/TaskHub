@@ -25,6 +25,12 @@
     },
     "list_success": {
       "title": "La liste à bien été crée !"
+    },
+    "update_list_success": {
+      "title": "La liste à bien été modifiée !"
+    },
+    "delete_list_success": {
+      "title": "La liste à bien été supprimée !"
     }
   },
   "settings": {
@@ -62,9 +68,15 @@
       "description": "Veuillez remplir les champs ci-dessous afin de créer une liste.",
       "list_title": "Titre de la liste",
       "list_title_placeholder": "Ceci est le titre de ma liste",
-      "list_color": "Description de la tâche",
+      "list_color": "Couleur de dinstinction",
       "list_color_small_text": "La couleur est un repère visuel que vous retrouvez sous la forme de point de couleur en haut à gauche de votre liste.",
       "submit": "Ajouter ma liste"
+    },
+    "update-list": {
+      "title": "Modifier une liste",
+      "description": "Les champs ont été pré-remplis avec les informations de la liste, vous pouvez les modifier à votre guise.",
+      "submit": "Modifier ma liste",
+      "delete": "Supprimer la liste"
     },
     "create-task": {
       "title": "Créer une tâche",
@@ -74,9 +86,19 @@
       "task_description": "Description de la tâche",
       "task_description_placeholder": "Ceci est la description de ma tâche",
       "task_goal_date": "Date d'échance",
+      "task_priority": "Priorité de la tâche",
+      "task_priority_placeholder": "Selectionnez une priorité",
+      "task_priority_low": "Basse",
+      "task_priority_medium": "Moyenne",
+      "task_priority_high": "Haute",
       "task_image": "Insérer une image",
       "task_image_optionnal": "Ce champ est optionnel.",
       "submit": "Ajouter ma tâche"
+    },
+    "update-task": {
+      "title": "Modifier une tâche",
+      "description": "Les champs ont été pré-remplis avec les informations de la tâche, vous pouvez les modifier à votre guise.",
+      "submit": "Modifier ma tâche"
     }
   },
   "back": "Revenir à"

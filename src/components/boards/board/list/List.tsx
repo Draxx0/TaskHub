@@ -224,17 +224,25 @@ const List = ({ list }: ListProps) => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label>Priorité</label>
+                  <label>{t("list.create-task.task_priority")}</label>
                   <Select name="task-priority">
                     <SelectTrigger className="w-full" id="profil">
                       <SelectValue placeholder="Sélectioner une priorité" />
                     </SelectTrigger>
                     <SelectContent position="item-aligned">
                       <SelectGroup>
-                        <SelectLabel>Sélectioner une priorité</SelectLabel>
-                        <SelectItem value={"Low"}>Low</SelectItem>
-                        <SelectItem value={"Medium"}>Medium</SelectItem>
-                        <SelectItem value={"High"}>High</SelectItem>
+                        <SelectLabel>
+                          {t("list.create-task.task_priority_placeholder")}
+                        </SelectLabel>
+                        <SelectItem value={"Low"}>
+                          {t("list.create-task.task_priority_low")}
+                        </SelectItem>
+                        <SelectItem value={"Medium"}>
+                          {t("list.create-task.task_priority_medium")}
+                        </SelectItem>
+                        <SelectItem value={"High"}>
+                          {t("list.create-task.task_priority_high")}
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -253,9 +261,9 @@ const List = ({ list }: ListProps) => {
           <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
             <ListSettings
               dynamicTranslations={{
-                sheetDescription: t("list.create-task.description"),
-                sheetTitle: t("list.create-task.title"),
-                submitText: t("list.create-task.submit"),
+                sheetDescription: t("list.update-list.description"),
+                sheetTitle: t("list.update-list.title"),
+                submitText: t("list.update-list.submit"),
               }}
               listData={list}
             />

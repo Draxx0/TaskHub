@@ -14,3 +14,5 @@ export interface ICreateList {
   color: string;
   tasks: [];
 }
+
+export type UpdateList = Omit<ICreateList, "boardId" | "tasks">;
