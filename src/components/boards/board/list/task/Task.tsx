@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import AvatarSelection from "@/components/common/form/AvatarSelection";
 import { useUserStore } from "@/store/user.store";
-import { BadgeCheck, Flag, MessageCircle, MoreHorizontal } from "lucide-react";
+import { BadgeCheck, Flag, MoreHorizontal } from "lucide-react";
 import { Task as ITask } from "@/utils/types/task";
 import { formatDate } from "@/utils/functions/formatDate";
 import { storedLang } from "@/main";
@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTranslation } from "react-i18next";
+import TaskMessages from "./task-messages/TaskMessages";
 
 interface Props {
   task: ITask;
@@ -110,12 +111,7 @@ const Task = ({ task, index }: Props) => {
                     </div>
                   )}
 
-                  <div className="p-2 relative flex items-center gap-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
-                    <MessageCircle size={20} className="text-gray-400" />
-                    <span className="text-xs text-gray-400">
-                      {task.messages.length}
-                    </span>
-                  </div>
+                  <TaskMessages task={task} />
                 </div>
               </div>
             </CardContent>
