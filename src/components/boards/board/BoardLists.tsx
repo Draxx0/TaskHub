@@ -5,6 +5,7 @@ import useGetCollection from "@/hooks/useGetCollection";
 import { useParams } from "react-router-dom";
 import { List as IList } from "@/utils/types/list";
 import { firebaseUpdate } from "@/service/firestore/firebaseUpdate";
+import { queryClient } from "@/main";
 
 const BoardLists = () => {
   const { id: boardId } = useParams();
@@ -74,6 +75,10 @@ const BoardLists = () => {
                   },
                 }),
               ]);
+
+              await queryClient.invalidateQueries({
+                queryKey: ["collection", "lists"],
+              });
             }
           }
         }
