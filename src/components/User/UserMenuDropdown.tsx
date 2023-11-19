@@ -44,24 +44,24 @@ const UserMenuDropdown = ({
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("dropdown.title")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link to="/settings/profile">
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
               <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <span>{t("dropdown.profile")}</span>
             </DropdownMenuItem>
           </Link>
           <Link to="/settings/account">
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <span>{t("dropdown.account")}</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem className="cursor-pointer" onClick={logout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{t("utils.disconnect")}</span>
         </DropdownMenuItem>
