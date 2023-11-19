@@ -17,6 +17,7 @@ const UserBadgeDisplay = () => {
     try {
       logoutUserInZustand();
       await signOut(auth);
+      localStorage.removeItem("user");
       navigate("/auth/login");
     } catch (error) {
       console.error("Error during disconnect :", error);
@@ -45,11 +46,7 @@ const UserBadgeDisplay = () => {
     <div className="flex items-center gap-4">
       {user.photoURL ? (
         <UserMenuDropdown photoURL={user.photoURL} logout={handleLogout} />
-      ) : (
-        <p>
-          Connected as {user.displayName || user.email?.slice(0, 10) + "..."}
-        </p>
-      )}
+      ) : null}
     </div>
   );
 };
