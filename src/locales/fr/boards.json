@@ -98,7 +98,8 @@
     "update-task": {
       "title": "Modifier une tâche",
       "description": "Les champs ont été pré-remplis avec les informations de la tâche, vous pouvez les modifier à votre guise.",
-      "submit": "Modifier ma tâche"
+      "submit": "Modifier ma tâche",
+      "task_done": "Tâche terminée !"
     }
   },
   "back": "Revenir à"

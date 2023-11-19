@@ -97,7 +97,8 @@
     "update-task": {
       "title": "Update a task",
       "description": "The fields have been pre-filled with the task informations, so you can modify them as you wish.",
-      "submit": "Update task"
+      "submit": "Update task",
+      "task_done": "Mark task as done !"
     }
   },
   "back": "Back to"
