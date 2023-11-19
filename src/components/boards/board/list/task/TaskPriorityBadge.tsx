@@ -1,10 +1,13 @@
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 const TaskPriorityBadge = ({
   priority,
 }: {
   priority: "Low" | "Medium" | "High";
 }) => {
+  const { t } = useTranslation("boards");
+
   const priorityContainerClass = clsx(
     {
       "bg-green-300/50": priority === "Low",
@@ -23,9 +26,22 @@ const TaskPriorityBadge = ({
     "text-xs"
   );
 
+  const priorityTranslation = () => {
+    switch (priority) {
+      case "Low":
+        return t("list.create-task.task_priority_low");
+      case "Medium":
+        return t("list.create-task.task_priority_medium");
+      case "High":
+        return t("list.create-task.task_priority_high");
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={priorityContainerClass}>
-      <span className={priorityClass}>{priority}</span>
+      <span className={priorityClass}>{priorityTranslation()}</span>
     </div>
   );
 };
