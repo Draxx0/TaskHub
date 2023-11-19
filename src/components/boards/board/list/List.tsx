@@ -210,6 +210,7 @@ const List = ({ list }: ListProps) => {
           <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
             <TaskCreate
               form={newTaskFormObject}
+              list={list}
               dynamicTranslations={{
                 sheetDescription: t("list.create-task.description"),
                 sheetTitle: t("list.create-task.title"),
@@ -279,7 +280,7 @@ const List = ({ list }: ListProps) => {
           >
             {list.tasks && list.tasks.length > 0 ? (
               list.tasks.map((task, index) => (
-                <Task key={index} task={task} index={index} />
+                <Task list={list} key={index} task={task} index={index} />
               ))
             ) : (
               <div className="whitespace-normal text-center">

@@ -11,6 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { FormObject } from "@/utils/types/form";
+import { List } from "@/utils/types/list";
 import { Plus } from "lucide-react";
 
 const TaskCreate = ({
@@ -18,6 +19,7 @@ const TaskCreate = ({
   form,
   children,
   dynamicTranslations,
+  list,
 }: {
   onSubmitEvent: (event: React.FormEvent<HTMLFormElement>) => void;
   form: FormObject;
@@ -27,6 +29,7 @@ const TaskCreate = ({
     sheetDescription: string;
     submitText: string;
   };
+  list: List;
 }) => {
   return (
     <Sheet>
@@ -35,7 +38,12 @@ const TaskCreate = ({
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-4">
         <SheetHeader>
-          <SheetTitle>{dynamicTranslations.sheetTitle}</SheetTitle>
+          <SheetTitle>
+            <span className="text-main-500 underline font-bold">
+              {list.title}
+            </span>{" "}
+            - {dynamicTranslations.sheetTitle}
+          </SheetTitle>
           <SheetDescription>
             {dynamicTranslations.sheetDescription}
           </SheetDescription>

@@ -18,13 +18,15 @@ import {
 } from "@/components/ui/tooltip";
 import { useTranslation } from "react-i18next";
 import TaskMessages from "./task-messages/TaskMessages";
+import { List } from "@/utils/types/list";
 
 interface Props {
   task: ITask;
+  list: List;
   index: number;
 }
 
-const Task = ({ task, index }: Props) => {
+const Task = ({ task, index, list }: Props) => {
   const { t } = useTranslation("boards");
   const [showFullContent, setShowFullContent] = useState(false);
   const { user } = useUserStore();
@@ -111,7 +113,7 @@ const Task = ({ task, index }: Props) => {
                     </div>
                   )}
 
-                  <TaskMessages task={task} />
+                  <TaskMessages task={task} list={list} />
                 </div>
               </div>
             </CardContent>

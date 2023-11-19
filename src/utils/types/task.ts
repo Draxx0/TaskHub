@@ -16,7 +16,8 @@ export interface Message {
   content: string;
   image?: string;
   createdAt: Timestamp;
-  user: User;
+  // userId: string;
+  user: Pick<User, "uid" | "displayName" | "photoURL" | "email">;
 }
 
 export type ICreateMessage = Omit<Message, "id" | "createdAt">;

@@ -1,10 +1,8 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -12,8 +10,12 @@ import {
 import { Task } from "@/utils/types/task";
 import { MessageCircle } from "lucide-react";
 import TaskMessage from "./TaskMessage";
+import TaskMessageCreate from "./TaskMessageCreate";
+import { Button } from "@/components/ui/button";
+import { List } from "@/utils/types/list";
+import { Separator } from "@/components/ui/separator";
 
-const TaskMessages = ({ task }: { task: Task }) => {
+const TaskMessages = ({ task, list }: { task: Task; list: List }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -22,21 +24,39 @@ const TaskMessages = ({ task }: { task: Task }) => {
           <span className="text-xs text-gray-400">{task.messages.length}</span>
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Fil de discussion</AlertDialogTitle>
-          <AlertDialogDescription>
-            {task.messages.length > 0 ? (
-              task.messages.map((message) => <TaskMessage key={message.id} />)
-            ) : (
-              <p>Aucun message</p>
-            )}
-          </AlertDialogDescription>
+      <AlertDialogContent className="min-h-[80%] min-w-[75%]">
+        <AlertDialogHeader className="sm:justify-between">
+          <div className="space-y-4">
+            <AlertDialogTitle>
+              Fil de discussion -{" "}
+              <span className="font-bold text-main-500">{task.title}</span>
+            </AlertDialogTitle>
+            <div className="max-h-[430px] flex flex-col gap-5 overflow-auto border border-neutral-100 p-4 rounded-sm">
+              {task.messages.length > 0 ? (
+                task.messages.map((message) => (
+                  <>
+                    <TaskMessage key={message.id} message={message} />
+                    <Separator />
+                  </>
+                ))
+              ) : (
+                <p>Aucun message</p>
+              )}
+            </div>
+          </div>
+          <div>
+            <AlertDialogDescription asChild>
+              <div className="space-y-4">
+                <TaskMessageCreate list={list} currentTask={task}>
+                  <div className="flex justify-end gap-4">
+                    <AlertDialogCancel>Retour</AlertDialogCancel>
+                    <Button type="submit">Envoyer</Button>
+                  </div>
+                </TaskMessageCreate>
+              </div>
+            </AlertDialogDescription>
+          </div>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );

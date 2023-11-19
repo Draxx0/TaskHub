@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import NavigationList from "./NavigationList";
 import { Separator } from "@/components/ui/separator";
 import Favorites from "./Favorites";
+import { Star } from "lucide-react";
 
 const Header = () => {
   return (
@@ -32,7 +33,10 @@ const Header = () => {
           <Separator />
         </div>
         <div className="space-y-6">
-          <span className="font-bold text-lg">Favoris</span>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg text-main-500">Favoris</span>
+            <Star size={20} className="text-main-500" />
+          </div>
           <Favorites />
         </div>
       </div>
