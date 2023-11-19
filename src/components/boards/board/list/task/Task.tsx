@@ -5,11 +5,18 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import AvatarSelection from "@/components/common/form/AvatarSelection";
 import { useUserStore } from "@/store/user.store";
-import { Flag, MessageCircle, MoreHorizontal } from "lucide-react";
+import { BadgeCheck, Flag, MessageCircle, MoreHorizontal } from "lucide-react";
 import { Task as ITask } from "@/utils/types/task";
 import { formatDate } from "@/utils/functions/formatDate";
 import { storedLang } from "@/main";
 import TaskPriorityBadge from "./TaskPriorityBadge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   task: ITask;
@@ -17,6 +24,7 @@ interface Props {
 }
 
 const Task = ({ task, index }: Props) => {
+  const { t } = useTranslation("boards");
   const [showFullContent, setShowFullContent] = useState(false);
   const { user } = useUserStore();
 
@@ -34,12 +42,28 @@ const Task = ({ task, index }: Props) => {
               <div className="flex items-center gap-2">
                 <TaskPriorityBadge priority={task.priority} />
               </div>
-              <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
-                <MoreHorizontal size={20} className="text-gray-400" />
+              <div className="flex items-center gap-2">
+                <div className="p-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
+                  <MoreHorizontal size={20} className="text-gray-400" />
+                </div>
+                <div className="p-1 flex items-center justify-center rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <BadgeCheck size={20} className="text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{t("list.update-task.task_done")}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
               </div>
             </div>
             <CardContent>
-              <p className="font-bold mb-2 break-words">{task.title}</p>
+              <p className="font-bold mb-2 break-words capitalize">
+                {task.title}
+              </p>
               <div className="flex flex-col gap-4">
                 <p className="text-sm break-words">
                   {task.content.length > 50 ? (
@@ -88,7 +112,9 @@ const Task = ({ task, index }: Props) => {
 
                   <div className="p-2 relative flex items-center gap-1 rounded-full transition ease-in-out duration-300 cursor-pointer hover:bg-gray-200">
                     <MessageCircle size={20} className="text-gray-400" />
-                    <span className="text-xs text-gray-400">8</span>
+                    <span className="text-xs text-gray-400">
+                      {task.messages.length}
+                    </span>
                   </div>
                 </div>
               </div>
