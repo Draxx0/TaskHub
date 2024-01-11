@@ -1,7 +1,7 @@
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import { firebaseGet } from "../service/firestore/firebaseGet";
-import { useUserStore } from "../store/user.store";
-import { UseFirebaseGet } from "@/utils/types/firebase";
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { firebaseGet } from '../service/firestore/firebaseGet';
+import { useUserStore } from '../store/user.store';
+import { UseFirebaseGet } from '@/utils/types/firebase';
 
 function useGetCollection<T>({
   docReference,
@@ -13,7 +13,7 @@ function useGetCollection<T>({
 
   const query = useQuery(
     [
-      "collection",
+      'collection',
       docReference.path,
       ...(docReference.pathSegments ? docReference.pathSegments : []),
     ],
